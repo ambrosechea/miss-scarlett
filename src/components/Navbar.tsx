@@ -125,7 +125,16 @@ export default function Navbar() {
                   onClick={() => setCollectionOpen(!collectionOpen)}
                   aria-expanded={collectionOpen}
                 >
-                  COLLECTION {collectionOpen ? '▲' : '▼'}
+                  COLLECTION
+                  <svg
+                    className={`nav-chevron${collectionOpen ? ' open' : ''}`}
+                    width="11" height="7" viewBox="0 0 11 7"
+                    fill="none" stroke="currentColor" strokeWidth="1.2"
+                    strokeLinecap="round" strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="1,1 5.5,6 10,1" />
+                  </svg>
                 </button>
                 {collectionOpen && (
                   <ul className="nav-overlay-sub dropdown-list-2 w--open">
@@ -152,7 +161,16 @@ export default function Navbar() {
                   onClick={() => setStockistOpen(!stockistOpen)}
                   aria-expanded={stockistOpen}
                 >
-                  STOCKISTS {stockistOpen ? '▲' : '▼'}
+                  STOCKISTS
+                  <svg
+                    className={`nav-chevron${stockistOpen ? ' open' : ''}`}
+                    width="11" height="7" viewBox="0 0 11 7"
+                    fill="none" stroke="currentColor" strokeWidth="1.2"
+                    strokeLinecap="round" strokeLinejoin="round"
+                    aria-hidden="true"
+                  >
+                    <polyline points="1,1 5.5,6 10,1" />
+                  </svg>
                 </button>
                 {stockistOpen && (
                   <ul className="nav-overlay-sub dropdown-list-2 w--open">
