@@ -1,0 +1,22 @@
+name = "miss-scarlett"
+main = "worker/index.ts"
+compatibility_date = "2025-05-27"
+compatibility_flags = ["nodejs_compat"]
+
+# Serve the Vite-built SPA from dist/
+# not_found_handling = "single-page-application" handles React Router deep links
+[assets]
+directory = "./dist"
+binding = "ASSETS"
+not_found_handling = "single-page-application"
+
+# D1 database — run `npm run db:create` to create it on Cloudflare,
+# then replace database_id below with the ID printed by that command.
+[[d1_databases]]
+binding = "DB"
+database_name = "miss-scarlett"
+database_id = "d649ef9c-b841-484a-af71-71c83e13d3c3"
+
+[dev]
+port = 8787
+local_protocol = "http"

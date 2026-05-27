@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+dist-ssr/
+
+# Wrangler / Cloudflare local dev cache
+.wrangler/
+
+# TypeScript build info
+*.tsbuildinfo
+
+# Local env / secrets (used by `wrangler dev` for local bindings)
+.env
+.env.*
+.dev.vars
+
+# Editor
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db

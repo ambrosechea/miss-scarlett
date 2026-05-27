@@ -1,0 +1,31 @@
+/* ── Self-hosted fonts (bundled via npm — no external CDN) ─────────────────── */
+/* Lato weights used by the design: 100 300 400 700 900 + italic variants */
+@import "@fontsource/lato/100.css";
+@import "@fontsource/lato/100-italic.css";
+@import "@fontsource/lato/300.css";
+@import "@fontsource/lato/300-italic.css";
+@import "@fontsource/lato/400.css";
+@import "@fontsource/lato/400-italic.css";
+@import "@fontsource/lato/700.css";
+@import "@fontsource/lato/700-italic.css";
+@import "@fontsource/lato/900.css";
+@import "@fontsource/lato/900-italic.css";
+
+/* Oswald weights 200–700 (variable font — one import covers all) */
+@import "@fontsource-variable/oswald";
+
+/* ── Tailwind ───────────────────────────────────────────────────────────────── */
+@import "tailwindcss";
+
+/* ── Base styles ────────────────────────────────────────────────────────────── */
+@import "./normalize.css";
+@import "./webflow.css";
+@import "./main.css";
+
+/* ── Brand tokens for Tailwind ──────────────────────────────────────────────── */
+@theme {
+  --color-light: #f4f2ef;
+  --color-coconut: #d6d1c5;
+  --color-black-light: #1a1a1a;
+  --color-dark-coconut: #989389;
+}
