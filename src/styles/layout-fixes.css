@@ -47,6 +47,12 @@
   grid-template-columns: 1fr 1fr;
 }
 
+/* Trunk show rows: name+subtitle | date | button */
+.quick-stack-13 {
+  grid-template-columns: 2fr 1fr auto;
+  align-items: center;
+}
+
 /* ── Collection slider (section-3): 3 portrait images ────────── */
 .slider-container {
   width: 100%;
@@ -222,6 +228,7 @@
   .quick-stack-5,
   .quick-stack-10,
   .quick-stack-12,
+  .quick-stack-13,
   .quick-stack-14,
   .quick-stack-19 {
     grid-template-columns: 1fr;

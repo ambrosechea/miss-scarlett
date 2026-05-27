@@ -2,9 +2,9 @@ import { useState, useEffect } from 'react'
 import { apiGet } from '@/lib/api'
 import type { Stockist } from '@/lib/types'
 import SEO from '@/components/SEO'
-import group257 from '@/assets/images/group_257.webp'
-import group257_500 from '@/assets/images/group_257-p-500.webp'
-import group257_800 from '@/assets/images/group_257-p-800.webp'
+import group257      from '@/assets/images/group_257.webp'
+import group257_500  from '@/assets/images/group_257-p-500.webp'
+import group257_800  from '@/assets/images/group_257-p-800.webp'
 import group257_1080 from '@/assets/images/group_257-p-1080.webp'
 
 const REGIONS = [
@@ -13,9 +13,15 @@ const REGIONS = [
   'REST OF THE WORLD',
 ]
 
+/** Format location string matching live site: "City, STATE, Country" */
+function location(s: Stockist): string {
+  const parts = [s.city, s.state, s.country].filter(Boolean)
+  return parts.join(', ')
+}
+
 export default function FindStockistPage() {
   const [stockists, setStockists] = useState<Stockist[]>([])
-  const [loading, setLoading] = useState(true)
+  const [loading, setLoading]     = useState(true)
   const [fetchError, setFetchError] = useState<string | null>(null)
 
   useEffect(() => {
@@ -62,7 +68,7 @@ export default function FindStockistPage() {
         </div>
       </section>
 
-      {/* Stockist lists by region */}
+      {/* Stockist lists */}
       <section className="section-18">
         {loading && (
           <div className="w-layout-blockcontainer container-25 w-container">
@@ -74,30 +80,41 @@ export default function FindStockistPage() {
             <p className="paragraph">{fetchError}</p>
           </div>
         )}
+
         {!loading && !fetchError && REGIONS.map((region) => {
-          const regionStockists = stockists.filter((s) => s.region === region)
+          const items = stockists.filter(s => s.region === region)
           return (
             <div key={region} className="w-layout-blockcontainer container-25 w-container">
               <h2 className="heading-26">{region}</h2>
-              {regionStockists.length === 0 ? (
-                <div className="w-dyn-empty"><div>No stockists listed in this region yet.</div></div>
+              {items.length === 0 ? (
+                <div className="w-dyn-list">
+                  <div className="w-dyn-empty"><div>No stockists listed in this region yet.</div></div>
+                </div>
               ) : (
-                <ul style={{ listStyle: 'none', padding: 0, margin: 0 }}>
-                  {regionStockists.map((s) => (
-                    <li key={s.id} style={{ marginBottom: '1.5rem' }}>
-                      <strong>{s.name}</strong>
-                      {s.city && <> — {s.city}, {s.country}</>}
-                      {s.address && <div style={{ fontSize: '0.9em', opacity: 0.7 }}>{s.address}</div>}
-                      {s.website && (
-                        <div>
-                          <a href={s.website} target="_blank" rel="noopener noreferrer" className="link">
-                            Visit website
+                <div className="w-dyn-list">
+                  <div role="list" className="w-dyn-items w-row">
+                    {items.map(s => (
+                      <div key={s.id} role="listitem" className="collection-item-3 w-dyn-item w-col w-col-4">
+                        <div className="div-block-17">
+                          <a href="#" className="link-block-5 w-inline-block">
+                            <h2 className="heading-18">{s.name}</h2>
                           </a>
+                          <p className="paragraph-8">{location(s)}</p>
+                          {s.website && (
+                            <a
+                              href={s.website}
+                              className="link-block-3 w-inline-block"
+                              target="_blank"
+                              rel="noopener noreferrer"
+                            >
+                              <p className="paragraph-9">VISIT WEBSITE</p>
+                            </a>
+                          )}
                         </div>
-                      )}
-                    </li>
-                  ))}
-                </ul>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               )}
             </div>
           )

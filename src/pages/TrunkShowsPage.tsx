@@ -3,25 +3,18 @@ import { Link } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
 import type { TrunkShow } from '@/lib/types'
 import SEO from '@/components/SEO'
-import group265 from '@/assets/images/group_265.webp'
-import group265_500 from '@/assets/images/group_265-p-500.webp'
-import group265_800 from '@/assets/images/group_265-p-800.webp'
+import group265      from '@/assets/images/group_265.webp'
+import group265_500  from '@/assets/images/group_265-p-500.webp'
+import group265_800  from '@/assets/images/group_265-p-800.webp'
 import group265_1080 from '@/assets/images/group_265-p-1080.webp'
 
-function formatDateRange(start: string, end: string): string {
-  const s = new Date(start)
-  const e = new Date(end)
-  const opts: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long', year: 'numeric' }
-  if (s.getMonth() === e.getMonth() && s.getFullYear() === e.getFullYear()) {
-    return `${s.getDate()}–${e.toLocaleDateString('en-AU', opts)}`
-  }
-  return `${s.toLocaleDateString('en-AU', opts)} – ${e.toLocaleDateString('en-AU', opts)}`
-}
+const COUNTRY_FILTERS = ['View All', 'AUSTRALIA', 'NZ', 'SINGAPORE', 'UK', 'USA', 'CANADA', 'MALAYSIA']
 
 export default function TrunkShowsPage() {
-  const [shows, setShows] = useState<TrunkShow[]>([])
-  const [loading, setLoading] = useState(true)
+  const [shows, setShows]         = useState<TrunkShow[]>([])
+  const [loading, setLoading]     = useState(true)
   const [fetchError, setFetchError] = useState<string | null>(null)
+  const [activeFilter, setActiveFilter] = useState('View All')
 
   useEffect(() => {
     apiGet<TrunkShow[]>('/api/trunk-shows').then(({ data, error }) => {
@@ -30,6 +23,10 @@ export default function TrunkShowsPage() {
       setLoading(false)
     })
   }, [])
+
+  const filtered = activeFilter === 'View All'
+    ? shows
+    : shows.filter(s => s.country_filter === activeFilter)
 
   return (
     <>
@@ -56,7 +53,7 @@ export default function TrunkShowsPage() {
               <img
                 src={group265}
                 loading="lazy"
-                sizes="100vw"
+                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${group265_500} 500w, ${group265_800} 800w, ${group265_1080} 1080w, ${group265} 1315w`}
                 alt="Miss Scarlett trunk show — experience the bridal collection in person"
                 className="image-3"
@@ -72,36 +69,75 @@ export default function TrunkShowsPage() {
           <h2 className="heading-5 happy-brides-h2">TRUNK SHOW EVENTS</h2>
         </div>
         <div className="w-layout-blockcontainer container-27 w-container">
+
+          {/* Country filter tabs */}
+          <div className="div-block-19">
+            <div className="w-dyn-list">
+              <div role="list" className="collection-list-4 w-dyn-items">
+                {COUNTRY_FILTERS.map(f => (
+                  <div key={f} role="listitem" className="w-dyn-item">
+                    <label
+                      className={`radio-button-field-2 w-radio${activeFilter === f ? ' w--redirected-checked' : ''}`}
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <input
+                        type="radio"
+                        name="trunk-filter"
+                        className="w-form-formradioinput radio-button-2 w-radio-input"
+                        checked={activeFilter === f}
+                        onChange={() => setActiveFilter(f)}
+                      />
+                      <span className="w-form-label">{f}</span>
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Results */}
           {loading && <p className="paragraph">Loading…</p>}
           {fetchError && <p className="paragraph">{fetchError}</p>}
-          {!loading && !fetchError && shows.length === 0 && (
-            <div className="w-dyn-empty"><div>No upcoming trunk shows scheduled. Check back soon.</div></div>
-          )}
-          {!loading && !fetchError && shows.length > 0 && (
-            <ul style={{ listStyle: 'none', padding: 0 }}>
-              {shows.map((show) => (
-                <li key={show.id} style={{ marginBottom: '2rem', borderBottom: '1px solid currentColor', paddingBottom: '1.5rem' }}>
-                  <h3 className="heading-5" style={{ marginBottom: '0.25rem' }}>{show.title}</h3>
-                  <p className="paragraph" style={{ margin: 0 }}>
-                    <strong>{show.boutique_name}</strong> — {show.location}
-                  </p>
-                  <p className="paragraph" style={{ margin: '0.25rem 0' }}>
-                    {formatDateRange(show.start_date, show.end_date)}
-                  </p>
-                  {show.description && <p className="paragraph">{show.description}</p>}
-                  <Link to="/book-appointment" className="button-3 lovce-btn w-button" style={{ marginTop: '0.75rem' }}>
-                    BOOK APPOINTMENT
-                  </Link>
-                </li>
-              ))}
-            </ul>
+
+          {!loading && !fetchError && (
+            <div className="w-dyn-list">
+              {filtered.length === 0 ? (
+                <div className="w-dyn-empty"><div>No trunk shows for this region yet.</div></div>
+              ) : (
+                <div role="list" className="w-dyn-items">
+                  {filtered.map(show => (
+                    <div key={show.id} role="listitem" className="w-dyn-item">
+                      <div className="div-block-20">
+                        <div className="w-layout-layout quick-stack-13 wf-layout-layout">
+                          {/* Name + subtitle */}
+                          <div className="w-layout-cell cell-41">
+                            <h5 className="heading-20">{show.name}</h5>
+                            {show.subtitle && (
+                              <p className="paragraph-11">{show.subtitle}</p>
+                            )}
+                          </div>
+                          {/* Date (empty — ongoing shows) */}
+                          <div className="w-layout-cell cell-28">
+                            <p className="paragraph-12" />
+                          </div>
+                          {/* CTA */}
+                          <div className="w-layout-cell cell-29">
+                            <Link to="/book-appointment" className="button-3 lovce-btn w-button">
+                              Book Appointment
+                            </Link>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
           )}
         </div>
-      </section>
 
-      {/* Related News */}
-      <section className="latest-news-section">
-        <div className="w-layout-blockcontainer container-15 w-container">
+        {/* Related News */}
+        <div className="w-layout-blockcontainer container-15 w-container" style={{ marginTop: '4rem' }}>
           <div className="w-layout-layout quick-stack-5 wf-layout-layout">
             <div className="w-layout-cell">
               <h6 className="heading latest-collections">Our Journal</h6>

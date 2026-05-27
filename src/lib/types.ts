@@ -3,6 +3,7 @@ export interface Stockist {
   name: string
   address: string | null
   city: string
+  state: string | null
   country: string
   region: string
   phone: string | null
@@ -22,10 +23,7 @@ export interface JournalPost {
 
 export interface TrunkShow {
   id: number
-  title: string
-  boutique_name: string
-  location: string
-  start_date: string
-  end_date: string
-  description: string | null
+  name: string
+  subtitle: string | null
+  country_filter: string
 }
