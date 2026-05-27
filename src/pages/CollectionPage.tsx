@@ -1,5 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { Link, useParams, useNavigate } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
 import type { Product } from '@/lib/types'
 import SEO from '@/components/SEO'
@@ -43,39 +43,39 @@ const COLLECTION_META: Record<string, { title: string; heading: string; descript
 }
 
 const COLLECTION_NAV = [
-  { slug: 'all-collections', label: 'ALL COLLECTIONS' },
   { slug: 'palais',          label: 'PALAIS' },
-  { slug: 'lumiere',         label: 'LUMIÈRE' },
   { slug: 'modern-muse',     label: 'MODERN MUSE' },
   { slug: 'iconic',          label: 'ICONIC' },
-  { slug: 'anniversary',     label: 'ANNIVERSARY' },
   { slug: 'siren',           label: 'SIREN' },
+  { slug: 'anniversary',     label: 'ANNIVERSARY' },
+  { slug: 'lumiere',         label: 'LUMIÈRE' },
+  { slug: 'all-collections', label: 'ALL COLLECTIONS' },
 ]
 
-const DRESS_TYPES = ['ALL SHAPES', 'A-LINE', 'BALLGOWN', 'FIT & FLARE', 'MINI', 'SHEATH']
+const DRESS_TYPES = ['ALL SHAPES', 'MINI', 'A-LINE', 'BALLGOWN', 'FIT & FLARE', 'SHEATH']
 
 /** Detect silhouette from product name + description text */
 function getDressType(p: Product): string {
-  // Normalise: collapse typographic ligatures (ﬁ ﬂ etc.) and lower-case
   const text = (p.name + ' ' + p.description)
     .replace(/ﬁ/g, 'fi').replace(/ﬂ/g, 'fl').replace(/ﬀ/g, 'ff')
     .toLowerCase()
-
   if (text.includes('mini')) return 'MINI'
   if (text.includes('ballgown') || text.includes('ball gown')) return 'BALLGOWN'
   if (text.includes('a-line')) return 'A-LINE'
   if (text.includes('fit-and-flare') || text.includes('fit and flare')) return 'FIT & FLARE'
   if (text.includes('sheath')) return 'SHEATH'
-  return ''   // no match — appears in ALL SHAPES but not in specific type
+  return ''
 }
 
 export default function CollectionPage() {
   const { slug = 'all-collections' } = useParams<{ slug: string }>()
+  const navigate = useNavigate()
 
   const [products,    setProducts]    = useState<Product[]>([])
   const [loading,     setLoading]     = useState(true)
   const [fetchError,  setFetchError]  = useState<string | null>(null)
-  const [search,      setSearch]      = useState('')
+  const [searchInput, setSearchInput] = useState('')
+  const [activeSearch,setActiveSearch]= useState('')
   const [dressType,   setDressType]   = useState('ALL SHAPES')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -85,9 +85,9 @@ export default function CollectionPage() {
     description: 'Explore the Miss Scarlett bridal collection.',
   }
 
-  // Reset filters when collection changes
   useEffect(() => {
-    setSearch('')
+    setSearchInput('')
+    setActiveSearch('')
     setDressType('ALL SHAPES')
     setLoading(true)
     setFetchError(null)
@@ -101,75 +101,81 @@ export default function CollectionPage() {
     })
   }, [slug])
 
-  // Filter + sort in memory
   const displayed = useMemo(() => {
     let list = [...products]
-
-    // search
-    const q = search.trim().toLowerCase()
-    if (q) list = list.filter(p => p.name.toLowerCase().includes(q))
-
-    // dress type
-    if (dressType !== 'ALL SHAPES') {
-      list = list.filter(p => getDressType(p) === dressType)
-    }
-
+    if (activeSearch) list = list.filter(p => p.name.toLowerCase().includes(activeSearch.toLowerCase()))
+    if (dressType !== 'ALL SHAPES') list = list.filter(p => getDressType(p) === dressType)
     return list
-  }, [products, search, dressType])
+  }, [products, activeSearch, dressType])
 
   const sidebar = (
     <aside className="collection-sidebar">
+
       {/* Search */}
       <div className="sidebar-section">
-        <label className="sidebar-label" htmlFor="product-search">SEARCH</label>
-        <div className="sidebar-search-wrap">
+        <p className="sidebar-label">Search</p>
+        <div className="sidebar-search-row">
           <input
-            id="product-search"
-            type="search"
+            type="text"
             className="sidebar-search-input"
-            placeholder="Search gowns…"
-            value={search}
-            onChange={e => setSearch(e.target.value)}
+            placeholder="Search..."
+            value={searchInput}
+            onChange={e => setSearchInput(e.target.value)}
+            onKeyDown={e => { if (e.key === 'Enter') setActiveSearch(searchInput) }}
           />
-          <svg className="sidebar-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <circle cx="11" cy="11" r="7" />
-            <line x1="16.5" y1="16.5" x2="22" y2="22" />
-          </svg>
+          <button
+            className="sidebar-search-btn"
+            onClick={() => setActiveSearch(searchInput)}
+          >
+            Search
+          </button>
         </div>
       </div>
 
-      {/* Collections */}
+      {/* Collection — radio style */}
       <div className="sidebar-section">
         <p className="sidebar-label">COLLECTION</p>
-        <ul className="sidebar-link-list">
+        <ul className="sidebar-radio-list">
           {COLLECTION_NAV.map(c => (
             <li key={c.slug}>
-              <Link
-                to={`/category/${c.slug}`}
-                className={`sidebar-collection-link${slug === c.slug ? ' active' : ''}`}
-              >
-                {c.label}
-              </Link>
+              <label className={`sidebar-radio-item${slug === c.slug ? ' checked' : ''}`}>
+                <input
+                  type="radio"
+                  name="collection"
+                  className="sidebar-radio-input"
+                  checked={slug === c.slug}
+                  onChange={() => navigate(`/category/${c.slug}`)}
+                />
+                <span className="sidebar-radio-dot" />
+                <span className="sidebar-radio-label">{c.label}</span>
+              </label>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* Dress / skirt type */}
+      {/* Dress / skirt type — radio style */}
       <div className="sidebar-section">
-        <p className="sidebar-label">DRESS TYPE</p>
-        <div className="sidebar-tags">
+        <p className="sidebar-label">DRESS/SKIRT TYPE</p>
+        <ul className="sidebar-radio-list">
           {DRESS_TYPES.map(type => (
-            <button
-              key={type}
-              className={`sidebar-tag${dressType === type ? ' active' : ''}`}
-              onClick={() => setDressType(type)}
-            >
-              {type}
-            </button>
+            <li key={type}>
+              <label className={`sidebar-radio-item${dressType === type ? ' checked' : ''}`}>
+                <input
+                  type="radio"
+                  name="dresstype"
+                  className="sidebar-radio-input"
+                  checked={dressType === type}
+                  onChange={() => setDressType(type)}
+                />
+                <span className="sidebar-radio-dot" />
+                <span className="sidebar-radio-label">{type}</span>
+              </label>
+            </li>
           ))}
-        </div>
+        </ul>
       </div>
+
     </aside>
   )
 
@@ -207,26 +213,21 @@ export default function CollectionPage() {
           </button>
 
           <div className={`collection-layout${sidebarOpen ? ' sidebar-visible' : ''}`}>
-            {/* Sidebar — always rendered but hidden on mobile until toggled */}
             {sidebar}
 
-            {/* Main content */}
             <div className="collection-main">
               {loading && <p className="paragraph">Loading…</p>}
               {fetchError && <p className="paragraph">{fetchError}</p>}
 
               {!loading && !fetchError && (
                 <>
-                  <p className="collection-count">
-                    {displayed.length} {displayed.length === 1 ? 'gown' : 'gowns'}
-                  </p>
                   {displayed.length === 0 ? (
                     <div className="w-dyn-empty">
                       <div>No gowns match your filters.</div>
                       <button
-                        className="sidebar-tag active"
+                        className="sidebar-search-btn"
                         style={{ marginTop: '1rem' }}
-                        onClick={() => { setSearch(''); setDressType('ALL SHAPES') }}
+                        onClick={() => { setActiveSearch(''); setSearchInput(''); setDressType('ALL SHAPES') }}
                       >
                         Clear filters
                       </button>

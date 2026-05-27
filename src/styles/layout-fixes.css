@@ -398,7 +398,7 @@
 }
 
 .sidebar-section {
-  padding: 1.25rem 0;
+  padding: 1.1rem 0;
   border-bottom: 1px solid #e8e4de;
 }
 
@@ -408,120 +408,132 @@
 
 .sidebar-label {
   font-family: Lato, sans-serif;
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 700;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   color: #1a1a1a;
-  margin: 0 0 0.75rem;
+  margin: 0 0 0.6rem;
 }
 
 /* Search */
-.sidebar-search-wrap {
-  position: relative;
+.sidebar-search-row {
+  display: flex;
+  border: 1px solid #c8c3bb;
 }
 
 .sidebar-search-input {
-  width: 100%;
+  flex: 1;
   font-family: Lato, sans-serif;
   font-size: 13px;
   font-weight: 300;
   color: #1a1a1a;
   background: transparent;
   border: none;
-  border-bottom: 1px solid #c8c3bb;
-  padding: 6px 28px 6px 0;
+  padding: 7px 10px;
   outline: none;
-  box-sizing: border-box;
-  transition: border-color 0.2s;
+  min-width: 0;
 }
 
 .sidebar-search-input::placeholder {
   color: #b0aa9f;
 }
 
-.sidebar-search-input:focus {
-  border-bottom-color: #1a1a1a;
+.sidebar-search-btn {
+  font-family: Lato, sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: #1a1a1a;
+  color: #fff;
+  border: none;
+  padding: 7px 14px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.18s;
 }
 
-.sidebar-search-icon {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #b0aa9f;
-  pointer-events: none;
+.sidebar-search-btn:hover {
+  background: #3a3530;
 }
 
-/* Collection links */
-.sidebar-link-list {
+/* Radio-button list — collections + dress types */
+.sidebar-radio-list {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 0;
 }
 
-.sidebar-collection-link {
-  display: block;
-  font-family: Lato, sans-serif;
-  font-size: 12px;
-  font-weight: 300;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  color: #989389;
-  text-decoration: none;
-  padding: 5px 0;
-  transition: color 0.15s;
-}
-
-.sidebar-collection-link:hover,
-.sidebar-collection-link.active {
-  color: #1a1a1a;
-  font-weight: 400;
-}
-
-/* Dress type tags */
-.sidebar-tags {
+.sidebar-radio-item {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.4rem;
-}
-
-.sidebar-tag {
-  font-family: Lato, sans-serif;
-  font-size: 10px;
-  font-weight: 400;
-  letter-spacing: 1.2px;
-  text-transform: uppercase;
-  background: transparent;
-  border: 1px solid #c8c3bb;
-  border-radius: 50px;
-  padding: 5px 12px;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
   cursor: pointer;
-  color: #1a1a1a;
-  transition: background 0.18s, color 0.18s, border-color 0.18s;
 }
 
-.sidebar-tag:hover,
-.sidebar-tag.active {
+.sidebar-radio-input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+}
+
+.sidebar-radio-dot {
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  border: 1px solid #b0aa9f;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+
+.sidebar-radio-dot::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
   background: #1a1a1a;
-  color: #fff;
+  opacity: 0;
+  transition: opacity 0.15s;
+}
+
+.sidebar-radio-item.checked .sidebar-radio-dot {
   border-color: #1a1a1a;
 }
 
-/* ── Product grid ─────────────────────────────────────────── */
+.sidebar-radio-item.checked .sidebar-radio-dot::after {
+  opacity: 1;
+}
 
-.collection-count {
+.sidebar-radio-label {
   font-family: Lato, sans-serif;
   font-size: 12px;
   font-weight: 300;
   letter-spacing: 1px;
-  color: #989389;
   text-transform: uppercase;
-  margin: 0 0 1.5rem;
+  color: #6b6560;
+  transition: color 0.15s;
+  line-height: 1.3;
 }
+
+.sidebar-radio-item.checked .sidebar-radio-label {
+  color: #1a1a1a;
+  font-weight: 400;
+}
+
+.sidebar-radio-item:hover .sidebar-radio-label {
+  color: #1a1a1a;
+}
+
+/* ── Product grid ─────────────────────────────────────────── */
 
 /* 3 columns inside the main area (sidebar already takes up 220px) */
 .product-grid {
@@ -561,9 +573,9 @@
 
 .product-card-name {
   font-family: 'Ivy Mode', 'Times New Roman', serif;
-  font-size: 16px;
+  font-size: 22px;
   font-weight: 400;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   text-transform: uppercase;
   margin: 0;
   color: #1a1a1a;
