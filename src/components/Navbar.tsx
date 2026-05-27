@@ -47,7 +47,25 @@ export default function Navbar() {
         <div className="navbar-no-shadow-container">
           <div className="container-regular">
             <header className="navbar-wrapper">
-              {/* LEFT – hamburger */}
+              {/* DOM order: CTA → logo → hamburger
+                  navbar-wrapper uses flex-flow:row-reverse, so DOM-first = visual-last:
+                  visual result: hamburger (left) | logo (centre) | CTA (right)   */}
+
+              {/* RIGHT – Book Appointment (DOM first → visual last/right) */}
+              <Link
+                to="/book-appointment"
+                className="button-3 header-btn w-button"
+                onClick={close}
+              >
+                Book Appointment
+              </Link>
+
+              {/* CENTRE – logo */}
+              <Link to="/" className="navbar-brand w-nav-brand" onClick={close} aria-label="Miss Scarlett home">
+                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
+              </Link>
+
+              {/* LEFT – hamburger (DOM last → visual first/left) */}
               <button
                 className="menu-button-3 w-nav-button"
                 onClick={() => setMenuOpen(true)}
@@ -56,20 +74,6 @@ export default function Navbar() {
               >
                 <div className="icon-6 w-icon-nav-menu" />
               </button>
-
-              {/* CENTRE – logo */}
-              <Link to="/" className="navbar-brand w-nav-brand" onClick={close} aria-label="Miss Scarlett home">
-                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
-              </Link>
-
-              {/* RIGHT – Book Appointment */}
-              <Link
-                to="/book-appointment"
-                className="button-3 header-btn w-button"
-                onClick={close}
-              >
-                Book Appointment
-              </Link>
             </header>
           </div>
         </div>
