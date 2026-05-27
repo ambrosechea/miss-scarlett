@@ -47,11 +47,35 @@ export default function Navbar() {
         <div className="navbar-no-shadow-container">
           <div className="container-regular">
             <header className="navbar-wrapper">
-              {/* DOM order: CTA → logo → hamburger
-                  navbar-wrapper uses flex-flow:row-reverse, so DOM-first = visual-last:
-                  visual result: hamburger (left) | logo (centre) | CTA (right)   */}
+              {/* LEFT – Hamburger Menu */}
+              <button
+                className="menu-button-3 w-nav-button"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open navigation"
+                aria-expanded={menuOpen}
+              >
+                <svg
+                  width="28"
+                  height="28"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="1.2"
+                  strokeLinecap="round"
+                  className="hamburger-svg"
+                >
+                  <line x1="3" y1="6" x2="21" y2="6" />
+                  <line x1="3" y1="12" x2="21" y2="12" />
+                  <line x1="3" y1="18" x2="21" y2="18" />
+                </svg>
+              </button>
 
-              {/* RIGHT – Book Appointment (DOM first → visual last/right) */}
+              {/* CENTRE – Logo */}
+              <Link to="/" className="navbar-brand w-nav-brand" onClick={close} aria-label="Miss Scarlett home">
+                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
+              </Link>
+
+              {/* RIGHT – Book Appointment CTA */}
               <Link
                 to="/book-appointment"
                 className="button-3 header-btn w-button"
@@ -59,21 +83,6 @@ export default function Navbar() {
               >
                 Book Appointment
               </Link>
-
-              {/* CENTRE – logo */}
-              <Link to="/" className="navbar-brand w-nav-brand" onClick={close} aria-label="Miss Scarlett home">
-                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
-              </Link>
-
-              {/* LEFT – hamburger (DOM last → visual first/left) */}
-              <button
-                className="menu-button-3 w-nav-button"
-                onClick={() => setMenuOpen(true)}
-                aria-label="Open navigation"
-                aria-expanded={menuOpen}
-              >
-                <div className="icon-6 w-icon-nav-menu" />
-              </button>
             </header>
           </div>
         </div>

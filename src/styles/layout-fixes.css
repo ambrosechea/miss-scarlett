@@ -247,3 +247,57 @@
     grid-template-columns: repeat(2, 1fr);
   }
 }
+
+/* ============================================================
+   Navbar layout overrides & Hamburger fixes
+   ============================================================ */
+
+/* Force hamburger menu to be visible on all screen sizes */
+.menu-button-3.w-nav-button {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px !important;
+  color: var(--color-black-light, #1a1a1a) !important;
+  transition: opacity 0.2s ease;
+  z-index: 1001;
+}
+
+.menu-button-3.w-nav-button:hover {
+  opacity: 0.7;
+}
+
+/* Override Webflow row-reverse with standard LTR layout for correct spacing */
+.navbar-wrapper {
+  display: flex !important;
+  flex-flow: row nowrap !important;
+  flex-direction: row !important;
+  justify-content: space-between !important;
+  align-items: center !important;
+  position: relative !important;
+  width: 100% !important;
+}
+
+/* Perfectly center the logo absolute to the header on all screen sizes */
+.navbar-brand {
+  position: absolute !important;
+  left: 50% !important;
+  top: 50% !important;
+  transform: translate(-50%, -50%) !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 1000 !important;
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
+}
+
+/* Clear any legacy margins pushing the brand logo */
+.navbar-brand,
+.navbar-brand.w--current {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
+}
