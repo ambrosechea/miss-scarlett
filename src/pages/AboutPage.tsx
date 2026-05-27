@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import SEO from '@/components/SEO'
-import { orgSchema } from '@/lib/schema'
+import { aboutSchema } from '@/lib/schema'
 
 import group255      from '@/assets/images/group_255.webp'
 import group255_500  from '@/assets/images/group_255-p-500.webp'
@@ -39,22 +39,6 @@ import img213413254 from '@/assets/images/213413254.webp'
 import img124345   from '@/assets/images/124345.webp'
 import img3453245  from '@/assets/images/3453245.webp'
 import img12342345 from '@/assets/images/12342345.webp'
-
-const aboutSchema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    orgSchema,
-    {
-      '@type': 'AboutPage',
-      '@id': 'https://www.missscarlett.com.au/about',
-      url: 'https://www.missscarlett.com.au/about',
-      name: 'About Miss Scarlett | Luxury Bridal Designer',
-      description:
-        'Learn about Miss Scarlett — founded by Melissa So in 2019 with a vision for modern, beautifully crafted bridal gowns available to brides everywhere.',
-      isPartOf: { '@id': 'https://www.missscarlett.com.au/#website' },
-    },
-  ],
-}
 
 const testimonials = [
   {

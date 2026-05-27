@@ -5,7 +5,7 @@ import type { JournalPost } from '@/lib/types'
 import ImageSlider from '@/components/ImageSlider'
 import MarqueeText from '@/components/MarqueeText'
 import SEO from '@/components/SEO'
-import { orgSchema } from '@/lib/schema'
+import { homeSchema } from '@/lib/schema'
 
 import group254     from '@/assets/images/group_254.webp'
 import group254_500 from '@/assets/images/group_254-p-500.webp'
@@ -61,21 +61,6 @@ const collectionSlides = [
     alt: 'Miss Scarlett wedding dress design',
   },
 ]
-
-const homeSchema = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    orgSchema,
-    {
-      '@type': 'WebPage',
-      '@id': 'https://www.missscarlett.com.au/',
-      url: 'https://www.missscarlett.com.au/',
-      name: 'Miss Scarlett | Luxury Bridal Designer',
-      description: 'Miss Scarlett reimagines modern bridal with refined design, graceful femininity, and exceptional craftsmanship.',
-      isPartOf: { '@id': 'https://www.missscarlett.com.au/#website' },
-    },
-  ],
-}
 
 export default function HomePage() {
   const [latestPosts, setLatestPosts] = useState<JournalPost[]>([])

@@ -2,6 +2,7 @@ import { useState, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { apiPost } from '@/lib/api'
 import SEO from '@/components/SEO'
+import { contactSchema } from '@/lib/schema'
 import group256 from '@/assets/images/group_256.webp'
 
 export default function ContactPage() {
@@ -38,6 +39,7 @@ export default function ContactPage() {
       <SEO
         title="Contact Miss Scarlett | Get in Touch"
         description="Send an enquiry to Miss Scarlett — our team will be in touch shortly. For bridal appointments we can connect you with the nearest stockist."
+        schema={contactSchema}
       />
 
       {/* Hero */}

@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
-import type { ProductDetail } from '@/lib/types'
+import type { Product, ProductDetail } from '@/lib/types'
 import SEO from '@/components/SEO'
+import { buildProductSchema } from '@/lib/schema'
 
 /** Maps DB category name → collection slug */
 function categoryToSlug(cat: string): string {
@@ -11,10 +12,11 @@ function categoryToSlug(cat: string): string {
 
 export default function ProductPage() {
   const { handle = '' } = useParams<{ handle: string }>()
-  const [product, setProduct]     = useState<ProductDetail | null>(null)
-  const [loading, setLoading]     = useState(true)
-  const [fetchError, setFetchError] = useState<string | null>(null)
-  const [activeImg, setActiveImg] = useState(0)
+  const [product, setProduct]         = useState<ProductDetail | null>(null)
+  const [loading, setLoading]         = useState(true)
+  const [fetchError, setFetchError]   = useState<string | null>(null)
+  const [activeImg, setActiveImg]     = useState(0)
+  const [similarProducts, setSimilarProducts] = useState<Product[]>([])
 
   useEffect(() => {
     setLoading(true)
@@ -28,6 +30,23 @@ export default function ProductPage() {
       setLoading(false)
     })
   }, [handle])
+
+  // Fetch similar dresses from the same collection whenever the product changes
+  useEffect(() => {
+    if (!product) return
+    setSimilarProducts([])
+    const primary = product.categories.find(c => c !== 'ALL COLLECTIONS') ?? ''
+    if (!primary) return
+    const slug = categoryToSlug(primary)
+    apiGet<Product[]>(`/api/products?collection=${slug}`).then(({ data }) => {
+      if (data) {
+        const others = data.filter(p => p.handle !== handle)
+        // Shuffle so different items appear on each visit, then take 4
+        const shuffled = others.sort(() => Math.random() - 0.5).slice(0, 4)
+        setSimilarProducts(shuffled)
+      }
+    })
+  }, [product, handle])
 
   if (loading) {
     return (
@@ -62,6 +81,13 @@ export default function ProductPage() {
         title={`${product.name} | Miss Scarlett Bridal`}
         description={product.description.slice(0, 155).replace(/\n/g, ' ')}
         image={product.main_image}
+        schema={buildProductSchema({
+          handle:      product.handle,
+          name:        product.name,
+          description: product.description,
+          main_image:  product.main_image,
+          categories:  product.categories,
+        })}
       />
 
       {/* Breadcrumb */}
@@ -154,11 +180,42 @@ export default function ProductPage() {
       </section>
 
       {/* Back to collection */}
-      <div className="product-wide-container" style={{ paddingBottom: '3rem' }}>
+      <div className="product-wide-container" style={{ paddingBottom: '2rem' }}>
         <Link to={`/category/${collectionSlug}`} className="product-back-link">
           ← Back to {primary}
         </Link>
       </div>
+
+      {/* Similar Dresses */}
+      {similarProducts.length > 0 && (
+        <section className="similar-dresses-section">
+          <div className="product-wide-container">
+            <div className="similar-dresses-header">
+              <h2 className="similar-dresses-heading">You May Also Like</h2>
+              <Link to={`/category/${collectionSlug}`} className="similar-dresses-view-all">
+                View all {primary} →
+              </Link>
+            </div>
+            <div className="similar-dresses-grid">
+              {similarProducts.map(p => (
+                <Link key={p.handle} to={`/product/${p.handle}`} className="product-card-link similar-dress-card">
+                  <div className="product-card-image-wrap">
+                    <img
+                      src={p.main_image}
+                      alt={`${p.name} — Miss Scarlett bridal gown`}
+                      className="product-card-image"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="product-card-info">
+                    <p className="product-card-name">{p.name}</p>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
     </>
   )
 }

@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { apiGet } from '@/lib/api'
 import type { Stockist } from '@/lib/types'
 import SEO from '@/components/SEO'
+import { stockistPageSchema } from '@/lib/schema'
 import group257      from '@/assets/images/group_257.webp'
 import group257_500  from '@/assets/images/group_257-p-500.webp'
 import group257_800  from '@/assets/images/group_257-p-800.webp'
@@ -37,6 +38,7 @@ export default function FindStockistPage() {
       <SEO
         title="Find a Miss Scarlett Stockist | Bridal Boutiques Worldwide"
         description="Discover Miss Scarlett bridal boutiques across Australia, New Zealand, the Americas, and worldwide. Find a stockist near you and try on your dream gown."
+        schema={stockistPageSchema}
       />
 
       {/* Hero */}

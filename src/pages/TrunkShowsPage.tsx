@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
 import type { TrunkShow } from '@/lib/types'
 import SEO from '@/components/SEO'
+import { trunkShowsSchema } from '@/lib/schema'
 import group265      from '@/assets/images/group_265.webp'
 import group265_500  from '@/assets/images/group_265-p-500.webp'
 import group265_800  from '@/assets/images/group_265-p-800.webp'
@@ -33,6 +34,7 @@ export default function TrunkShowsPage() {
       <SEO
         title="Miss Scarlett Trunk Shows | Exclusive Bridal Events"
         description="Experience the Miss Scarlett collection at an exclusive trunk show near you. Limited-time events at selected boutiques — appointments essential."
+        schema={trunkShowsSchema}
       />
 
       {/* Hero */}

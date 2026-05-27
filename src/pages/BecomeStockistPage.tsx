@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { apiPost } from '@/lib/api'
 import SEO from '@/components/SEO'
+import { becomeStockistSchema } from '@/lib/schema'
 import group264 from '@/assets/images/group_264.webp'
 import group264_500 from '@/assets/images/group_264-p-500.webp'
 import group264_800 from '@/assets/images/group_264-p-800.webp'
@@ -53,6 +54,7 @@ export default function BecomeStockistPage() {
       <SEO
         title="Become a Miss Scarlett Stockist | Partner With Us"
         description="Apply to stock Miss Scarlett luxury bridal gowns in your boutique. We partner with a curated network of bridal boutiques worldwide — apply today."
+        schema={becomeStockistSchema}
       />
 
       {/* Hero */}

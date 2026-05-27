@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { apiPost } from '@/lib/api'
 import SEO from '@/components/SEO'
+import { bookAppointmentSchema } from '@/lib/schema'
 import group258 from '@/assets/images/group_258.webp'
 import group258_500 from '@/assets/images/group_258-p-500.webp'
 import group258_800 from '@/assets/images/group_258-p-800.webp'
@@ -44,6 +45,7 @@ export default function BookAppointmentPage() {
       <SEO
         title="Book a Bridal Appointment | Miss Scarlett"
         description="Book an appointment to try on Miss Scarlett bridal gowns at a boutique near you. Submit your details and we'll connect you with the nearest stockist."
+        schema={bookAppointmentSchema}
       />
 
       {/* Hero */}

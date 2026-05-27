@@ -3,6 +3,7 @@ import { Link, useParams, useNavigate } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
 import type { Product } from '@/lib/types'
 import SEO from '@/components/SEO'
+import { buildCollectionSchema } from '@/lib/schema'
 
 const COLLECTION_META: Record<string, { title: string; heading: string; description: string }> = {
   'palais': {
@@ -181,7 +182,11 @@ export default function CollectionPage() {
 
   return (
     <>
-      <SEO title={meta.title} description={meta.description} />
+      <SEO
+        title={meta.title}
+        description={meta.description}
+        schema={buildCollectionSchema(slug, meta.heading, meta.description, products.map(p => p.handle))}
+      />
 
       {/* Hero */}
       <section className="section-2 discover-miss-scarlett">
