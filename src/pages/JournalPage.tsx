@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { apiGet } from '@/lib/api'
 import type { JournalPost } from '@/lib/types'
+import SEO from '@/components/SEO'
 
 export default function JournalPage() {
   const [posts, setPosts] = useState<JournalPost[]>([])
@@ -17,6 +18,11 @@ export default function JournalPage() {
 
   return (
     <>
+      <SEO
+        title="Miss Scarlett Journal | Bridal Inspiration & News"
+        description="Read the Miss Scarlett journal — bridal inspiration, styling tips, real bride stories, and the latest news from the Miss Scarlett label."
+      />
+
       <section className="section-21">
         <div className="w-layout-blockcontainer container-28 w-container">
           <h1 className="heading-5">Our Journal</h1>

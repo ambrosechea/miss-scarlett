@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { apiGet } from '@/lib/api'
 import type { Stockist } from '@/lib/types'
+import SEO from '@/components/SEO'
 import group257 from '@/assets/images/group_257.webp'
 import group257_500 from '@/assets/images/group_257-p-500.webp'
 import group257_800 from '@/assets/images/group_257-p-800.webp'
@@ -27,6 +28,11 @@ export default function FindStockistPage() {
 
   return (
     <>
+      <SEO
+        title="Find a Miss Scarlett Stockist | Bridal Boutiques Worldwide"
+        description="Discover Miss Scarlett bridal boutiques across Australia, New Zealand, the Americas, and worldwide. Find a stockist near you and try on your dream gown."
+      />
+
       {/* Hero */}
       <section className="section-2 discover-miss-scarlett">
         <div className="w-layout-blockcontainer container-6 w-container">
@@ -48,7 +54,7 @@ export default function FindStockistPage() {
                 loading="lazy"
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${group257_500} 500w, ${group257_800} 800w, ${group257_1080} 1080w, ${group257} 1138w`}
-                alt=""
+                alt="Miss Scarlett bridal gown — find a stockist near you"
                 className="image-3"
               />
             </div>

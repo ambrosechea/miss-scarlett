@@ -21,6 +21,7 @@
 @import "./normalize.css";
 @import "./webflow.css";
 @import "./main.css";
+@import "./layout-fixes.css";
 
 /* ── Brand tokens for Tailwind ──────────────────────────────────────────────── */
 @theme {

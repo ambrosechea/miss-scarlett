@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { apiPost } from '@/lib/api'
+import SEO from '@/components/SEO'
 import group264 from '@/assets/images/group_264.webp'
 import group264_500 from '@/assets/images/group_264-p-500.webp'
 import group264_800 from '@/assets/images/group_264-p-800.webp'
@@ -49,6 +50,11 @@ export default function BecomeStockistPage() {
 
   return (
     <>
+      <SEO
+        title="Become a Miss Scarlett Stockist | Partner With Us"
+        description="Apply to stock Miss Scarlett luxury bridal gowns in your boutique. We partner with a curated network of bridal boutiques worldwide — apply today."
+      />
+
       {/* Hero */}
       <section className="section-2 discover-miss-scarlett">
         <div className="w-layout-blockcontainer container-6 w-container">
@@ -69,7 +75,7 @@ export default function BecomeStockistPage() {
                 loading="lazy"
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
                 srcSet={`${group264_500} 500w, ${group264_800} 800w, ${group264_1080} 1080w, ${group264} 1138w`}
-                alt=""
+                alt="Miss Scarlett luxury bridal gown — become a stockist"
                 className="image-3"
               />
             </div>
@@ -83,7 +89,7 @@ export default function BecomeStockistPage() {
           <div className="w-layout-layout quick-stack-10 wf-layout-layout">
             {perks.map((perk, i) => (
               <div key={i} className={`w-layout-cell cell-${20 + i}`}>
-                <img src={perk.img} loading="lazy" alt="" className="image-15" />
+                <img src={perk.img} loading="lazy" alt={perk.label.replace('\n', ' ')} className="image-15" />
                 <h5 className="heading-19">
                   <sub style={{ whiteSpace: 'pre-line' }}>{perk.label}</sub>
                 </h5>

@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { apiPost } from '@/lib/api'
+import SEO from '@/components/SEO'
 import group258 from '@/assets/images/group_258.webp'
 import group258_500 from '@/assets/images/group_258-p-500.webp'
 import group258_800 from '@/assets/images/group_258-p-800.webp'
@@ -40,6 +41,11 @@ export default function BookAppointmentPage() {
 
   return (
     <>
+      <SEO
+        title="Book a Bridal Appointment | Miss Scarlett"
+        description="Book an appointment to try on Miss Scarlett bridal gowns at a boutique near you. Submit your details and we'll connect you with the nearest stockist."
+      />
+
       {/* Hero */}
       <section className="section-2 discover-miss-scarlett">
         <div className="w-layout-blockcontainer container-6 w-container">
@@ -61,7 +67,7 @@ export default function BookAppointmentPage() {
                 loading="lazy"
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px, 100vw"
                 srcSet={`${group258_500} 500w, ${group258_800} 800w, ${group258_1080} 1080w, ${group258} 1138w`}
-                alt=""
+                alt="Miss Scarlett bride in a luxury bridal gown — book your appointment"
                 className="image-3"
               />
             </div>

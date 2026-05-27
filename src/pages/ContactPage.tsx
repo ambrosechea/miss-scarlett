@@ -1,6 +1,7 @@
 import { useState, FormEvent } from 'react'
 import { Link } from 'react-router-dom'
 import { apiPost } from '@/lib/api'
+import SEO from '@/components/SEO'
 import group256 from '@/assets/images/group_256.webp'
 
 export default function ContactPage() {
@@ -34,6 +35,11 @@ export default function ContactPage() {
 
   return (
     <>
+      <SEO
+        title="Contact Miss Scarlett | Get in Touch"
+        description="Send an enquiry to Miss Scarlett — our team will be in touch shortly. For bridal appointments we can connect you with the nearest stockist."
+      />
+
       {/* Hero */}
       <section className="section-2 discover-miss-scarlett">
         <div className="w-layout-blockcontainer container-6 w-container">
@@ -52,7 +58,7 @@ export default function ContactPage() {
               </p>
             </div>
             <div className="w-layout-cell cell-7">
-              <img src={group256} loading="lazy" alt="" className="image-3" />
+              <img src={group256} loading="lazy" alt="Miss Scarlett bride — contact us for bridal enquiries" className="image-3" />
             </div>
           </div>
         </div>

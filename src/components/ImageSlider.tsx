@@ -1,8 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, Navigation, Pagination } from 'swiper/modules'
+import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
 interface Slide {
   src: string
@@ -13,42 +11,44 @@ interface Slide {
 
 interface ImageSliderProps {
   slides: Slide[]
-  autoplay?: boolean
-  showNav?: boolean
-  showDots?: boolean
-  className?: string
+  /** How many full slides visible at once. Default 3 (portrait gallery). */
+  slidesPerView?: number
+  spaceBetween?: number
   imgClassName?: string
+  className?: string
 }
 
 export default function ImageSlider({
   slides,
-  autoplay = true,
-  showNav = true,
-  showDots = true,
+  slidesPerView = 3,
+  spaceBetween = 16,
+  imgClassName = 'image-24',
   className = '',
-  imgClassName = '',
 }: ImageSliderProps) {
   return (
     <Swiper
-      modules={[Autoplay, Navigation, Pagination]}
-      autoplay={autoplay ? { delay: 4000, disableOnInteraction: false } : false}
-      navigation={showNav}
-      pagination={showDots ? { clickable: true } : false}
+      modules={[Autoplay]}
+      slidesPerView={slidesPerView}
+      spaceBetween={spaceBetween}
       loop
-      className={`w-slider ${className}`}
+      autoplay={{ delay: 3500, disableOnInteraction: false }}
+      className={className}
+      breakpoints={{
+        0:   { slidesPerView: 1, spaceBetween: 10 },
+        640: { slidesPerView: 2, spaceBetween: 12 },
+        900: { slidesPerView: slidesPerView, spaceBetween },
+      }}
     >
       {slides.map((slide, i) => (
-        <SwiperSlide key={i} className="slide-2 w-slide">
-          <div className="slide-content-wrapper-2">
-            <img
-              src={slide.src}
-              srcSet={slide.srcSet}
-              sizes={slide.sizes}
-              alt={slide.alt ?? ''}
-              loading="lazy"
-              className={imgClassName || 'image-24'}
-            />
-          </div>
+        <SwiperSlide key={i}>
+          <img
+            src={slide.src}
+            srcSet={slide.srcSet}
+            sizes={slide.sizes ?? '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw'}
+            alt={slide.alt ?? ''}
+            loading="lazy"
+            className={imgClassName}
+          />
         </SwiperSlide>
       ))}
     </Swiper>

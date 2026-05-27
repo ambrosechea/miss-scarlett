@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
 import type { TrunkShow } from '@/lib/types'
+import SEO from '@/components/SEO'
 import group265 from '@/assets/images/group_265.webp'
 import group265_500 from '@/assets/images/group_265-p-500.webp'
 import group265_800 from '@/assets/images/group_265-p-800.webp'
@@ -32,6 +33,11 @@ export default function TrunkShowsPage() {
 
   return (
     <>
+      <SEO
+        title="Miss Scarlett Trunk Shows | Exclusive Bridal Events"
+        description="Experience the Miss Scarlett collection at an exclusive trunk show near you. Limited-time events at selected boutiques — appointments essential."
+      />
+
       {/* Hero */}
       <section className="section-2 discover-miss-scarlett">
         <div className="w-layout-blockcontainer container-6 w-container">
@@ -52,7 +58,7 @@ export default function TrunkShowsPage() {
                 loading="lazy"
                 sizes="100vw"
                 srcSet={`${group265_500} 500w, ${group265_800} 800w, ${group265_1080} 1080w, ${group265} 1315w`}
-                alt=""
+                alt="Miss Scarlett trunk show — experience the bridal collection in person"
                 className="image-3"
               />
             </div>

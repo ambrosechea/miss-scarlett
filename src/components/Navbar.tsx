@@ -1,163 +1,186 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import logoBlack from '@/assets/images/logo-black.webp'
-import crosseImg from '@/assets/images/crose-img.webp'
 
 const collectionLinks = [
-  { label: 'PALAIS', href: 'https://www.missscarlett.com.au/category/palais' },
-  { label: 'MODERN MUSE', href: 'https://www.missscarlett.com.au/category/modern-muse' },
-  { label: 'ICONIC', href: 'https://www.missscarlett.com.au/category/iconic' },
-  { label: 'ALL WEDDING DRESSES', href: 'https://www.missscarlett.com.au/category/all-collections' },
+  { label: 'PALAIS',               href: 'https://www.missscarlett.com.au/category/palais' },
+  { label: 'MODERN MUSE',          href: 'https://www.missscarlett.com.au/category/modern-muse' },
+  { label: 'ICONIC',               href: 'https://www.missscarlett.com.au/category/iconic' },
+  { label: 'ALL WEDDING DRESSES',  href: 'https://www.missscarlett.com.au/category/all-collections' },
 ]
 
 const stockistLinks = [
-  { label: 'Find a stockist', to: '/find-a-stockist' },
+  { label: 'Find a stockist',  to: '/find-a-stockist' },
   { label: 'Become a stockist', to: '/become-a-stockist' },
-  { label: 'Stockist login', href: 'http://portal.missscarlett.com.au/orders', external: true },
+  { label: 'Stockist login',   href: 'http://portal.missscarlett.com.au/orders', external: true },
 ]
 
 export default function Navbar() {
-  const [menuOpen, setMenuOpen] = useState(false)
+  const [menuOpen,       setMenuOpen]       = useState(false)
   const [collectionOpen, setCollectionOpen] = useState(false)
-  const [stockistOpen, setStockistOpen] = useState(false)
+  const [stockistOpen,   setStockistOpen]   = useState(false)
   const location = useLocation()
 
-  const isActive = (path: string) => location.pathname === path
-
+  // Close everything on route change
   useEffect(() => {
     setMenuOpen(false)
     setCollectionOpen(false)
     setStockistOpen(false)
   }, [location.pathname])
 
+  // Prevent body scroll while overlay is open
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => { document.body.style.overflow = '' }
+  }, [menuOpen])
+
+  const close = () => {
+    setMenuOpen(false)
+    setCollectionOpen(false)
+    setStockistOpen(false)
+  }
+
   return (
-    <div className="navbar-second">
-      <div className="navbar-no-shadow-container w-nav" role="banner" data-collapse="all">
-        <div className="container-regular">
-          {/* Top bar: always visible */}
-          <header className="navbar-wrapper">
-            <Link
-              to="/book-appointment"
-              className={`button-3 header-btn black-headerbtn w-button${isActive('/book-appointment') ? ' w--current' : ''}`}
-            >
-              Book Appointment
-            </Link>
+    <>
+      {/* ── Sticky top bar ─────────────────────────────────────────── */}
+      <div className="navbar-second">
+        <div className="navbar-no-shadow-container">
+          <div className="container-regular">
+            <header className="navbar-wrapper">
+              {/* LEFT – hamburger */}
+              <button
+                className="menu-button-3 w-nav-button"
+                onClick={() => setMenuOpen(true)}
+                aria-label="Open navigation"
+                aria-expanded={menuOpen}
+              >
+                <div className="icon-6 w-icon-nav-menu" />
+              </button>
 
-            <Link to="/" className="navbar-brand w-nav-brand">
-              <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
-            </Link>
+              {/* CENTRE – logo */}
+              <Link to="/" className="navbar-brand w-nav-brand" onClick={close} aria-label="Miss Scarlett home">
+                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
+              </Link>
 
-            <button
-              className={`menu-button-3 w-nav-button${menuOpen ? ' w--open' : ''}`}
-              onClick={() => setMenuOpen(!menuOpen)}
-              aria-label="Toggle navigation"
-            >
-              <div className="icon-6 w-icon-nav-menu" style={{ opacity: menuOpen ? 0 : 1 }} />
-              <img
-                src={crosseImg}
-                loading="lazy"
-                alt=""
-                className="image-13 crosse-img-menu"
-                style={{ opacity: menuOpen ? 1 : 0, position: 'absolute', top: 15 }}
-              />
-            </button>
-          </header>
+              {/* RIGHT – Book Appointment */}
+              <Link
+                to="/book-appointment"
+                className="button-3 header-btn w-button"
+                onClick={close}
+              >
+                Book Appointment
+              </Link>
+            </header>
+          </div>
         </div>
+      </div>
 
-        {/* Dropdown menu — sits below the top bar, flows in layout (no absolute) */}
-        {menuOpen && (
-          <nav
-            role="navigation"
-            style={{
-              backgroundColor: '#f4f2ef',
-              width: '100%',
-              paddingBottom: '2rem',
-            }}
-          >
-            <ul role="list" className="nav-menu-2 w-list-unstyled" style={{ paddingTop: '1rem', height: 'auto' }}>
-              <li className="list-item">
-                <Link to="/" className={`nav-link-2${isActive('/') ? ' w--current' : ''}`}>
-                  HOME
-                </Link>
+      {/* ── Full-screen overlay ────────────────────────────────────── */}
+      {menuOpen && (
+        <div className="nav-overlay" role="dialog" aria-modal="true" aria-label="Navigation menu">
+          {/* Top bar */}
+          <div className="nav-overlay-top">
+            <button className="nav-overlay-close" onClick={close} aria-label="Close navigation">
+              ×
+            </button>
+            <div className="nav-overlay-logo">
+              <Link to="/" onClick={close} aria-label="Miss Scarlett home">
+                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
+              </Link>
+            </div>
+            <div className="nav-overlay-spacer" />
+          </div>
 
-                <Link to="/about" className={`nav-link-2${isActive('/about') ? ' w--current' : ''}`}>
-                  ABOUT
-                </Link>
+          {/* Nav items */}
+          <nav role="navigation">
+            <ul className="nav-menu-2 nav-overlay-items w-list-unstyled">
+              <li>
+                <Link to="/" className="nav-link-2" onClick={close}>HOME</Link>
+              </li>
+              <li>
+                <Link to="/about" className="nav-link-2" onClick={close}>ABOUT</Link>
+              </li>
 
-                {/* Collection accordion */}
-                <div className="dropdown w-dropdown">
-                  <button
-                    className="dropdown-toggle-copy w-dropdown-toggle"
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: '100%' }}
-                    onClick={() => setCollectionOpen(!collectionOpen)}
-                  >
-                    <div className="nav-link-2">Collection {collectionOpen ? '▲' : '▼'}</div>
-                  </button>
-                  {collectionOpen && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', paddingTop: '0.5rem' }}>
-                      {collectionLinks.map((link) => (
+              {/* Collection dropdown */}
+              <li>
+                <button
+                  className="nav-link-2 dropdown-toggle-copy w-dropdown-toggle"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%' }}
+                  onClick={() => setCollectionOpen(!collectionOpen)}
+                  aria-expanded={collectionOpen}
+                >
+                  COLLECTION {collectionOpen ? '▲' : '▼'}
+                </button>
+                {collectionOpen && (
+                  <ul className="nav-overlay-sub dropdown-list-2 w--open">
+                    {collectionLinks.map((link) => (
+                      <li key={link.label}>
                         <a
-                          key={link.label}
                           href={link.href}
                           className="dropdown-link-2 w-dropdown-link"
                           target="_blank"
                           rel="noopener noreferrer"
+                          onClick={close}
                         >
                           {link.label}
                         </a>
-                      ))}
-                    </div>
-                  )}
-                </div>
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
 
-                {/* Stockists accordion */}
-                <div className="dropdown w-dropdown">
-                  <button
-                    className="dropdown-toggle w-dropdown-toggle"
-                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0, width: '100%' }}
-                    onClick={() => setStockistOpen(!stockistOpen)}
-                  >
-                    <div className="nav-link-2">Stockists {stockistOpen ? '▲' : '▼'}</div>
-                  </button>
-                  {stockistOpen && (
-                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '0.5rem', paddingTop: '0.5rem' }}>
-                      {stockistLinks.map((link) =>
-                        link.to ? (
+              {/* Stockists dropdown */}
+              <li>
+                <button
+                  className="nav-link-2 dropdown-toggle w-dropdown-toggle"
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%' }}
+                  onClick={() => setStockistOpen(!stockistOpen)}
+                  aria-expanded={stockistOpen}
+                >
+                  STOCKISTS {stockistOpen ? '▲' : '▼'}
+                </button>
+                {stockistOpen && (
+                  <ul className="nav-overlay-sub dropdown-list-2 w--open">
+                    {stockistLinks.map((link) =>
+                      link.to ? (
+                        <li key={link.label}>
                           <Link
-                            key={link.label}
                             to={link.to}
                             className="dropdown-link-2 w-dropdown-link"
+                            onClick={close}
                           >
                             {link.label}
                           </Link>
-                        ) : (
+                        </li>
+                      ) : (
+                        <li key={link.label}>
                           <a
-                            key={link.label}
                             href={link.href}
                             className="dropdown-link-2 w-dropdown-link"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={close}
                           >
                             {link.label}
                           </a>
-                        )
-                      )}
-                    </div>
-                  )}
-                </div>
+                        </li>
+                      )
+                    )}
+                  </ul>
+                )}
+              </li>
 
-                <Link to="/trunk-shows" className={`nav-link-2${isActive('/trunk-shows') ? ' w--current' : ''}`}>
-                  Trunk Shows
-                </Link>
-
-                <Link to="/contact-us" className={`nav-link-2${isActive('/contact-us') ? ' w--current' : ''}`}>
-                  Contact US
-                </Link>
+              <li>
+                <Link to="/trunk-shows" className="nav-link-2" onClick={close}>TRUNK SHOWS</Link>
+              </li>
+              <li>
+                <Link to="/contact-us" className="nav-link-2" onClick={close}>CONTACT US</Link>
               </li>
             </ul>
           </nav>
-        )}
-      </div>
-    </div>
+        </div>
+      )}
+    </>
   )
 }
