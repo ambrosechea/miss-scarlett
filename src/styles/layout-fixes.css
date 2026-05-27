@@ -695,19 +695,9 @@
   margin-bottom: 1.5rem !important;
 }
 
-/* Description body — Lato light, matches live site */
+/* Description — uses Webflow's .paragraph-7.product-discription (16px/400/22px) */
 .product-description {
   margin-bottom: 2rem;
-}
-
-.product-desc-para {
-  font-family: Lato, sans-serif;
-  font-size: 13px;
-  font-weight: 300;
-  line-height: 1.65;
-  letter-spacing: 0.2px;
-  color: #3a3530;
-  margin: 0 0 0.75rem;
 }
 
 .product-actions {
@@ -717,16 +707,6 @@
   align-items: flex-start;
 }
 
-.product-stockist-link {
-  font-family: Lato, sans-serif;
-  font-size: 13px;
-  font-weight: 400;
-  letter-spacing: 0.5px;
-  color: #1a1a1a;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-transform: uppercase;
-}
 
 .product-back-link {
   font-family: Lato, sans-serif;

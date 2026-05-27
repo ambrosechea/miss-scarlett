@@ -125,16 +125,26 @@ export default function ProductPage() {
                   .replace(/ﬁ/g, 'fi').replace(/ﬂ/g, 'fl').replace(/ﬀ/g, 'ff')
                   .split('\n')
                   .map((para, i) =>
-                    para.trim() ? <p key={i} className="product-desc-para">{para}</p> : null
+                    para.trim()
+                      ? <p key={i} className="paragraph-7 product-discription">{para}</p>
+                      : null
                   )}
               </div>
 
               <div className="product-actions">
-                <Link to="/book-appointment" className="button-3 lovce-btn w-button">
-                  Enquire Now
+                <Link
+                  to="/book-appointment"
+                  className="button-3 lovce-btn nearest-stockist enquire-now-btn w-button"
+                  style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}
+                >
+                  ENQUIRE NOW
                 </Link>
-                <Link to="/find-a-stockist" className="product-stockist-link">
-                  Find the Nearest Stockist
+                <Link
+                  to="/find-a-stockist"
+                  className="button-3 lovce-btn nearest-stockist w-button"
+                  style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}
+                >
+                  FIND THE NEAREST STOCKIST
                 </Link>
               </div>
             </div>
