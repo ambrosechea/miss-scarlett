@@ -16,72 +16,49 @@ import maskGroup500  from '@/assets/images/mask_group-p-500.webp'
 import maskGroup800  from '@/assets/images/mask_group-p-800.webp'
 import maskGroup1080 from '@/assets/images/mask_group-p-1080.webp'
 
-// Portrait collection images for the "Finding THE ONE" slider
-import img12342345  from '@/assets/images/12342345.webp'
-import img12342345_500 from '@/assets/images/12342345-p-500.webp'
-import img12342345_800 from '@/assets/images/12342345-p-800.webp'
-import img213413254 from '@/assets/images/213413254.webp'
-import img213413254_500 from '@/assets/images/213413254-p-500.webp'
-import img213413254_800 from '@/assets/images/213413254-p-800.webp'
-import img125325     from '@/assets/images/125325.webp'
-import img125325_500 from '@/assets/images/125325-p-500.webp'
-import img125325_800 from '@/assets/images/125325-p-800.webp'
-import img125435     from '@/assets/images/125435.webp'
-import img125435_500 from '@/assets/images/125435-p-500.webp'
-import img125435_800 from '@/assets/images/125435-p-800.webp'
-import img124234     from '@/assets/images/124234.webp'
-import img124234_500 from '@/assets/images/124234-p-500.webp'
-import img124234_800 from '@/assets/images/124234-p-800.webp'
-import img12423443   from '@/assets/images/12423443.webp'
-import img12423443_500 from '@/assets/images/12423443-p-500.webp'
-import img12423443_800 from '@/assets/images/12423443-p-800.webp'
-import img3453245    from '@/assets/images/3453245.webp'
-import img3453245_500 from '@/assets/images/3453245-p-500.webp'
-import img3453245_800 from '@/assets/images/3453245-p-800.webp'
-import imgUUID       from '@/assets/images/265F15EC-A208-4A9E-8970-D513DFDEE7CC.webp'
-import imgUUID500    from '@/assets/images/265F15EC-A208-4A9E-8970-D513DFDEE7CC-p-500.webp'
-import imgUUID800    from '@/assets/images/265F15EC-A208-4A9E-8970-D513DFDEE7CC-p-800.webp'
+// "Finding THE ONE Begins Here" slider — images sourced from the live site
+import sliderSoleil     from '@/assets/images/soleil.webp'
+import sliderSoleil500  from '@/assets/images/soleil-p-500.webp'
+import sliderSoleil800  from '@/assets/images/soleil-p-800.webp'
+import sliderAnna       from '@/assets/images/anna.webp'
+import sliderAnna500    from '@/assets/images/anna-p-500.webp'
+import sliderAnna800    from '@/assets/images/anna-p-800.webp'
+import sliderLatest     from '@/assets/images/latestcollection.webp'
+import sliderLatest500  from '@/assets/images/latestcollection-p-500.webp'
+import sliderLatest800  from '@/assets/images/latestcollection-p-800.webp'
+import sliderJournal    from '@/assets/images/ourjournal.webp'
+import sliderJournal500 from '@/assets/images/ourjournal-p-500.webp'
+import sliderJournal800 from '@/assets/images/ourjournal-p-800.webp'
+import sliderJournal1080 from '@/assets/images/ourjournal-p-1080.webp'
+import sliderJournal1   from '@/assets/images/ourjournal1.webp'
+import sliderJournal1500 from '@/assets/images/ourjournal1-p-500.webp'
+import sliderJournal1800 from '@/assets/images/ourjournal1-p-800.webp'
 
 const collectionSlides = [
   {
-    src: img12342345,
-    srcSet: `${img12342345_500} 500w, ${img12342345_800} 800w, ${img12342345} 1200w`,
-    alt: 'Miss Scarlett bridal gown collection',
+    src: sliderSoleil,
+    srcSet: `${sliderSoleil500} 500w, ${sliderSoleil800} 800w, ${sliderSoleil} 1017w`,
+    alt: 'Miss Scarlett Soleil bridal gown — modern fitted silhouette',
   },
   {
-    src: img213413254,
-    srcSet: `${img213413254_500} 500w, ${img213413254_800} 800w, ${img213413254} 1200w`,
-    alt: 'Miss Scarlett wedding dress',
+    src: sliderAnna,
+    srcSet: `${sliderAnna500} 500w, ${sliderAnna800} 800w, ${sliderAnna} 1017w`,
+    alt: 'Miss Scarlett bride in a luxury bridal gown',
   },
   {
-    src: img125325,
-    srcSet: `${img125325_500} 500w, ${img125325_800} 800w, ${img125325} 1200w`,
-    alt: 'Miss Scarlett bridal gown',
+    src: sliderLatest,
+    srcSet: `${sliderLatest500} 500w, ${sliderLatest800} 800w, ${sliderLatest} 1017w`,
+    alt: 'Miss Scarlett latest bridal collection',
   },
   {
-    src: img125435,
-    srcSet: `${img125435_500} 500w, ${img125435_800} 800w, ${img125435} 1200w`,
-    alt: 'Miss Scarlett wedding gown',
+    src: sliderJournal,
+    srcSet: `${sliderJournal500} 500w, ${sliderJournal800} 800w, ${sliderJournal1080} 1080w, ${sliderJournal} 1178w`,
+    alt: 'Miss Scarlett bridal gown — graceful femininity',
   },
   {
-    src: img124234,
-    srcSet: `${img124234_500} 500w, ${img124234_800} 800w, ${img124234} 1200w`,
-    alt: 'Miss Scarlett bridal collection',
-  },
-  {
-    src: img12423443,
-    srcSet: `${img12423443_500} 500w, ${img12423443_800} 800w, ${img12423443} 1200w`,
+    src: sliderJournal1,
+    srcSet: `${sliderJournal1500} 500w, ${sliderJournal1800} 800w, ${sliderJournal1} 950w`,
     alt: 'Miss Scarlett wedding dress design',
-  },
-  {
-    src: img3453245,
-    srcSet: `${img3453245_500} 500w, ${img3453245_800} 800w, ${img3453245} 1200w`,
-    alt: 'Miss Scarlett bridal gown',
-  },
-  {
-    src: imgUUID,
-    srcSet: `${imgUUID500} 500w, ${imgUUID800} 800w, ${imgUUID} 1200w`,
-    alt: 'Miss Scarlett luxury bridal design',
   },
 ]
 
