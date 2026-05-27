@@ -322,10 +322,24 @@
   margin-right: 0 !important;
 }
 
-/* Hide Book Appointment CTA on mobile — hamburger + logo only */
+/* ── Mobile navbar — hamburger left, logo centred, no CTA ── */
 @media (max-width: 767px) {
+  /* Hide Book Appointment CTA — hamburger + logo only */
   .button-3.header-btn {
     display: none !important;
+  }
+
+  /* Shrink logo so it never overlaps the hamburger */
+  .image-12 {
+    max-width: 130px !important;
+    width: 130px !important;
+  }
+
+  /* Hamburger sits flush left with enough z-index to stay on top */
+  .menu-button-3.w-nav-button {
+    position: relative;
+    z-index: 1002;
+    flex-shrink: 0;
   }
 }
 
