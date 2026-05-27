@@ -3,6 +3,9 @@ main = "worker/index.ts"
 compatibility_date = "2025-05-27"
 compatibility_flags = ["nodejs_compat"]
 
+[build]
+command = "npm run build"
+
 # Serve the Vite-built SPA from dist/
 # not_found_handling = "single-page-application" handles React Router deep links
 [assets]
