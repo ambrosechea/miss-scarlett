@@ -54,8 +54,6 @@ const COLLECTION_NAV = [
 
 const DRESS_TYPES = ['ALL SHAPES', 'A-LINE', 'BALLGOWN', 'FIT & FLARE', 'MINI', 'SHEATH']
 
-type SortOption = 'default' | 'a-z' | 'z-a'
-
 /** Detect silhouette from product name + description text */
 function getDressType(p: Product): string {
   // Normalise: collapse typographic ligatures (ﬁ ﬂ etc.) and lower-case
@@ -78,7 +76,6 @@ export default function CollectionPage() {
   const [loading,     setLoading]     = useState(true)
   const [fetchError,  setFetchError]  = useState<string | null>(null)
   const [search,      setSearch]      = useState('')
-  const [sortBy,      setSortBy]      = useState<SortOption>('default')
   const [dressType,   setDressType]   = useState('ALL SHAPES')
   const [sidebarOpen, setSidebarOpen] = useState(false)
 
@@ -91,7 +88,6 @@ export default function CollectionPage() {
   // Reset filters when collection changes
   useEffect(() => {
     setSearch('')
-    setSortBy('default')
     setDressType('ALL SHAPES')
     setLoading(true)
     setFetchError(null)
@@ -118,12 +114,8 @@ export default function CollectionPage() {
       list = list.filter(p => getDressType(p) === dressType)
     }
 
-    // sort
-    if (sortBy === 'a-z') list.sort((a, b) => a.name.localeCompare(b.name))
-    else if (sortBy === 'z-a') list.sort((a, b) => b.name.localeCompare(a.name))
-
     return list
-  }, [products, search, dressType, sortBy])
+  }, [products, search, dressType])
 
   const sidebar = (
     <aside className="collection-sidebar">
@@ -144,21 +136,6 @@ export default function CollectionPage() {
             <line x1="16.5" y1="16.5" x2="22" y2="22" />
           </svg>
         </div>
-      </div>
-
-      {/* Sort */}
-      <div className="sidebar-section">
-        <label className="sidebar-label" htmlFor="sort-select">SORT BY</label>
-        <select
-          id="sort-select"
-          className="sidebar-select"
-          value={sortBy}
-          onChange={e => setSortBy(e.target.value as SortOption)}
-        >
-          <option value="default">Default</option>
-          <option value="a-z">A – Z</option>
-          <option value="z-a">Z – A</option>
-        </select>
       </div>
 
       {/* Collections */}
@@ -249,7 +226,7 @@ export default function CollectionPage() {
                       <button
                         className="sidebar-tag active"
                         style={{ marginTop: '1rem' }}
-                        onClick={() => { setSearch(''); setDressType('ALL SHAPES'); setSortBy('default') }}
+                        onClick={() => { setSearch(''); setDressType('ALL SHAPES') }}
                       >
                         Clear filters
                       </button>
