@@ -7,12 +7,12 @@ import group264_800 from '@/assets/images/group_264-p-800.webp'
 import group264_1080 from '@/assets/images/group_264-p-1080.webp'
 import minOrderImg from '@/assets/images/Minimum-Orders-img_1.webp'
 import flexibleImg from '@/assets/images/Flexible-size-img_1.webp'
-import hiddenStockImg from '@/assets/images/Hiden-stock-img_1.webp'
+import needleThreadImg from '@/assets/images/needle-thread.svg'
 
 const perks = [
   { img: minOrderImg,     label: 'EXCLUSIVE STOCKIST\nOPPORTUNITIES' },
   { img: flexibleImg,     label: 'DESIGNED IN AUSTRALIA' },
-  { img: hiddenStockImg,  label: 'SEAMLESS PARTNERSHIP &\nSUPPORT' },
+  { img: needleThreadImg, label: 'SEAMLESS PARTNERSHIP &\nSUPPORT' },
 ]
 
 export default function BecomeStockistPage() {

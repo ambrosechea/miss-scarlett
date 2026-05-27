@@ -1,0 +1,26 @@
+<svg viewBox="0 0 500 500" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+  <!-- Circular soft background -->
+  <circle cx="250" cy="250" r="160" fill="#f6f4f1" />
+  
+  <!-- Needle outline -->
+  <path d="M 115 480 
+           L 290 238
+           C 292 235, 296 230, 299 226
+           L 322 194
+           C 328 186, 334 191, 329 198
+           L 306 230
+           C 303 234, 299 237, 297 241
+           L 120 482
+           Z" 
+        fill="#fcfbf9" 
+        stroke="#1a1a1a" 
+        stroke-width="1.2" 
+        stroke-linejoin="round" />
+        
+  <!-- Needle eye -->
+  <path d="M 302 222 L 319 199" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" />
+
+  <!-- Thread passing through the eye -->
+  <path d="M 10 200 C 150 140, 220 200, 310 210" fill="none" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" />
+  <path d="M 310 210 C 340 220, 420 380, 490 200" fill="none" stroke="#1a1a1a" stroke-width="1.2" stroke-linecap="round" />
+</svg>
