@@ -65,21 +65,21 @@ export default function ProductPage() {
       />
 
       {/* Breadcrumb */}
-      <div className="w-layout-blockcontainer container-6 w-container" style={{ paddingTop: '1.5rem', paddingBottom: '0.5rem' }}>
+      <div className="product-wide-container" style={{ paddingTop: '1.5rem', paddingBottom: '0.5rem' }}>
         <nav aria-label="Breadcrumb" className="product-breadcrumb">
           <Link to="/">Home</Link>
-          <span aria-hidden="true"> / </span>
+          <span aria-hidden="true"> &gt; </span>
           <Link to="/category/all-collections">All Collections</Link>
-          <span aria-hidden="true"> / </span>
+          <span aria-hidden="true"> &gt; </span>
           <Link to={`/category/${collectionSlug}`}>{primary}</Link>
-          <span aria-hidden="true"> / </span>
+          <span aria-hidden="true"> &gt; </span>
           <span>{product.name}</span>
         </nav>
       </div>
 
       {/* Product detail: thumbnails | main image | info */}
       <section className="section-20 product-detail-section">
-        <div className="w-layout-blockcontainer container-6 w-container">
+        <div className="product-wide-container">
           <div className="product-detail-grid">
 
             {/* ── Col 1: Thumbnail strip ── */}
@@ -144,7 +144,7 @@ export default function ProductPage() {
       </section>
 
       {/* Back to collection */}
-      <div className="w-layout-blockcontainer container-6 w-container" style={{ paddingBottom: '3rem' }}>
+      <div className="product-wide-container" style={{ paddingBottom: '3rem' }}>
         <Link to={`/category/${collectionSlug}`} className="product-back-link">
           ← Back to {primary}
         </Link>
