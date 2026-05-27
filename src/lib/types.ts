@@ -27,3 +27,17 @@ export interface TrunkShow {
   subtitle: string | null
   country_filter: string
 }
+
+export interface Product {
+  id: number
+  handle: string
+  name: string
+  description: string
+  price: string
+  main_image: string
+}
+
+export interface ProductDetail extends Product {
+  images: string[]
+  categories: string[]
+}

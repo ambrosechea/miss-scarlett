@@ -10,6 +10,8 @@ import TrunkShowsPage from '@/pages/TrunkShowsPage'
 import BookAppointmentPage from '@/pages/BookAppointmentPage'
 import JournalPage from '@/pages/JournalPage'
 import SearchPage from '@/pages/SearchPage'
+import CollectionPage from '@/pages/CollectionPage'
+import ProductPage from '@/pages/ProductPage'
 
 export default function App() {
   return (
@@ -26,6 +28,9 @@ export default function App() {
           <Route path="/book-appointment" element={<BookAppointmentPage />} />
           <Route path="/journal" element={<JournalPage />} />
           <Route path="/search" element={<SearchPage />} />
+          {/* Products */}
+          <Route path="/category/:slug" element={<CollectionPage />} />
+          <Route path="/product/:handle" element={<ProductPage />} />
           {/* Catch-all */}
           <Route path="*" element={<HomePage />} />
         </Routes>

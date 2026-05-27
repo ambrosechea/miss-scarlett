@@ -5,6 +5,7 @@ import { handleBookAppointment } from './routes/book-appointment'
 import { handleStockists } from './routes/stockists'
 import { handleJournal } from './routes/journal'
 import { handleTrunkShows } from './routes/trunk-shows'
+import { handleProductsList, handleProductDetail } from './routes/products'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -62,6 +63,14 @@ async function routeApi(request: Request, url: URL, env: Env): Promise<Response>
   }
   if (pathname === '/api/trunk-shows' && method === 'GET') {
     return handleTrunkShows(request, env)
+  }
+  if (pathname === '/api/products' && method === 'GET') {
+    return handleProductsList(request, env)
+  }
+  // /api/products/:handle
+  const productMatch = pathname.match(/^\/api\/products\/([^/]+)$/)
+  if (productMatch && method === 'GET') {
+    return handleProductDetail(productMatch[1], env)
   }
 
   return json({ error: 'Not found' }, 404)

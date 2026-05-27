@@ -3,10 +3,13 @@ import { Link, useLocation } from 'react-router-dom'
 import logoBlack from '@/assets/images/logo-black.webp'
 
 const collectionLinks = [
-  { label: 'PALAIS',               href: 'https://www.missscarlett.com.au/category/palais' },
-  { label: 'MODERN MUSE',          href: 'https://www.missscarlett.com.au/category/modern-muse' },
-  { label: 'ICONIC',               href: 'https://www.missscarlett.com.au/category/iconic' },
-  { label: 'ALL WEDDING DRESSES',  href: 'https://www.missscarlett.com.au/category/all-collections' },
+  { label: 'PALAIS',               to: '/category/palais' },
+  { label: 'LUMIÈRE',              to: '/category/lumiere' },
+  { label: 'MODERN MUSE',          to: '/category/modern-muse' },
+  { label: 'ICONIC',               to: '/category/iconic' },
+  { label: 'ANNIVERSARY',          to: '/category/anniversary' },
+  { label: 'SIREN',                to: '/category/siren' },
+  { label: 'ALL WEDDING DRESSES',  to: '/category/all-collections' },
 ]
 
 const stockistLinks = [
@@ -128,15 +131,13 @@ export default function Navbar() {
                   <ul className="nav-overlay-sub dropdown-list-2 w--open">
                     {collectionLinks.map((link) => (
                       <li key={link.label}>
-                        <a
-                          href={link.href}
+                        <Link
+                          to={link.to}
                           className="dropdown-link-2 w-dropdown-link"
-                          target="_blank"
-                          rel="noopener noreferrer"
                           onClick={close}
                         >
                           {link.label}
-                        </a>
+                        </Link>
                       </li>
                     ))}
                   </ul>
