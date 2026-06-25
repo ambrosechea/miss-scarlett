@@ -1,6 +1,6 @@
 import type { Env } from '../types'
 
-const TO = 'support@missscarlett.com.au'
+const TO = ['support@missscarlett.com.au', 'ambrose@locally.net.au']
 const FROM = { email: 'noreply@missscarlett.com.au', name: 'Miss Scarlett' }
 
 export async function sendNotification(
@@ -20,9 +20,10 @@ export async function sendNotification(
     )
     .join('')}</table>`
 
-  try {
-    await env.EMAIL.send({ to: TO, from: FROM, subject, html, text })
-  } catch (err) {
-    console.error(`Email send failed for "${subject}":`, err)
-  }
+  const sends = TO.map((to) =>
+    env.EMAIL.send({ to, from: FROM, subject, html, text }).catch((err) =>
+      console.error(`Email send failed for "${subject}" to ${to}:`, err),
+    ),
+  )
+  await Promise.all(sends)
 }

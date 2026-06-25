@@ -40,7 +40,7 @@ export async function handleContact(request: Request, env: Env): Promise<Respons
     .bind(firstName, lastName ?? null, email, phone ?? null, message)
     .run()
 
-  sendNotification(env, 'New Contact Enquiry', {
+  await sendNotification(env, 'New Contact Enquiry', {
     'First Name': firstName,
     'Last Name': lastName,
     Email: email,

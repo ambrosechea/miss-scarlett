@@ -45,7 +45,7 @@ export async function handleBookAppointment(request: Request, env: Env): Promise
     .bind(firstName, lastName ?? null, email, phone ?? null, city ?? null, state ?? null, country ?? null, weddingDate ?? null, message ?? null)
     .run()
 
-  sendNotification(env, 'New Appointment Request', {
+  await sendNotification(env, 'New Appointment Request', {
     'First Name': firstName,
     'Last Name': lastName,
     Email: email,

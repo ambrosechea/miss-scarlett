@@ -45,7 +45,7 @@ export async function handleBecomeStockist(request: Request, env: Env): Promise<
     .bind(name, lastname ?? null, email, phone, storename, address, country, website ?? null, message ?? null)
     .run()
 
-  sendNotification(env, 'New Stockist Application', {
+  await sendNotification(env, 'New Stockist Application', {
     'First Name': name,
     'Last Name': lastname,
     Email: email,
