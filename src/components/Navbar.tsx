@@ -1,16 +1,9 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
+import { COLLECTIONS } from '@/lib/collections'
 import logoBlack from '@/assets/images/logo-black.webp'
 
-const collectionLinks = [
-  { label: 'PALAIS',               to: '/category/palais' },
-  { label: 'LUMIÈRE',              to: '/category/lumiere' },
-  { label: 'MODERN MUSE',          to: '/category/modern-muse' },
-  { label: 'ICONIC',               to: '/category/iconic' },
-  { label: 'ANNIVERSARY',          to: '/category/anniversary' },
-  { label: 'SIREN',                to: '/category/siren' },
-  { label: 'ALL WEDDING DRESSES',  to: '/category/all-collections' },
-]
+const collectionLinks = COLLECTIONS.map(c => ({ label: c.label, to: `/category/${c.slug}` }))
 
 const stockistLinks = [
   { label: 'Find a stockist',  to: '/find-a-stockist' },
@@ -75,7 +68,7 @@ export default function Navbar() {
 
               {/* CENTRE – Logo */}
               <Link to="/" className="navbar-brand w-nav-brand" onClick={close} aria-label="Miss Scarlett home">
-                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
+                <img src={logoBlack} loading="lazy" width={706} height={194} alt="Miss Scarlett" className="image-12" />
               </Link>
 
               {/* RIGHT – Book Appointment CTA */}
@@ -101,7 +94,7 @@ export default function Navbar() {
             </button>
             <div className="nav-overlay-logo">
               <Link to="/" onClick={close} aria-label="Miss Scarlett home">
-                <img src={logoBlack} loading="lazy" alt="Miss Scarlett" className="image-12" />
+                <img src={logoBlack} loading="lazy" width={706} height={194} alt="Miss Scarlett" className="image-12" />
               </Link>
             </div>
             <div className="nav-overlay-spacer" />

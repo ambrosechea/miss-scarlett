@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { apiGet } from '@/lib/api'
 import type { JournalPost } from '@/lib/types'
 import SEO from '@/components/SEO'
+import { journalSchema } from '@/lib/schema'
 
 export default function JournalPage() {
   const [posts, setPosts] = useState<JournalPost[]>([])
@@ -21,6 +22,7 @@ export default function JournalPage() {
       <SEO
         title="Miss Scarlett Journal | Bridal Inspiration & News"
         description="Read the Miss Scarlett journal — bridal inspiration, styling tips, real bride stories, and the latest news from the Miss Scarlett label."
+        schema={journalSchema}
       />
 
       <section className="section-21">

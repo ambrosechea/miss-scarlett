@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { COLLECTIONS } from '@/lib/collections'
 import type { Product } from '@/lib/types'
 import SEO from '@/components/SEO'
 import { buildCollectionSchema } from '@/lib/schema'
@@ -43,15 +44,7 @@ const COLLECTION_META: Record<string, { title: string; heading: string; descript
   },
 }
 
-const COLLECTION_NAV = [
-  { slug: 'palais',          label: 'PALAIS' },
-  { slug: 'modern-muse',     label: 'MODERN MUSE' },
-  { slug: 'iconic',          label: 'ICONIC' },
-  { slug: 'siren',           label: 'SIREN' },
-  { slug: 'anniversary',     label: 'ANNIVERSARY' },
-  { slug: 'lumiere',         label: 'LUMIÈRE' },
-  { slug: 'all-collections', label: 'ALL COLLECTIONS' },
-]
+const COLLECTION_NAV = COLLECTIONS.map(c => ({ slug: c.slug, label: c.label }))
 
 const DRESS_TYPES = ['ALL SHAPES', 'MINI', 'A-LINE', 'BALLGOWN', 'FIT & FLARE', 'SHEATH']
 

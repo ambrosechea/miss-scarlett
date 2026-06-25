@@ -55,6 +55,8 @@ export default function TrunkShowsPage() {
               <img
                 src={group265}
                 loading="lazy"
+                width={1315}
+                height={1402}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${group265_500} 500w, ${group265_800} 800w, ${group265_1080} 1080w, ${group265} 1315w`}
                 alt="Miss Scarlett trunk show — experience the bridal collection in person"

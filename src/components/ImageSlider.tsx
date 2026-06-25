@@ -7,6 +7,8 @@ interface Slide {
   srcSet?: string
   sizes?: string
   alt?: string
+  width?: number
+  height?: number
 }
 
 interface ImageSliderProps {
@@ -50,6 +52,8 @@ export default function ImageSlider({
               src={slide.src}
               srcSet={slide.srcSet}
               sizes={slide.sizes ?? '(max-width: 640px) 100vw, (max-width: 900px) 50vw, 33vw'}
+              width={slide.width}
+              height={slide.height}
               alt={slide.alt ?? ''}
               loading="lazy"
               className={imgClassName}
@@ -59,10 +63,9 @@ export default function ImageSlider({
       </Swiper>
 
       {/* Custom Left Arrow Button */}
-      <button 
-        className="slider-left-arrow w-slider-arrow-left" 
-        aria-label="Previous slide" 
-        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+      <button
+        className="slider-left-arrow w-slider-arrow-left btn-reset"
+        aria-label="Previous slide"
       >
         <div className="slider-icon w-icon-slider-left">
           <svg
@@ -88,10 +91,9 @@ export default function ImageSlider({
       </button>
 
       {/* Custom Right Arrow Button */}
-      <button 
-        className="slider-right-arrow w-slider-arrow-right" 
-        aria-label="Next slide" 
-        style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+      <button
+        className="slider-right-arrow w-slider-arrow-right btn-reset"
+        aria-label="Next slide"
       >
         <div className="slider-icon w-icon-slider-right">
           <svg

@@ -7,6 +7,15 @@ import MarqueeText from '@/components/MarqueeText'
 import SEO from '@/components/SEO'
 import { homeSchema } from '@/lib/schema'
 
+import heroFull     from '@/assets/images/SAGE-MS89-1Z-12-2-1.jpg'
+import hero500      from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-500.jpg'
+import hero800      from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-800.jpg'
+import hero1080     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-1080.jpg'
+import hero1600     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-1600.jpg'
+import hero2000     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-2000.jpg'
+import hero2600     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-2600.jpg'
+import hero3200     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-3200.jpg'
+
 import group254     from '@/assets/images/group_254.webp'
 import group254_500 from '@/assets/images/group_254-p-500.webp'
 import group254_800 from '@/assets/images/group_254-p-800.webp'
@@ -39,26 +48,31 @@ const collectionSlides = [
     src: sliderSoleil,
     srcSet: `${sliderSoleil500} 500w, ${sliderSoleil800} 800w, ${sliderSoleil} 1017w`,
     alt: 'Miss Scarlett Soleil bridal gown — modern fitted silhouette',
+    width: 1017, height: 1386,
   },
   {
     src: sliderAnna,
     srcSet: `${sliderAnna500} 500w, ${sliderAnna800} 800w, ${sliderAnna} 1017w`,
     alt: 'Miss Scarlett bride in a luxury bridal gown',
+    width: 1017, height: 1386,
   },
   {
     src: sliderLatest,
     srcSet: `${sliderLatest500} 500w, ${sliderLatest800} 800w, ${sliderLatest} 1017w`,
     alt: 'Miss Scarlett latest bridal collection',
+    width: 1017, height: 1386,
   },
   {
     src: sliderJournal,
     srcSet: `${sliderJournal500} 500w, ${sliderJournal800} 800w, ${sliderJournal1080} 1080w, ${sliderJournal} 1178w`,
     alt: 'Miss Scarlett bridal gown — graceful femininity',
+    width: 1178, height: 1564,
   },
   {
     src: sliderJournal1,
     srcSet: `${sliderJournal1500} 500w, ${sliderJournal1800} 800w, ${sliderJournal1} 950w`,
     alt: 'Miss Scarlett wedding dress design',
+    width: 950, height: 1564,
   },
 ]
 
@@ -81,17 +95,23 @@ export default function HomePage() {
 
       {/* Hero */}
       <section className="section" aria-label="PALAIS collection hero">
+        <img
+          src={heroFull}
+          srcSet={`${hero500} 500w, ${hero800} 800w, ${hero1080} 1080w, ${hero1600} 1600w, ${hero2000} 2000w, ${hero2600} 2600w, ${hero3200} 3200w, ${heroFull} 4480w`}
+          sizes="100vw"
+          width={4461}
+          height={3345}
+          alt="Miss Scarlett PALAIS collection — modern luxury bridal gown"
+          className="hero-bg"
+          loading="eager"
+          fetchPriority="high"
+        />
         <div className="w-layout-blockcontainer container-3 w-container">
           <h1 className="heading-3">PALAIS</h1>
           <h6 className="heading">A NEW CHAPTER OF MODERN BRIDAL ELEGANCE</h6>
-          <a
-            href="https://www.missscarlett.com.au/category/palais"
-            className="button-3 w-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link to="/category/palais" className="button-3 w-button">
             EXPLORE THE COLLECTION
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -117,6 +137,8 @@ export default function HomePage() {
               <img
                 src={group254}
                 loading="lazy"
+                width={1315}
+                height={1402}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${group254_500} 500w, ${group254_800} 800w, ${group254_1080} 1080w, ${group254} 1315w`}
                 alt="Miss Scarlett bride in a modern luxury bridal gown"
@@ -146,14 +168,9 @@ export default function HomePage() {
             <br />
             Explore the collections and discover the gown that feels truly yours.
           </p>
-          <a
-            href="https://www.missscarlett.com.au/category/all-collections"
-            className="button-3 lovce-btn explore w-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link to="/category/all-collections" className="button-3 lovce-btn explore w-button">
             EXPLORE
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -205,6 +222,8 @@ export default function HomePage() {
               <img
                 src={maskGroup}
                 loading="lazy"
+                width={1320}
+                height={1508}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${maskGroup500} 500w, ${maskGroup800} 800w, ${maskGroup1080} 1080w, ${maskGroup} 1320w`}
                 alt="Bride trying on a Miss Scarlett gown at a boutique"

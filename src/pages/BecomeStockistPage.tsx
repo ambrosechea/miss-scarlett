@@ -1,5 +1,4 @@
-import { useState, FormEvent } from 'react'
-import { apiPost } from '@/lib/api'
+import { useFormSubmit } from '@/lib/useFormSubmit'
 import SEO from '@/components/SEO'
 import { becomeStockistSchema } from '@/lib/schema'
 import group264 from '@/assets/images/group_264.webp'
@@ -17,37 +16,10 @@ const perks = [
 ]
 
 export default function BecomeStockistPage() {
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setSubmitting(true)
-    setError(null)
-
-    const form = e.currentTarget
-    const data = new FormData(form)
-
-    const result = await apiPost('/api/become-stockist', {
-      firstName:       data.get('name')        as string,
-      lastName:        data.get('lastname')     as string,
-      email:           data.get('email')        as string,
-      phone:           data.get('phone')        as string,
-      boutiqueName:    data.get('storename')    as string,
-      boutiqueAddress: data.get('address')      as string,
-      country:         data.get('country')      as string,
-      website:         data.get('website')      as string,
-      message:         data.get('message')      as string,
-    })
-
-    if (result.ok) {
-      setSubmitted(true)
-    } else {
-      setError(result.error)
-    }
-    setSubmitting(false)
-  }
+  const { submitting, submitted, error, handleSubmit } = useFormSubmit(
+    '/api/become-stockist',
+    ['name', 'lastname', 'email', 'phone', 'storename', 'address', 'country', 'website', 'message'],
+  )
 
   return (
     <>
@@ -75,6 +47,8 @@ export default function BecomeStockistPage() {
               <img
                 src={group264}
                 loading="lazy"
+                width={1138}
+                height={832}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 95vw, 940px"
                 srcSet={`${group264_500} 500w, ${group264_800} 800w, ${group264_1080} 1080w, ${group264} 1138w`}
                 alt="Miss Scarlett luxury bridal gown — become a stockist"

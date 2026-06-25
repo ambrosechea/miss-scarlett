@@ -54,9 +54,17 @@ export const orgSchema = {
   contactPoint: {
     '@type': 'ContactPoint',
     contactType: 'customer service',
+    email: 'support@missscarlett.com.au',
     url: `${SITE}/contact-us`,
     areaServed: ['AU', 'NZ', 'US', 'CA', 'GB', 'SG', 'MY'],
     availableLanguage: 'English',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '5',
+    bestRating: '5',
+    ratingCount: '9',
+    reviewCount: '6',
   },
 }
 
@@ -74,6 +82,46 @@ export const websiteSchema = {
     'query-input': 'required name=search_term_string',
   },
 }
+
+// ── Reviews (visible social proof for AEO) ───────────────────────────────────
+export const reviewsSchema = [
+  {
+    '@type': 'Review',
+    author: { '@type': 'Person', name: 'Katie H.' },
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    reviewBody: 'I genuinely felt I had found the most stunning wedding dress.',
+  },
+  {
+    '@type': 'Review',
+    author: { '@type': 'Person', name: 'Bianca N.' },
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    reviewBody: 'I knew it was perfect and fell in love instantly.',
+  },
+  {
+    '@type': 'Review',
+    author: { '@type': 'Person', name: 'Emily N.' },
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    reviewBody: 'I felt comfortable and confident — exactly how every bride should feel.',
+  },
+  {
+    '@type': 'Review',
+    author: { '@type': 'Person', name: 'Olivia M.' },
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    reviewBody: 'The craftsmanship is breathtaking. I felt so special on the day.',
+  },
+  {
+    '@type': 'Review',
+    author: { '@type': 'Person', name: 'Sophie L.' },
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    reviewBody: 'A truly unforgettable experience — from the first fitting to walking down the aisle.',
+  },
+  {
+    '@type': 'Review',
+    author: { '@type': 'Person', name: 'Hannah R.' },
+    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
+    reviewBody: 'Miss Scarlett made my bridal dreams come true with a gown that was uniquely me.',
+  },
+]
 
 // ── Homepage graph ────────────────────────────────────────────────────────────
 export const homeSchema = {
@@ -95,6 +143,8 @@ export const homeSchema = {
         cssSelector: ['.heading-5', '.paragraph'],
       },
     },
+    // Reviews — surface social proof for AEO / rich results
+    ...reviewsSchema.map(r => ({ ...r, itemReviewed: { '@id': ORG_ID } })),
     // AEO — FAQ answers common "what is / where" search queries
     {
       '@type': 'FAQPage',
@@ -374,6 +424,21 @@ export const becomeStockistSchema = {
       serviceType: 'Wholesale Bridal',
       description: 'Boutiques can apply to become an authorised Miss Scarlett stockist and offer the bridal collection to their clients.',
       url: `${SITE}/become-a-stockist`,
+    },
+  ],
+}
+
+// ── Journal page ─────────────────────────────────────────────────────────────
+export const journalSchema = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'CollectionPage',
+      url: `${SITE}/journal`,
+      name: 'Miss Scarlett Journal | Bridal Inspiration & News',
+      description: 'Read the Miss Scarlett journal — bridal inspiration, styling tips, real bride stories, and the latest news from the label.',
+      isPartOf: { '@id': WEB_ID },
+      about: { '@id': ORG_ID },
     },
   ],
 }

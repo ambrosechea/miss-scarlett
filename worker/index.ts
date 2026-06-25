@@ -6,11 +6,19 @@ import { handleStockists } from './routes/stockists'
 import { handleJournal } from './routes/journal'
 import { handleTrunkShows } from './routes/trunk-shows'
 import { handleProductsList, handleProductDetail } from './routes/products'
+import { handleSitemap } from './routes/sitemap'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
   'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
   'Access-Control-Allow-Headers': 'Content-Type',
+}
+
+const SECURITY_HEADERS: Record<string, string> = {
+  'X-Content-Type-Options': 'nosniff',
+  'X-Frame-Options': 'DENY',
+  'Referrer-Policy': 'strict-origin-when-cross-origin',
+  'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
 }
 
 export default {
@@ -21,6 +29,19 @@ export default {
     }
 
     const url = new URL(request.url)
+
+    // robots.txt
+    if (url.pathname === '/robots.txt') {
+      return new Response(
+        'User-agent: *\nAllow: /\n\nSitemap: https://www.missscarlett.com.au/sitemap.xml\n',
+        { headers: { 'Content-Type': 'text/plain' } },
+      )
+    }
+
+    // sitemap.xml
+    if (url.pathname === '/sitemap.xml') {
+      return handleSitemap(env)
+    }
 
     // Route all /api/* requests through the Worker
     if (url.pathname.startsWith('/api/')) {
@@ -36,9 +57,13 @@ export default {
       })
     }
 
-    // Everything else → serve the Vite SPA (React Router handles deep links
-    // via `not_found_handling = "single-page-application"` in wrangler.toml)
-    return env.ASSETS.fetch(request)
+    // Everything else → serve the Vite SPA with security headers
+    const assetResponse = await env.ASSETS.fetch(request)
+    const response = new Response(assetResponse.body, assetResponse)
+    for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
+      response.headers.set(key, value)
+    }
+    return response
   },
 }
 

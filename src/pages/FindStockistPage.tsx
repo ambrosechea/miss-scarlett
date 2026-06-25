@@ -60,6 +60,8 @@ export default function FindStockistPage() {
               <img
                 src={group257}
                 loading="lazy"
+                width={1138}
+                height={832}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${group257_500} 500w, ${group257_800} 800w, ${group257_1080} 1080w, ${group257} 1138w`}
                 alt="Miss Scarlett bridal gown — find a stockist near you"

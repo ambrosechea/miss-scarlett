@@ -104,7 +104,7 @@ export default function AboutPage() {
     <>
       <SEO
         title="About Miss Scarlett | Modern Luxury Bridal Designer"
-        description="Discover the world of Miss Scarlett — modern luxury bridal gowns crafted with refined design, graceful femininity, and exceptional craftsmanship. Founded by Melissa So in 2019."
+        description="Discover the world of Miss Scarlett — luxury bridal gowns crafted with refined design, graceful femininity, and exceptional craftsmanship."
         schema={aboutSchema}
       />
 
@@ -126,6 +126,8 @@ export default function AboutPage() {
               <img
                 src={group255}
                 loading="lazy"
+                width={1315}
+                height={1402}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${group255_500} 500w, ${group255_800} 800w, ${group255_1080} 1080w, ${group255} 1315w`}
                 alt="Miss Scarlett bride in a modern luxury bridal gown — understated elegance"
@@ -148,14 +150,9 @@ export default function AboutPage() {
             Each gown is created to enhance the bride herself, allowing her confidence and
             individuality to take centre stage.
           </p>
-          <a
-            href="https://www.missscarlett.com.au/category/all-collections"
-            className="button-3 w-button"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
+          <Link to="/category/all-collections" className="button-3 w-button">
             EXPLORE THE COLLECTIONS
-          </a>
+          </Link>
         </div>
       </section>
 
@@ -189,6 +186,8 @@ export default function AboutPage() {
               <img
                 src={maskGroup2}
                 loading="lazy"
+                width={1320}
+                height={1508}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${maskGroup2_500} 500w, ${maskGroup2_800} 800w, ${maskGroup2_1080} 1080w, ${maskGroup2} 1320w`}
                 alt="Miss Scarlett bridal gown — the beginning of a modern luxury bridal brand"
@@ -207,6 +206,8 @@ export default function AboutPage() {
               <img
                 src={melwebp}
                 loading="lazy"
+                width={1320}
+                height={1508}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
                 srcSet={`${melwebp500} 500w, ${melwebp800} 800w, ${melwebp1080} 1080w, ${melwebp} 1320w`}
                 alt="Melissa So, founder of Miss Scarlett bridal label"

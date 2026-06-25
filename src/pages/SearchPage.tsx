@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import SEO from '@/components/SEO'
 
 export default function SearchPage() {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -12,6 +13,11 @@ export default function SearchPage() {
 
   return (
     <>
+      <SEO
+        title="Search | Miss Scarlett Bridal"
+        description="Search the Miss Scarlett bridal collection — find your dream luxury wedding gown by name, style, or collection."
+      />
+
       <section className="section-21">
         <div className="w-layout-blockcontainer container-28 w-container">
           <h1 className="heading-5">Search</h1>

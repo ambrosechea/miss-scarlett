@@ -1,5 +1,4 @@
-import { useState, FormEvent } from 'react'
-import { apiPost } from '@/lib/api'
+import { useFormSubmit } from '@/lib/useFormSubmit'
 import SEO from '@/components/SEO'
 import { bookAppointmentSchema } from '@/lib/schema'
 import group258 from '@/assets/images/group_258.webp'
@@ -8,37 +7,10 @@ import group258_800 from '@/assets/images/group_258-p-800.webp'
 import group258_1080 from '@/assets/images/group_258-p-1080.webp'
 
 export default function BookAppointmentPage() {
-  const [submitting, setSubmitting] = useState(false)
-  const [submitted, setSubmitted] = useState(false)
-  const [error, setError] = useState<string | null>(null)
-
-  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setSubmitting(true)
-    setError(null)
-
-    const form = e.currentTarget
-    const data = new FormData(form)
-
-    const result = await apiPost('/api/book-appointment', {
-      firstName:   data.get('firstName')   as string,
-      lastName:    data.get('lastName')    as string,
-      email:       data.get('email')       as string,
-      phone:       data.get('phone')       as string,
-      city:        data.get('city')        as string,
-      state:       data.get('state')       as string,
-      country:     data.get('country')     as string,
-      weddingDate: data.get('weddingDate') as string,
-      message:     data.get('message')     as string,
-    })
-
-    if (result.ok) {
-      setSubmitted(true)
-    } else {
-      setError(result.error)
-    }
-    setSubmitting(false)
-  }
+  const { submitting, submitted, error, handleSubmit } = useFormSubmit(
+    '/api/book-appointment',
+    ['firstName', 'lastName', 'email', 'phone', 'city', 'state', 'country', 'weddingDate', 'message'],
+  )
 
   return (
     <>
@@ -67,6 +39,8 @@ export default function BookAppointmentPage() {
               <img
                 src={group258}
                 loading="lazy"
+                width={1138}
+                height={832}
                 sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px, 100vw"
                 srcSet={`${group258_500} 500w, ${group258_800} 800w, ${group258_1080} 1080w, ${group258} 1138w`}
                 alt="Miss Scarlett bride in a luxury bridal gown — book your appointment"

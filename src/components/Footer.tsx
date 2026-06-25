@@ -10,7 +10,7 @@ export default function Footer() {
       <div className="w-layout-blockcontainer container-7 w-container">
         <div className="div-block-5">
           <Link to="/" className="w-inline-block">
-            <img src={logoWhite} loading="lazy" alt="Miss Scarlett" className="image-4" />
+            <img src={logoWhite} loading="lazy" width={1059} height={291} alt="Miss Scarlett" className="image-4" />
           </Link>
         </div>
         <div className="w-layout-layout quick-stack-4 wf-layout-layout">

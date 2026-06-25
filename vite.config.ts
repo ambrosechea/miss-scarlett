@@ -12,4 +12,13 @@ export default defineConfig({
       '@': '/src',
     },
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          swiper: ['swiper', 'swiper/react', 'swiper/modules', 'swiper/css'],
+        },
+      },
+    },
+  },
 })

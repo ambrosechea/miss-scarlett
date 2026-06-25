@@ -324,22 +324,29 @@
 
 /* ── Mobile navbar — hamburger left, logo centred, no CTA ── */
 @media (max-width: 767px) {
-  /* Hide Book Appointment CTA — hamburger + logo only */
+  /* Hide Book Appointment CTA */
   .button-3.header-btn {
     display: none !important;
+  }
+
+  /* Give the wrapper a fixed height so absolute children have a reference */
+  .navbar-wrapper {
+    height: 64px !important;
+  }
+
+  /* Anchor hamburger to the left edge — same pattern as the centred logo */
+  .menu-button-3.w-nav-button {
+    position: absolute !important;
+    left: 12px !important;
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    z-index: 1002 !important;
   }
 
   /* Shrink logo so it never overlaps the hamburger */
   .image-12 {
     max-width: 130px !important;
     width: 130px !important;
-  }
-
-  /* Hamburger sits flush left with enough z-index to stay on top */
-  .menu-button-3.w-nav-button {
-    position: relative;
-    z-index: 1002;
-    flex-shrink: 0;
   }
 }
 
@@ -707,7 +714,8 @@
   display: block;
   width: 100%;
   height: auto;
-  object-fit: unset;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
   transition: opacity 0.2s ease;
 }
 
@@ -946,4 +954,12 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 1.25rem 0.75rem;
   }
+}
+
+/* ── Utility classes for repeated inline styles ── */
+.btn-reset {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
 }
