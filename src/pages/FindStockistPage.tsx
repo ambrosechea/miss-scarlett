@@ -46,7 +46,7 @@ export default function FindStockistPage() {
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-8">
-              <h6 className="heading latest-collections">Discover miss scarlett</h6>
+              <p className="heading latest-collections">Discover miss scarlett</p>
               <h1 className="heading-5">Find a stockist</h1>
               <p className="paragraph">
                 Miss Scarlett gowns are available through a curated network of bridal boutiques

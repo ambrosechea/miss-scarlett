@@ -34,7 +34,7 @@ export default function BecomeStockistPage() {
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-26">
-              <h6 className="heading latest-collections">PARTNER WITH MISS SCARLETT</h6>
+              <p className="heading latest-collections">PARTNER WITH MISS SCARLETT</p>
               <h1 className="heading-5">Become a stockist</h1>
               <p className="paragraph">
                 Miss Scarlett partners with a curated network of bridal boutiques around the world.

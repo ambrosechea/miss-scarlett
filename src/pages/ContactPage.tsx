@@ -23,7 +23,7 @@ export default function ContactPage() {
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-8">
-              <h6 className="heading latest-collections">Discover miss scarlett</h6>
+              <p className="heading latest-collections">Discover miss scarlett</p>
               <h1 className="heading-5">GENERAL ENQUIRIES</h1>
               <p className="paragraph">
                 Send us an enquiry below and our team will be in touch shortly.

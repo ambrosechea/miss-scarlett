@@ -113,7 +113,7 @@ export default function AboutPage() {
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-8">
-              <h6 className="heading latest-collections">ABOUT US</h6>
+              <p className="heading latest-collections">ABOUT US</p>
               <h1 className="heading-5">THE WORLD OF MISS SCARLETT</h1>
               <p className="paragraph">
                 Miss Scarlett celebrates a modern vision of bridal — where elegance, confidence, and
@@ -215,7 +215,7 @@ export default function AboutPage() {
               />
             </div>
             <div className="w-layout-cell">
-              <h6 className="heading latest-collections" />
+              <p className="heading latest-collections" />
               <h2 className="heading-5">THE BRAND TODAY</h2>
               <p className="paragraph">
                 What began as a passion for contemporary bridal design soon found its place in

@@ -185,7 +185,7 @@ export default function CollectionPage() {
       <section className="section-2 discover-miss-scarlett">
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="collection-hero">
-            <h6 className="heading latest-collections">THE COLLECTION</h6>
+            <p className="heading latest-collections">THE COLLECTION</p>
             <h1 className="heading-5">{meta.heading}</h1>
             <p className="paragraph">{meta.description}</p>
           </div>

@@ -42,7 +42,7 @@ export default function TrunkShowsPage() {
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-8">
-              <h6 className="heading latest-collections">EXPERIENCE MISS SCARLETT</h6>
+              <p className="heading latest-collections">EXPERIENCE MISS SCARLETT</p>
               <h1 className="heading-5">TRUNK SHOWS</h1>
               <p className="paragraph">
                 Discover our latest designs at an exclusive Miss Scarlett trunk show — where brides
@@ -144,7 +144,7 @@ export default function TrunkShowsPage() {
         <div className="w-layout-blockcontainer container-15 w-container" style={{ marginTop: '4rem' }}>
           <div className="w-layout-layout quick-stack-5 wf-layout-layout">
             <div className="w-layout-cell">
-              <h6 className="heading latest-collections">Our Journal</h6>
+              <p className="heading latest-collections">Our Journal</p>
               <h2 className="heading-5">Related News</h2>
               <Link to="/journal" className="button-3 lovce-btn w-button">
                 See All

@@ -7,14 +7,14 @@ import MarqueeText from '@/components/MarqueeText'
 import SEO from '@/components/SEO'
 import { homeSchema } from '@/lib/schema'
 
-import heroFull     from '@/assets/images/SAGE-MS89-1Z-12-2-1.jpg'
-import hero500      from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-500.jpg'
-import hero800      from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-800.jpg'
-import hero1080     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-1080.jpg'
-import hero1600     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-1600.jpg'
-import hero2000     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-2000.jpg'
-import hero2600     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-2600.jpg'
-import hero3200     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-3200.jpg'
+import heroFull     from '@/assets/images/SAGE-MS89-1Z-12-2-1.webp'
+import hero500      from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-500.webp'
+import hero800      from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-800.webp'
+import hero1080     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-1080.webp'
+import hero1600     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-1600.webp'
+import hero2000     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-2000.webp'
+import hero2600     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-2600.webp'
+import hero3200     from '@/assets/images/SAGE-MS89-1Z-12-2-1-p-3200.webp'
 
 import group254     from '@/assets/images/group_254.webp'
 import group254_500 from '@/assets/images/group_254-p-500.webp'
@@ -108,7 +108,7 @@ export default function HomePage() {
         />
         <div className="w-layout-blockcontainer container-3 w-container">
           <h1 className="heading-3">PALAIS</h1>
-          <h6 className="heading">A NEW CHAPTER OF MODERN BRIDAL ELEGANCE</h6>
+          <p className="heading">A NEW CHAPTER OF MODERN BRIDAL ELEGANCE</p>
           <Link to="/category/palais" className="button-3 w-button">
             EXPLORE THE COLLECTION
           </Link>
@@ -118,7 +118,7 @@ export default function HomePage() {
       {/* Discover Miss Scarlett */}
       <section className="section-2">
         <div className="w-layout-blockcontainer container-6 w-container">
-          <h6 className="heading latest-collections">DISCOVER MISS SCARLETT</h6>
+          <p className="heading latest-collections">DISCOVER MISS SCARLETT</p>
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-8">
               <h2 className="heading-5">Modern luxury for every bride</h2>
@@ -151,9 +151,9 @@ export default function HomePage() {
 
       {/* Collections slider */}
       <section className="section-3" aria-label="Collection gallery">
-        <h6 className="heading-28">
+        <p className="heading-28">
           FINDING <em>THE ONE</em> BEGINS HERE
-        </h6>
+        </p>
         <div className="w-layout-blockcontainer container-8 w-container">
           <div className="slider-container">
             <div className="slider-wrapper">

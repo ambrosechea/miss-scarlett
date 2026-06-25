@@ -6,7 +6,7 @@ import tiktokImg from '@/assets/images/tick-tok.webp'
 
 export default function Footer() {
   return (
-    <section className="footer-light">
+    <footer className="footer-light" role="contentinfo">
       <div className="w-layout-blockcontainer container-7 w-container">
         <div className="div-block-5">
           <Link to="/" className="w-inline-block">
@@ -66,6 +66,6 @@ export default function Footer() {
           </div>
         </div>
       </div>
-    </section>
+    </footer>
   )
 }

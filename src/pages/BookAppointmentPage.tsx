@@ -25,7 +25,7 @@ export default function BookAppointmentPage() {
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-8">
-              <h6 className="heading latest-collections">BEGIN YOUR JOURNEY</h6>
+              <p className="heading latest-collections">BEGIN YOUR JOURNEY</p>
               <h1 className="heading-5">BOOK APPOINTMENT</h1>
               <p className="paragraph">
                 Submit your details below and we will connect you with the nearest Miss Scarlett
