@@ -3,6 +3,14 @@ main = "worker/index.ts"
 compatibility_date = "2025-05-27"
 compatibility_flags = ["nodejs_compat"]
 
+[[routes]]
+pattern = "missscarlett.com.au"
+custom_domain = true
+
+[[routes]]
+pattern = "www.missscarlett.com.au"
+custom_domain = true
+
 [build]
 command = "npm run build"
 
