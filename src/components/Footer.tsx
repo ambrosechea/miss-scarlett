@@ -28,7 +28,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={facebookImg} loading="lazy" alt="Facebook" className="image-5" />
+                <img src={facebookImg} loading="lazy" width={54} height={54} alt="Facebook" className="image-5" />
               </a>
               <a
                 href="https://www.instagram.com/missscarlett.thelabel/?hl=en"
@@ -36,7 +36,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={instaImg} loading="lazy" alt="Instagram" className="image-6" />
+                <img src={instaImg} loading="lazy" width={72} height={75} alt="Instagram" className="image-6" />
               </a>
               <a
                 href="https://www.tiktok.com/@missscarlettthelabel"
@@ -44,7 +44,7 @@ export default function Footer() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                <img src={tiktokImg} loading="lazy" alt="TikTok" className="image-7" />
+                <img src={tiktokImg} loading="lazy" width={54} height={63} alt="TikTok" className="image-7" />
               </a>
             </div>
           </div>

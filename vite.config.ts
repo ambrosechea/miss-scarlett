@@ -16,7 +16,7 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          swiper: ['swiper', 'swiper/react', 'swiper/modules', 'swiper/css'],
+          swiper: ['swiper', 'swiper/react', 'swiper/modules'],
         },
       },
     },
