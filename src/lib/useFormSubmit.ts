@@ -16,6 +16,8 @@ export function useFormSubmit(endpoint: string, fieldNames: string[]) {
     for (const name of fieldNames) {
       body[name] = fd.get(name) as string
     }
+    const turnstileToken = fd.get('cf-turnstile-response') as string
+    if (turnstileToken) body['cf-turnstile-response'] = turnstileToken
 
     const result = await apiPost(endpoint, body)
     if (result.ok) {

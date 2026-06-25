@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useFormSubmit } from '@/lib/useFormSubmit'
 import SEO from '@/components/SEO'
+import Turnstile from '@/components/Turnstile'
 import { contactSchema } from '@/lib/schema'
 import group256 from '@/assets/images/group_256.webp'
 
@@ -82,6 +83,7 @@ export default function ContactPage() {
                         <textarea required maxLength={5000} id="message" name="message" className="textarea w-input" />
                       </div>
                     </div>
+                    <Turnstile />
                     <div className="div-block-18">
                       <input type="submit" className="submit-button w-button" value={submitting ? 'Sending…' : 'Submit'} disabled={submitting} />
                     </div>

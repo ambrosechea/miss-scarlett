@@ -1,5 +1,6 @@
 import { useFormSubmit } from '@/lib/useFormSubmit'
 import SEO from '@/components/SEO'
+import Turnstile from '@/components/Turnstile'
 import { bookAppointmentSchema } from '@/lib/schema'
 import group258 from '@/assets/images/group_258.webp'
 import group258_500 from '@/assets/images/group_258-p-500.webp'
@@ -112,6 +113,7 @@ export default function BookAppointmentPage() {
                     <div className="text-block-6">
                       Your details may be shared with a Miss Scarlett stockist to assist with your enquiry.
                     </div>
+                    <Turnstile />
                     <div className="div-block-18">
                       <input type="submit" className="submit-button w-button" value={submitting ? 'Sending…' : 'Submit'} disabled={submitting} />
                     </div>

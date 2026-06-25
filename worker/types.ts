@@ -4,4 +4,10 @@ export interface Env {
 
   /** D1 database binding */
   DB: D1Database
+
+  /** Cloudflare Email Sending binding */
+  EMAIL: SendEmail
+
+  /** Cloudflare Turnstile secret key (Worker secret) */
+  TURNSTILE_SECRET_KEY: string
 }

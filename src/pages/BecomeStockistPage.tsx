@@ -1,5 +1,6 @@
 import { useFormSubmit } from '@/lib/useFormSubmit'
 import SEO from '@/components/SEO'
+import Turnstile from '@/components/Turnstile'
 import { becomeStockistSchema } from '@/lib/schema'
 import group264 from '@/assets/images/group_264.webp'
 import group264_500 from '@/assets/images/group_264-p-500.webp'
@@ -135,6 +136,7 @@ export default function BecomeStockistPage() {
                         <textarea required maxLength={5000} id="message" name="message" className="textarea w-input" />
                       </div>
                     </div>
+                    <Turnstile />
                     <div className="div-block-18">
                       <input type="submit" className="submit-button w-button" value={submitting ? 'Sending…' : 'Submit'} disabled={submitting} />
                     </div>
