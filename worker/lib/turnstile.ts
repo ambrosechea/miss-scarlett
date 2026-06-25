@@ -5,7 +5,10 @@ export async function verifyTurnstile(
   secretKey: string,
   ip: string | null,
 ): Promise<boolean> {
-  if (!token) return false
+  if (!token) {
+    console.log('[turnstile] no token provided')
+    return false
+  }
 
   const res = await fetch(VERIFY_URL, {
     method: 'POST',
@@ -17,6 +20,7 @@ export async function verifyTurnstile(
     }),
   })
 
-  const data = await res.json<{ success: boolean }>()
+  const data = await res.json<{ success: boolean; 'error-codes'?: string[] }>()
+  console.log('[turnstile] verify response:', JSON.stringify(data))
   return data.success
 }
