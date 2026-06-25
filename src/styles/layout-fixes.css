@@ -36,6 +36,10 @@
   grid-template-columns: 1fr 1fr;
 }
 
+.quick-stack-12 > .w-layout-cell:only-child {
+  grid-column: 1 / -1;
+}
+
 /* Journal grid: 2 columns */
 .quick-stack-14 {
   grid-template-columns: 1fr 1fr;
