@@ -23,6 +23,7 @@ database_id = "d649ef9c-b841-484a-af71-71c83e13d3c3"
 # Email Sending — requires `wrangler email sending enable missscarlett.com.au`
 [[send_email]]
 name = "EMAIL"
+destination_address = "support@missscarlett.com.au"
 
 [dev]
 port = 8787

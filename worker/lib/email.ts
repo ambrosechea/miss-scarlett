@@ -22,7 +22,7 @@ export async function sendNotification(
 
   try {
     await env.EMAIL.send({ to: TO, from: FROM, subject, html, text })
-  } catch {
-    console.error(`Email send failed for "${subject}"`)
+  } catch (err) {
+    console.error(`Email send failed for "${subject}":`, err)
   }
 }
