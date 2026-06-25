@@ -30,6 +30,12 @@ export default {
 
     const url = new URL(request.url)
 
+    // Redirect apex to www
+    if (url.hostname === 'missscarlett.com.au') {
+      url.hostname = 'www.missscarlett.com.au'
+      return Response.redirect(url.toString(), 301)
+    }
+
     // robots.txt
     if (url.pathname === '/robots.txt') {
       return new Response(
