@@ -7,6 +7,7 @@ import { handleJournal } from './routes/journal'
 import { handleTrunkShows } from './routes/trunk-shows'
 import { handleProductsList, handleProductDetail } from './routes/products'
 import { handleSitemap } from './routes/sitemap'
+import { handleMerchantFeed } from './routes/merchant-feed'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -47,6 +48,11 @@ export default {
     // sitemap.xml
     if (url.pathname === '/sitemap.xml') {
       return handleSitemap(env)
+    }
+
+    // Google Merchant product feed
+    if (url.pathname === '/feed/google-merchant.xml') {
+      return handleMerchantFeed(env)
     }
 
     // Route all /api/* requests through the Worker
