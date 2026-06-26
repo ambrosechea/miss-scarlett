@@ -107,6 +107,7 @@ function buildItem(p: ProductRow, images: string[], collection: string): string 
       <g:description>${esc(desc.slice(0, 5000))}</g:description>
       <g:rich_text_description><![CDATA[${desc.slice(0, 5000)}]]></g:rich_text_description>
       <g:availability>in stock</g:availability>
+      <g:quantity_to_sell_on_facebook>50</g:quantity_to_sell_on_facebook>
       <g:condition>new</g:condition>
       <g:price>${price} AUD</g:price>
       <g:link>${SITE_URL}/product/${encodeURIComponent(p.handle)}</g:link>
