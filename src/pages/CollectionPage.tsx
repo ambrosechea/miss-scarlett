@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { trackCollectionView } from '@/lib/analytics'
 import { COLLECTIONS } from '@/lib/collections'
 import type { Product } from '@/lib/types'
 import SEO from '@/components/SEO'
@@ -94,6 +95,11 @@ export default function CollectionPage() {
       setLoading(false)
     })
   }, [slug])
+
+  useEffect(() => {
+    if (loading || products.length === 0) return
+    trackCollectionView(slug, meta.heading, products)
+  }, [loading, products, slug, meta.heading])
 
   const displayed = useMemo(() => {
     let list = [...products]

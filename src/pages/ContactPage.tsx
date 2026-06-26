@@ -9,6 +9,7 @@ export default function ContactPage() {
   const { submitting, submitted, error, handleSubmit } = useFormSubmit(
     '/api/contact',
     ['firstName', 'lastName', 'email', 'phone', 'message'],
+    'contact',
   )
 
   return (

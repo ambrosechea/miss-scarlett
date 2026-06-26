@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { trackProductView, trackEnquireClick, trackFindStockistClick } from '@/lib/analytics'
 import type { Product, ProductDetail } from '@/lib/types'
 import SEO from '@/components/SEO'
 import { buildProductSchema } from '@/lib/schema'
@@ -47,6 +48,16 @@ export default function ProductPage() {
       }
     })
   }, [product, handle])
+
+  useEffect(() => {
+    if (!product) return
+    trackProductView({
+      handle: product.handle,
+      name: product.name,
+      price: product.price,
+      categories: product.categories,
+    })
+  }, [product])
 
   if (loading) {
     return (
@@ -160,6 +171,7 @@ export default function ProductPage() {
               <div className="product-actions">
                 <Link
                   to="/book-appointment"
+                  onClick={() => trackEnquireClick({ handle: product.handle, name: product.name })}
                   className="button-3 lovce-btn nearest-stockist enquire-now-btn w-button"
                   style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}
                 >
@@ -167,6 +179,7 @@ export default function ProductPage() {
                 </Link>
                 <Link
                   to="/find-a-stockist"
+                  onClick={() => trackFindStockistClick({ handle: product.handle, name: product.name })}
                   className="button-3 lovce-btn nearest-stockist w-button"
                   style={{ display: 'block', textAlign: 'center', textDecoration: 'none' }}
                 >

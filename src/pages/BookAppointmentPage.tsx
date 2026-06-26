@@ -11,6 +11,7 @@ export default function BookAppointmentPage() {
   const { submitting, submitted, error, handleSubmit } = useFormSubmit(
     '/api/book-appointment',
     ['firstName', 'lastName', 'email', 'phone', 'city', 'state', 'country', 'weddingDate', 'message'],
+    'book-appointment',
   )
 
   return (

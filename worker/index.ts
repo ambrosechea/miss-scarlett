@@ -8,6 +8,7 @@ import { handleTrunkShows } from './routes/trunk-shows'
 import { handleProductsList, handleProductDetail } from './routes/products'
 import { handleSitemap } from './routes/sitemap'
 import { handleMerchantFeed } from './routes/merchant-feed'
+import { handleMetaFeed } from './routes/meta-feed'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -53,6 +54,11 @@ export default {
     // Google Merchant product feed
     if (url.pathname === '/feed/google-merchant.xml') {
       return handleMerchantFeed(env)
+    }
+
+    // Meta product catalog feed
+    if (url.pathname === '/feed/meta-catalog.xml') {
+      return handleMetaFeed(env)
     }
 
     // Route all /api/* requests through the Worker

@@ -1,7 +1,8 @@
 import { useState, FormEvent } from 'react'
 import { apiPost } from './api'
+import { trackFormSubmission } from './analytics'
 
-export function useFormSubmit(endpoint: string, fieldNames: string[]) {
+export function useFormSubmit(endpoint: string, fieldNames: string[], formName?: string) {
   const [submitting, setSubmitting] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [error, setError] = useState<string | null>(null)
@@ -21,6 +22,7 @@ export function useFormSubmit(endpoint: string, fieldNames: string[]) {
 
     const result = await apiPost(endpoint, body)
     if (result.ok) {
+      if (formName) trackFormSubmission(formName)
       setSubmitted(true)
     } else {
       setError(result.error)

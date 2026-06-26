@@ -20,6 +20,7 @@ export default function BecomeStockistPage() {
   const { submitting, submitted, error, handleSubmit } = useFormSubmit(
     '/api/become-stockist',
     ['name', 'lastname', 'email', 'phone', 'storename', 'address', 'country', 'website', 'message'],
+    'become-stockist',
   )
 
   return (
