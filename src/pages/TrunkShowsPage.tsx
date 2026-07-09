@@ -33,7 +33,7 @@ export default function TrunkShowsPage() {
     <>
       <SEO
         title="Miss Scarlett Trunk Shows | Exclusive Bridal Events"
-        description="Experience the Miss Scarlett collection at an exclusive trunk show near you. Limited-time events at selected boutiques — appointments essential."
+        description="Experience the Miss Scarlett collection at an exclusive trunk show near you. Limited-time events held at selected boutiques worldwide — appointments essential."
         schema={trunkShowsSchema}
       />
 

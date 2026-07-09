@@ -15,8 +15,8 @@ export default function ContactPage() {
   return (
     <>
       <SEO
-        title="Contact Miss Scarlett | Get in Touch"
-        description="Send an enquiry to Miss Scarlett — our team will be in touch shortly. For bridal appointments we can connect you with the nearest stockist."
+        title="Contact Miss Scarlett Bridal | Enquiries & Support"
+        description="Send an enquiry to the Miss Scarlett team — we'll be in touch shortly. Looking to book an appointment? We'll connect you with your nearest boutique stockist."
         schema={contactSchema}
       />
 

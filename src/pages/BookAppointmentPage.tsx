@@ -17,7 +17,7 @@ export default function BookAppointmentPage() {
   return (
     <>
       <SEO
-        title="Book a Bridal Appointment | Miss Scarlett"
+        title="Book a Bridal Fitting Appointment | Miss Scarlett Bridal"
         description="Book an appointment to try on Miss Scarlett bridal gowns at a boutique near you. Submit your details and we'll connect you with the nearest stockist."
         schema={bookAppointmentSchema}
       />

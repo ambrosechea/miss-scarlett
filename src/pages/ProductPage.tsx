@@ -89,7 +89,7 @@ export default function ProductPage() {
   return (
     <>
       <SEO
-        title={`${product.name} | Miss Scarlett Bridal`}
+        title={`${product.name} | Miss Scarlett Luxury Bridal Wedding Gown`}
         description={product.description.slice(0, 155).replace(/\n/g, ' ')}
         image={product.main_image}
         schema={buildProductSchema({

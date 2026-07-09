@@ -4,8 +4,8 @@ export default function TermsPage() {
   return (
     <>
       <SEO
-        title="Terms of Use | Miss Scarlett"
-        description="The terms and conditions governing use of the Miss Scarlett website."
+        title="Terms of Use | Miss Scarlett Luxury Bridal Website"
+        description="The terms and conditions governing your use of the Miss Scarlett website, including content ownership, gown availability, pricing, and boutique visit liability."
       />
 
       <section className="section-2 discover-miss-scarlett">

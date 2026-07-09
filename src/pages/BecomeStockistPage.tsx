@@ -27,7 +27,7 @@ export default function BecomeStockistPage() {
     <>
       <SEO
         title="Become a Miss Scarlett Stockist | Partner With Us"
-        description="Apply to stock Miss Scarlett luxury bridal gowns in your boutique. We partner with a curated network of bridal boutiques worldwide — apply today."
+        description="Apply to stock Miss Scarlett luxury bridal gowns in your boutique. We partner with a curated network of bridal boutiques worldwide — apply to join us today."
         schema={becomeStockistSchema}
       />
 

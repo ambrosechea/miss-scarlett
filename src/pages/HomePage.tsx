@@ -89,7 +89,7 @@ export default function HomePage() {
   return (
     <>
       <SEO
-        title="Miss Scarlett | Luxury Bridal Designer"
+        title="Miss Scarlett | Luxury Bridal Gowns & Wedding Dresses"
         description="Discover Miss Scarlett — modern luxury bridal gowns crafted with refined design, graceful femininity, and exceptional craftsmanship. Find a stockist near you."
         schema={homeSchema}
       />

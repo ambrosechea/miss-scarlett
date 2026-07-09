@@ -4,8 +4,8 @@ export default function PrivacyPage() {
   return (
     <>
       <SEO
-        title="Privacy Statement | Miss Scarlett"
-        description="How Miss Scarlett collects, uses, and protects the personal information submitted through this website."
+        title="Privacy Statement | Miss Scarlett Bridal Label Website"
+        description="How Miss Scarlett collects, uses, and protects the personal information you submit through enquiry, appointment, and stockist application forms on this website."
       />
 
       <section className="section-2 discover-miss-scarlett">

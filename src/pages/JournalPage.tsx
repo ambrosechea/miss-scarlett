@@ -20,8 +20,8 @@ export default function JournalPage() {
   return (
     <>
       <SEO
-        title="Miss Scarlett Journal | Bridal Inspiration & News"
-        description="Read the Miss Scarlett journal — bridal inspiration, styling tips, real bride stories, and the latest news from the Miss Scarlett label."
+        title="Miss Scarlett Journal | Bridal Inspiration & Style News"
+        description="Read the Miss Scarlett journal for bridal inspiration, styling tips, real bride stories, and the latest news and updates from the Miss Scarlett label."
         schema={journalSchema}
       />
 

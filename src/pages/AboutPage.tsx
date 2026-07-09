@@ -96,7 +96,7 @@ export default function AboutPage() {
     <>
       <SEO
         title="About Miss Scarlett | Modern Luxury Bridal Designer"
-        description="Discover the world of Miss Scarlett — luxury bridal gowns crafted with refined design, graceful femininity, and exceptional craftsmanship."
+        description="Discover the world of Miss Scarlett — a luxury bridal label crafting modern gowns with refined design, graceful femininity, and exceptional craftsmanship."
         schema={aboutSchema}
       />
 
