@@ -1,0 +1,174 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-06-29T00:00:00Z",
+  "title": "Design System: Miss Scarlett",
+  "extensions": {
+    "colorMeta": {
+      "ink": {
+        "role": "primary",
+        "displayName": "Ink",
+        "canonical": "oklch(0.15 0.004 285)",
+        "tonalRamp": ["#0d0d0d", "#1a1a1a", "#333333", "#4d4d4d", "#666666", "#808080", "#b3b3b3", "#e6e6e6"]
+      },
+      "light": {
+        "role": "neutral",
+        "displayName": "Light",
+        "canonical": "oklch(0.96 0.012 80)",
+        "tonalRamp": ["#3a3530", "#5c5650", "#7e7870", "#a09a90", "#c2bcb0", "#d6d1c5", "#f4f2ef", "#faf9f7"]
+      },
+      "coconut": {
+        "role": "neutral",
+        "displayName": "Coconut",
+        "canonical": "oklch(0.85 0.02 75)",
+        "tonalRamp": ["#2e2b27", "#504c46", "#726e66", "#948f86", "#b6b0a6", "#d6d1c5", "#ebe8e2", "#f7f6f3"]
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Muted",
+        "canonical": "oklch(0.65 0.015 70)",
+        "tonalRamp": ["#1f1d1b", "#3f3c38", "#5f5b55", "#7f7b73", "#989389", "#b8b3a9", "#d8d3c9", "#f0ede8"]
+      },
+      "white": {
+        "role": "neutral",
+        "displayName": "White",
+        "canonical": "oklch(1 0 0)",
+        "tonalRamp": ["#333333", "#666666", "#999999", "#bbbbbb", "#dddddd", "#eeeeee", "#f7f7f7", "#ffffff"]
+      },
+      "warm-white": {
+        "role": "neutral",
+        "displayName": "Warm White",
+        "canonical": "oklch(0.98 0.008 75)",
+        "tonalRamp": ["#3a3530", "#6b6560", "#9c9690", "#c2bcb0", "#e0ddd8", "#f0ede8", "#fcfaf8", "#ffffff"]
+      },
+      "border": {
+        "role": "neutral",
+        "displayName": "Border",
+        "canonical": "oklch(0.92 0.012 75)",
+        "tonalRamp": ["#2e2b27", "#5c5650", "#8a8478", "#b0aa9f", "#c8c3bb", "#e8e4de", "#f4f2ef", "#faf9f7"]
+      }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Display", "purpose": "Hero headlines only. Uppercase. White on imagery or Ink on light backgrounds." },
+      "headline": { "displayName": "Headline", "purpose": "Section headings. Uppercase. Ivy Mode thin weight at scale." },
+      "title": { "displayName": "Title", "purpose": "Card names, sub-section headings, product names. Uppercase with letter-spacing." },
+      "body": { "displayName": "Body", "purpose": "All paragraph text. Lato at light weight. Cap width at 65-75ch." },
+      "label": { "displayName": "Label", "purpose": "Navigation metadata, breadcrumbs, filter labels, button text. Smallest typographic voice." }
+    },
+    "shadows": [],
+    "motion": [
+      { "name": "ease-standard", "value": "ease", "purpose": "Default transition easing. Used on button fills and hover states." },
+      { "name": "duration-fast", "value": "0.2s", "purpose": "Button hover fills, link color shifts, chevron rotation." },
+      { "name": "duration-medium", "value": "0.4s", "purpose": "Product card image scale on hover." }
+    ],
+    "breakpoints": [
+      { "name": "tablet", "value": "1100px" },
+      { "name": "mobile", "value": "767px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Outline Button",
+      "kind": "button",
+      "refersTo": "button-outline",
+      "description": "Primary CTA across body sections. Pill shape, outline-to-fill hover.",
+      "html": "<button class=\"ds-btn-outline\">EXPLORE THE COLLECTION</button>",
+      "css": ".ds-btn-outline { background: transparent; color: #1a1a1a; border: 1px solid #1a1a1a; border-radius: 50px; padding: 15px 25px; font-family: 'Ivy Mode', Arial, sans-serif; font-size: 16px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; } .ds-btn-outline:hover { background-color: #1a1a1a; color: #fff; } .ds-btn-outline:focus-visible { outline: 2px solid #1a1a1a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Filled Button",
+      "kind": "button",
+      "refersTo": "button-filled",
+      "description": "Secondary CTA. Ink background, used for Explore and search actions.",
+      "html": "<button class=\"ds-btn-filled\">EXPLORE</button>",
+      "css": ".ds-btn-filled { background-color: #1a1a1a; color: #f4f2ef; border: 1px solid #1a1a1a; border-radius: 50px; padding: 15px 25px; font-family: 'Ivy Mode', Arial, sans-serif; font-size: 16px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease; } .ds-btn-filled:hover { background-color: #d6d1c5; color: #1a1a1a; border-color: #d6d1c5; } .ds-btn-filled:focus-visible { outline: 2px solid #1a1a1a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Header CTA",
+      "kind": "button",
+      "refersTo": "button-header",
+      "description": "Compact pill button in the sticky navbar. Lato label typography.",
+      "html": "<a class=\"ds-btn-header\" href=\"#\">BOOK APPOINTMENT</a>",
+      "css": ".ds-btn-header { display: inline-block; background: transparent; color: #1a1a1a; border: 1px solid #1a1a1a; border-radius: 50px; padding: 10px 20px; font-family: Lato, sans-serif; font-size: 12px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; text-decoration: none; white-space: nowrap; cursor: pointer; transition: background-color 0.2s ease, color 0.2s ease; } .ds-btn-header:hover { background-color: #1a1a1a; color: #fff; } .ds-btn-header:focus-visible { outline: 2px solid #1a1a1a; outline-offset: 3px; }"
+    },
+    {
+      "name": "Form Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Standard text field. Light background, no visible border, 8px radius.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"First Name\" />",
+      "css": ".ds-input { width: 100%; height: 51px; background-color: #f4f2ef; color: #1a1a1a; border: 1px solid transparent; border-radius: 8px; padding: 12px 16px; font-family: Lato, sans-serif; font-size: 16px; font-weight: 300; box-sizing: border-box; transition: border-color 0.2s ease; } .ds-input::placeholder { color: #989389; } .ds-input:focus { border-color: #1a1a1a; outline: none; } .ds-input:focus-visible { outline: 2px solid #1a1a1a; outline-offset: 1px; }"
+    },
+    {
+      "name": "Navigation Link",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Full-screen overlay nav item. Ivy Mode display serif, centered, uppercase.",
+      "html": "<a class=\"ds-nav-link\" href=\"#\">COLLECTION</a>",
+      "css": ".ds-nav-link { display: block; text-align: center; padding: 11px 15px; font-family: 'Ivy Mode', Arial, sans-serif; font-size: 40px; font-weight: 300; line-height: 20px; text-transform: uppercase; text-decoration: none; color: #d6d1c5; transition: color 0.2s ease; } .ds-nav-link:hover { color: #1a1a1a; } .ds-nav-link:focus-visible { outline: 2px solid #1a1a1a; outline-offset: 3px; border-radius: 4px; }"
+    },
+    {
+      "name": "Product Card",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Browsable product unit. Image + name only. Hover scales image.",
+      "html": "<a class=\"ds-product-card\" href=\"#\"><div class=\"ds-product-card-image\"></div><h3 class=\"ds-product-card-name\">SOLEIL</h3></a>",
+      "css": ".ds-product-card { display: block; text-decoration: none; color: inherit; } .ds-product-card-image { overflow: hidden; aspect-ratio: 3 / 4; background: #f4f2ef; } .ds-product-card-image img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform 0.4s ease; } .ds-product-card:hover .ds-product-card-image img { transform: scale(1.04); } .ds-product-card-name { font-family: 'Ivy Mode', 'Times New Roman', serif; font-size: 24px; font-weight: 400; letter-spacing: 1.5px; text-transform: uppercase; margin: 0.65rem 0 0; color: #1a1a1a; line-height: 1.2; }"
+    },
+    {
+      "name": "Testimonial Card",
+      "kind": "card",
+      "refersTo": null,
+      "description": "Bride testimonial with quote text and author attribution.",
+      "html": "<div class=\"ds-testimonial\"><p class=\"ds-testimonial-text\">The most beautiful gown I've ever worn. Every detail was perfect.</p><div class=\"ds-testimonial-author\"><span class=\"ds-testimonial-name\">Sarah</span><span class=\"ds-testimonial-tag\">BRIDE, 2025</span></div></div>",
+      "css": ".ds-testimonial { background: #f4f2ef; border: 1px solid #d6d1c5; border-radius: 2px; padding: 2rem; display: flex; flex-direction: column; justify-content: space-between; height: 100%; } .ds-testimonial-text { font-family: Lato, sans-serif; font-size: 15px; font-weight: 300; line-height: 1.65; color: #1a1a1a; margin: 0; } .ds-testimonial-author { margin-top: 1.5rem; } .ds-testimonial-name { display: block; font-family: 'Ivy Mode', Arial, sans-serif; font-size: 18px; font-weight: 400; color: #1a1a1a; } .ds-testimonial-tag { display: block; font-family: Lato, sans-serif; font-size: 13px; color: #989389; letter-spacing: 1px; text-transform: uppercase; margin-top: 0.25rem; }"
+    },
+    {
+      "name": "Social Link",
+      "kind": "button",
+      "refersTo": null,
+      "description": "Footer social icon in a pill-bordered circle. White on Ink background.",
+      "html": "<a class=\"ds-social-link\" href=\"#\"><svg width=\"20\" height=\"20\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><rect x=\"2\" y=\"2\" width=\"20\" height=\"20\" rx=\"5\"/><circle cx=\"12\" cy=\"12\" r=\"5\"/><circle cx=\"18\" cy=\"6\" r=\"1.5\" fill=\"currentColor\" stroke=\"none\"/></svg></a>",
+      "css": ".ds-social-link { display: inline-flex; align-items: center; justify-content: center; width: 44px; height: 44px; border: 1px solid #fff; border-radius: 50%; color: #fff; text-decoration: none; transition: background-color 0.2s ease, color 0.2s ease; } .ds-social-link:hover { background-color: #fff; color: #1a1a1a; } .ds-social-link:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Atelier Window",
+    "overview": "Looking into the design studio itself — precision, intentionality, the hand behind the garment. Every element exists because someone decided it should. The system carries the discipline of the atelier into the browser: sharp lines, deliberate negative space, and a refusal to decorate where structure alone is enough. The gowns are the subject; the interface is the frame.\n\nThis system explicitly rejects over-the-top glam (heavy ornamentation, glitzy gold, maximalist embellishment), generic template bridal (stock-photo-heavy, interchangeable layouts), and fast-fashion aesthetics (cluttered layouts, sale banners, urgency tactics). Miss Scarlett’s luxury is sculptural, not decorative. The site should feel authored, not assembled.\n\nThe palette is restrained: warm neutrals with near-black ink carrying all authority. Typography does the heavy lifting through a serif/sans pairing — Ivy Mode for display and Lato for body — with thin weights and generous scale. Sections breathe. Imagery lands.",
+    "keyCharacteristics": [
+      "Warm neutral palette with near-black as the sole action color",
+      "Thin font weights throughout (300 for display and body, 400 for labels)",
+      "Pill-shaped buttons with outline-to-fill hover transitions",
+      "Flat elevation — depth through background color alternation, never shadows",
+      "Full-bleed hero imagery with overlaid typography",
+      "Full-screen navigation overlay on all viewports",
+      "Generous section padding (60px standard) with visual rhythm through alternating backgrounds"
+    ],
+    "rules": [
+      { "name": "The Ink Authority Rule", "body": "Ink (#1a1a1a) is the only color that commands attention. Every interactive element, every heading, every call-to-action uses Ink or White-on-Ink. No secondary accent color. No brand color applied to buttons. The photography provides the color; the interface provides the frame.", "section": "colors" },
+      { "name": "The Muted Prohibition", "body": "Muted (#989389) is forbidden as body text on the Light background — the contrast ratio (approximately 3.2:1) fails WCAG AA. Muted is reserved for labels, breadcrumbs, and metadata only, where the text is short and supplementary.", "section": "colors" },
+      { "name": "The Light Weight Rule", "body": "Body text is weight 300. Label text is weight 400. Weight 700 exists in the Lato import but is not used in the current design system. Bold is earned; reaching for it should feel unusual.", "section": "typography" },
+      { "name": "The Uppercase Boundary", "body": "All Ivy Mode text is uppercase. All Label-role Lato text is uppercase. Body-role Lato text is never uppercase. The boundary is typographic role, not visual size.", "section": "typography" },
+      { "name": "The Flat-By-Conviction Rule", "body": "Shadows are prohibited. If a new component needs depth, use a background color shift or a thin border — never a box-shadow. The atelier window is flat glass; looking through it should feel like looking, not reaching.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use Ink (#1a1a1a) as the sole interactive/emphasis color. Photography provides vibrancy; the interface provides the frame.",
+      "Do maintain the pill shape (50px radius) on every button. It is the component signature.",
+      "Do alternate section backgrounds (Light / White / Coconut / Ink) for visual rhythm. Vary the sequence.",
+      "Do set body text in Lato 300 at 18px with generous line-height (1.83). Cap paragraph width at 65–75ch.",
+      "Do use full-bleed imagery for hero sections. The photograph is the design; the UI is the caption.",
+      "Do keep product cards minimal: image + name, nothing else. The gown sells itself.",
+      "Do test all Ivy Mode headings at every breakpoint. Thin weight + uppercase + large scale is prone to overflow."
+    ],
+    "donts": [
+      "Don't introduce a secondary accent color. No teal, no rose, no gold. The palette is Ink + warm neutrals.",
+      "Don't use Muted (#989389) as body text on Light backgrounds — it fails AA contrast.",
+      "Don't add box-shadows to any element. The system is flat by conviction.",
+      "Don't use heavy ornamentation, glitzy gold, or maximalist embellishment. Luxury is sculptural, not decorative.",
+      "Don't use generic template bridal layouts — stock-photo grids, predictable pastels, interchangeable ordering.",
+      "Don't use sale banners, urgency copy, countdown timers, or discount badges. Price is not the conversation.",
+      "Don't use font weight 700 (bold). Weight 300 and 400 carry all hierarchy through scale and case.",
+      "Don't use border-radius values between 8px and 50px. Two shapes: tight (0–8px) and pill (50px).",
+      "Don't nest cards or place cards inside cards."
+    ]
+  }
+}

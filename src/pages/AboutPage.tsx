@@ -18,12 +18,6 @@ import melwebp      from '@/assets/images/melwebp.webp'
 import melwebp500   from '@/assets/images/melwebp-p-500.webp'
 import melwebp800   from '@/assets/images/melwebp-p-800.webp'
 import melwebp1080  from '@/assets/images/melwebp-p-1080.webp'
-import logo1 from '@/assets/images/logo1.webp'
-import logo2 from '@/assets/images/logo2.webp'
-import logo3 from '@/assets/images/logo3.webp'
-import logo4 from '@/assets/images/logo4.webp'
-import logo5 from '@/assets/images/logo5.webp'
-import logo6 from '@/assets/images/logo6.webp'
 import img125325    from '@/assets/images/125325.webp'
 import img125325_500 from '@/assets/images/125325-p-500.webp'
 import img125325_800 from '@/assets/images/125325-p-800.webp'
@@ -72,8 +66,6 @@ const testimonials = [
     location: 'Australia',
   },
 ]
-
-const brideLogos = [logo6, logo5, logo4, logo3, logo2, logo1, logo6, logo5]
 
 const bridePhotos = [
   {
@@ -234,42 +226,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* As seen in — logo slider */}
       <section className="section-7">
-        <div className="w-layout-blockcontainer container-13 w-container">
-          <h2 className="heading-5 happy-brides-h2">Miss Scarlett brides</h2>
-          <p className="paragraph happy-brides-para">
-            Real brides. Real moments.
-            <br />A celebration of love, style, and individuality.
-          </p>
-        </div>
-        <div className="container-12">
-          <Swiper
-            modules={[Autoplay]}
-            autoplay={{ delay: 2500, disableOnInteraction: false }}
-            loop
-            slidesPerView={4}
-            spaceBetween={32}
-            breakpoints={{
-              0:   { slidesPerView: 2, spaceBetween: 20 },
-              640: { slidesPerView: 3, spaceBetween: 24 },
-              900: { slidesPerView: 5, spaceBetween: 32 },
-            }}
-            className="team-slider-wrapper-2 w-slider"
-          >
-            {brideLogos.map((src, i) => (
-              <SwiperSlide key={i} className="team-slide-wrapper-2 w-slide">
-                <img
-                  src={src}
-                  loading="lazy"
-                  alt="Miss Scarlett stockist or media feature logo"
-                  className="team-member-image-two-2"
-                />
-              </SwiperSlide>
-            ))}
-          </Swiper>
-        </div>
-
         {/* Bride photos — 3 portrait images side by side */}
         <section className="team-slider-4">
           <div className="container-18">

@@ -43,28 +43,36 @@ export default function Navbar() {
         <div className="navbar-no-shadow-container">
           <div className="container-regular">
             <header className="navbar-wrapper">
-              {/* LEFT – Hamburger Menu */}
-              <button
-                className="menu-button-3 w-nav-button"
-                onClick={() => setMenuOpen(true)}
-                aria-label="Open navigation"
-                aria-expanded={menuOpen}
-              >
-                <svg
-                  width="28"
-                  height="28"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="1.2"
-                  strokeLinecap="round"
-                  className="hamburger-svg"
+              {/* LEFT – Hamburger + Desktop Nav Links */}
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <button
+                  className="menu-button-3 w-nav-button"
+                  onClick={() => setMenuOpen(true)}
+                  aria-label="Open navigation"
+                  aria-expanded={menuOpen}
                 >
-                  <line x1="3" y1="6" x2="21" y2="6" />
-                  <line x1="3" y1="12" x2="21" y2="12" />
-                  <line x1="3" y1="18" x2="21" y2="18" />
-                </svg>
-              </button>
+                  <svg
+                    width="28"
+                    height="28"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    className="hamburger-svg"
+                  >
+                    <line x1="3" y1="6" x2="21" y2="6" />
+                    <line x1="3" y1="12" x2="21" y2="12" />
+                    <line x1="3" y1="18" x2="21" y2="18" />
+                  </svg>
+                </button>
+                <nav className="desktop-nav-links" aria-label="Primary">
+                  <Link to="/category/all-collections" className="desktop-nav-link">Collections</Link>
+                  <Link to="/about" className="desktop-nav-link">About</Link>
+                  <Link to="/find-a-stockist" className="desktop-nav-link">Stockists</Link>
+                  <Link to="/journal" className="desktop-nav-link">Journal</Link>
+                </nav>
+              </div>
 
               {/* CENTRE – Logo */}
               <Link to="/" className="navbar-brand w-nav-brand" onClick={close} aria-label="Miss Scarlett home">
