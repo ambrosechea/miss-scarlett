@@ -16,8 +16,8 @@ export default function Footer() {
         <div className="w-layout-layout quick-stack-4 wf-layout-layout">
           <div className="w-layout-cell cell-19">
             <div className="footer-copyright-copy">
-              <a href="#" className="link"><sub>Privacy Statement</sub></a>
-              <a href="#" className="link-2"><sub>Terms of use</sub></a>
+              <Link to="/privacy" className="link"><sub>Privacy Statement</sub></Link>
+              <Link to="/terms" className="link-2"><sub>Terms of use</sub></Link>
             </div>
           </div>
           <div className="w-layout-cell cell-9">

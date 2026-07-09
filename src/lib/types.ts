@@ -1,6 +1,7 @@
 export interface Stockist {
   id: number
   name: string
+  slug: string
   address: string | null
   city: string
   state: string | null

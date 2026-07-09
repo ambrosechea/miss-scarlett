@@ -2,13 +2,14 @@ import type { Env } from './types'
 import { handleContact } from './routes/contact'
 import { handleBecomeStockist } from './routes/become-stockist'
 import { handleBookAppointment } from './routes/book-appointment'
-import { handleStockists } from './routes/stockists'
+import { handleStockists, handleStockistDetail } from './routes/stockists'
 import { handleJournal } from './routes/journal'
 import { handleTrunkShows } from './routes/trunk-shows'
 import { handleProductsList, handleProductDetail } from './routes/products'
 import { handleSitemap } from './routes/sitemap'
 import { handleMerchantFeed } from './routes/merchant-feed'
 import { handleMetaFeed } from './routes/meta-feed'
+import { getMetaForPath, injectPageMeta } from './seo'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -77,10 +78,20 @@ export default {
 
     // Everything else → serve the Vite SPA with security headers
     const assetResponse = await env.ASSETS.fetch(request)
-    const response = new Response(assetResponse.body, assetResponse)
+    let response = new Response(assetResponse.body, assetResponse)
     for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
       response.headers.set(key, value)
     }
+
+    // Server-render <title>/meta/OG/canonical/JSON-LD per route so crawlers that
+    // don't execute JS (most AI bots) still see real content, not an empty shell.
+    if ((response.headers.get('content-type') ?? '').includes('text/html')) {
+      const meta = await getMetaForPath(url.pathname, env)
+      if (meta) {
+        response = injectPageMeta(response, meta, `https://www.missscarlett.com.au${url.pathname}`)
+      }
+    }
+
     return response
   },
 }
@@ -100,6 +111,11 @@ async function routeApi(request: Request, url: URL, env: Env): Promise<Response>
   }
   if (pathname === '/api/stockists' && method === 'GET') {
     return handleStockists(request, env)
+  }
+  // /api/stockists/:slug
+  const stockistMatch = pathname.match(/^\/api\/stockists\/([^/]+)$/)
+  if (stockistMatch && method === 'GET') {
+    return handleStockistDetail(stockistMatch[1], env)
   }
   if (pathname === '/api/journal' && method === 'GET') {
     return handleJournal(request, env)

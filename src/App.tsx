@@ -8,6 +8,7 @@ import HomePage from '@/pages/HomePage'
 const AboutPage = lazy(() => import('@/pages/AboutPage'))
 const ContactPage = lazy(() => import('@/pages/ContactPage'))
 const FindStockistPage = lazy(() => import('@/pages/FindStockistPage'))
+const StockistDetailPage = lazy(() => import('@/pages/StockistDetailPage'))
 const BecomeStockistPage = lazy(() => import('@/pages/BecomeStockistPage'))
 const TrunkShowsPage = lazy(() => import('@/pages/TrunkShowsPage'))
 const BookAppointmentPage = lazy(() => import('@/pages/BookAppointmentPage'))
@@ -15,6 +16,8 @@ const JournalPage = lazy(() => import('@/pages/JournalPage'))
 const SearchPage = lazy(() => import('@/pages/SearchPage'))
 const CollectionPage = lazy(() => import('@/pages/CollectionPage'))
 const ProductPage = lazy(() => import('@/pages/ProductPage'))
+const PrivacyPage = lazy(() => import('@/pages/PrivacyPage'))
+const TermsPage = lazy(() => import('@/pages/TermsPage'))
 
 function RouteTracker() {
   const location = useLocation()
@@ -37,6 +40,7 @@ export default function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/contact-us" element={<ContactPage />} />
             <Route path="/find-a-stockist" element={<FindStockistPage />} />
+            <Route path="/stockists/:slug" element={<StockistDetailPage />} />
             <Route path="/become-a-stockist" element={<BecomeStockistPage />} />
             <Route path="/trunk-shows" element={<TrunkShowsPage />} />
             <Route path="/book-appointment" element={<BookAppointmentPage />} />
@@ -45,6 +49,8 @@ export default function App() {
             {/* Products */}
             <Route path="/category/:slug" element={<CollectionPage />} />
             <Route path="/product/:handle" element={<ProductPage />} />
+            <Route path="/privacy" element={<PrivacyPage />} />
+            <Route path="/terms" element={<TermsPage />} />
             {/* Catch-all */}
             <Route path="*" element={<HomePage />} />
           </Routes>

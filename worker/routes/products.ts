@@ -21,6 +21,43 @@ const SLUG_TO_CATEGORY: Record<string, string> = {
   'all-collections':  'ALL COLLECTIONS',
 }
 
+export async function getProductHandles(slug: string, env: Env): Promise<string[]> {
+  const category = SLUG_TO_CATEGORY[slug]
+  if (!category) return []
+
+  const { results } = await env.DB.prepare(
+    `SELECT p.handle
+       FROM products p
+       JOIN product_categories pc ON pc.product_id = p.id
+      WHERE pc.category = ? AND p.active = 1
+      ORDER BY p.rowid ASC`
+  ).bind(category).all<{ handle: string }>()
+  return results.map(r => r.handle)
+}
+
+export async function getProductDetail(handle: string, env: Env) {
+  const product = await env.DB.prepare(
+    `SELECT id, handle, name, description, price, main_image
+       FROM products WHERE handle = ? AND active = 1`
+  ).bind(handle).first<ProductRow>()
+
+  if (!product) return null
+
+  const { results: imageRows } = await env.DB.prepare(
+    `SELECT url FROM product_images WHERE product_id = ? ORDER BY sort_order ASC`
+  ).bind(product.id).all<{ url: string }>()
+
+  const { results: catRows } = await env.DB.prepare(
+    `SELECT category FROM product_categories WHERE product_id = ?`
+  ).bind(product.id).all<{ category: string }>()
+
+  return {
+    ...product,
+    images:     imageRows.map(r => r.url),
+    categories: catRows.map(r => r.category),
+  }
+}
+
 export async function handleProductsList(request: Request, env: Env): Promise<Response> {
   const url = new URL(request.url)
   const slug = url.searchParams.get('collection')
@@ -51,24 +88,7 @@ export async function handleProductsList(request: Request, env: Env): Promise<Re
 }
 
 export async function handleProductDetail(handle: string, env: Env): Promise<Response> {
-  const product = await env.DB.prepare(
-    `SELECT id, handle, name, description, price, main_image
-       FROM products WHERE handle = ? AND active = 1`
-  ).bind(handle).first<ProductRow>()
-
+  const product = await getProductDetail(handle, env)
   if (!product) return json({ error: 'Product not found' }, 404)
-
-  const { results: imageRows } = await env.DB.prepare(
-    `SELECT url FROM product_images WHERE product_id = ? ORDER BY sort_order ASC`
-  ).bind(product.id).all<{ url: string }>()
-
-  const { results: catRows } = await env.DB.prepare(
-    `SELECT category FROM product_categories WHERE product_id = ?`
-  ).bind(product.id).all<{ category: string }>()
-
-  return json({
-    ...product,
-    images:     imageRows.map(r => r.url),
-    categories: catRows.map(r => r.category),
-  })
+  return json(product)
 }

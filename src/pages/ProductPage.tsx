@@ -98,6 +98,7 @@ export default function ProductPage() {
           description: product.description,
           main_image:  product.main_image,
           categories:  product.categories,
+          price:       product.price,
         })}
       />
 

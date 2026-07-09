@@ -28,6 +28,10 @@ export async function handleSitemap(env: Env): Promise<Response> {
     `SELECT handle FROM products WHERE active = 1 ORDER BY rowid ASC`
   ).all<{ handle: string }>()
 
+  const { results: stockists } = await env.DB.prepare(
+    `SELECT slug FROM stockists WHERE active = 1 ORDER BY rowid ASC`
+  ).all<{ slug: string }>()
+
   const urls: string[] = []
 
   for (const path of STATIC_ROUTES) {
@@ -40,6 +44,10 @@ export async function handleSitemap(env: Env): Promise<Response> {
 
   for (const { handle } of products) {
     urls.push(entry(`${SITE_URL}/product/${handle}`, 'weekly', '0.6'))
+  }
+
+  for (const { slug } of stockists) {
+    urls.push(entry(`${SITE_URL}/stockists/${slug}`, 'monthly', '0.6'))
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

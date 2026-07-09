@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
 import type { Stockist } from '@/lib/types'
 import SEO from '@/components/SEO'
@@ -100,9 +101,9 @@ export default function FindStockistPage() {
                     {items.map(s => (
                       <div key={s.id} role="listitem" className="collection-item-3 w-dyn-item w-col w-col-4">
                         <div className="div-block-17">
-                          <a href="#" className="link-block-5 w-inline-block">
+                          <Link to={`/stockists/${s.slug}`} className="link-block-5 w-inline-block">
                             <h2 className="heading-18">{s.name}</h2>
-                          </a>
+                          </Link>
                           <p className="paragraph-8">{location(s)}</p>
                           {s.website && (
                             <a

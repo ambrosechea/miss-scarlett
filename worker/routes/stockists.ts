@@ -4,6 +4,7 @@ import { json } from '../index'
 interface StockistRow {
   id: number
   name: string
+  slug: string
   address: string | null
   city: string
   state: string | null
@@ -16,11 +17,23 @@ interface StockistRow {
 
 export async function handleStockists(_request: Request, env: Env): Promise<Response> {
   const { results } = await env.DB.prepare(
-    `SELECT id, name, address, city, state, country, region, phone, email, website
+    `SELECT id, name, slug, address, city, state, country, region, phone, email, website
        FROM stockists
       WHERE active = 1
       ORDER BY region, country, name`
   ).all<StockistRow>()
 
   return json(results)
+}
+
+export async function handleStockistDetail(slug: string, env: Env): Promise<Response> {
+  const stockist = await env.DB.prepare(
+    `SELECT id, name, slug, address, city, state, country, region, phone, email, website
+       FROM stockists
+      WHERE slug = ? AND active = 1`
+  ).bind(slug).first<StockistRow>()
+
+  if (!stockist) return json({ error: 'Stockist not found' }, 404)
+
+  return json(stockist)
 }

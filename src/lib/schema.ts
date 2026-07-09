@@ -44,6 +44,8 @@ export const orgSchema = {
   ],
   sameAs: [
     'https://www.instagram.com/missscarlett.thelabel',
+    'https://www.facebook.com/missscarlett.thelabel/',
+    'https://www.tiktok.com/@missscarlettthelabel',
     SITE,
   ],
   address: {
@@ -181,6 +183,14 @@ export const homeSchema = {
             text: 'Miss Scarlett trunk shows are exclusive limited-time events held at selected boutiques worldwide, where brides can experience the full collection in an intimate setting. Appointments are essential.',
           },
         },
+        {
+          '@type': 'Question',
+          name: 'Can I buy Miss Scarlett gowns online?',
+          acceptedAnswer: {
+            '@type': 'Answer',
+            text: 'Miss Scarlett gowns are sold exclusively through a curated network of boutiques and are not available for direct online purchase. Try on the collection at your nearest stockist, where the boutique team will guide you through fitting, ordering, and alteration options.',
+          },
+        },
       ],
     },
   ],
@@ -215,6 +225,7 @@ export function buildProductSchema(product: {
   description: string
   main_image: string
   categories: string[]
+  price: string
 }) {
   const url = `${SITE}/product/${product.handle}`
   const primaryCategory = product.categories.find(c => c !== 'ALL COLLECTIONS') ?? 'Bridal'
@@ -240,12 +251,9 @@ export function buildProductSchema(product: {
           availability: 'https://schema.org/InStoreOnly',
           itemCondition: 'https://schema.org/NewCondition',
           seller: { '@id': ORG_ID },
+          price: parseFloat(product.price).toFixed(2),
           priceCurrency: 'AUD',
-          priceSpecification: {
-            '@type': 'PriceSpecification',
-            priceCurrency: 'AUD',
-            description: 'Contact your nearest stockist for pricing',
-          },
+          priceValidUntil: `${new Date().getFullYear() + 1}-12-31`,
           url: `${SITE}/find-a-stockist`,
         },
       },
@@ -354,6 +362,67 @@ export const stockistPageSchema = {
       ],
     },
   ],
+}
+
+// ── Individual stockist page (called dynamically with stockist data) ──────────
+export function buildStockistSchema(stockist: {
+  slug: string
+  name: string
+  address: string | null
+  city: string
+  state: string | null
+  country: string
+  region: string
+  phone: string | null
+  email: string | null
+  website: string | null
+}) {
+  const url = `${SITE}/stockists/${stockist.slug}`
+  const locationLabel = [stockist.city, stockist.state, stockist.country].filter(Boolean).join(', ')
+
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': ['ClothingStore', 'LocalBusiness'],
+        '@id': `${url}#store`,
+        name: stockist.name,
+        url: stockist.website ?? url,
+        image: `${SITE}/og-image.jpg`,
+        description: `${stockist.name} is an authorised Miss Scarlett bridal stockist in ${locationLabel}, offering the full Miss Scarlett gown collection for in-person fittings.`,
+        address: {
+          '@type': 'PostalAddress',
+          ...(stockist.address ? { streetAddress: stockist.address } : {}),
+          addressLocality: stockist.city,
+          ...(stockist.state ? { addressRegion: stockist.state } : {}),
+          addressCountry: stockist.country,
+        },
+        ...(stockist.phone ? { telephone: stockist.phone } : {}),
+        ...(stockist.email ? { email: stockist.email } : {}),
+        brand: { '@id': ORG_ID },
+        parentOrganization: { '@id': ORG_ID },
+        areaServed: locationLabel,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        '@id': `${url}#breadcrumb`,
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+          { '@type': 'ListItem', position: 2, name: 'Find a Stockist', item: `${SITE}/find-a-stockist` },
+          { '@type': 'ListItem', position: 3, name: stockist.name, item: url },
+        ],
+      },
+      {
+        '@type': 'WebPage',
+        url,
+        name: `${stockist.name} — Miss Scarlett Stockist in ${stockist.city} | Miss Scarlett Bridal`,
+        description: `Visit ${stockist.name} in ${locationLabel} to try on the Miss Scarlett bridal collection in person. Address, contact details, and directions.`,
+        isPartOf: { '@id': WEB_ID },
+        about: { '@id': `${url}#store` },
+        breadcrumb: { '@id': `${url}#breadcrumb` },
+      },
+    ],
+  }
 }
 
 // ── Book Appointment ──────────────────────────────────────────────────────────
