@@ -43,7 +43,7 @@ export default function Navbar() {
         <div className="navbar-no-shadow-container">
           <div className="container-regular">
             <header className="navbar-wrapper">
-              {/* LEFT – Hamburger + Desktop Nav Links */}
+              {/* LEFT – Hamburger */}
               <div style={{ display: 'flex', alignItems: 'center' }}>
                 <button
                   className="menu-button-3 w-nav-button"
@@ -66,12 +66,6 @@ export default function Navbar() {
                     <line x1="3" y1="18" x2="21" y2="18" />
                   </svg>
                 </button>
-                <nav className="desktop-nav-links" aria-label="Primary">
-                  <Link to="/category/all-collections" className="desktop-nav-link">Collections</Link>
-                  <Link to="/about" className="desktop-nav-link">About</Link>
-                  <Link to="/find-a-stockist" className="desktop-nav-link">Stockists</Link>
-                  <Link to="/journal" className="desktop-nav-link">Journal</Link>
-                </nav>
               </div>
 
               {/* CENTRE – Logo */}
@@ -206,6 +200,9 @@ export default function Navbar() {
 
               <li>
                 <Link to="/trunk-shows" className="nav-link-2" onClick={close}>TRUNK SHOWS</Link>
+              </li>
+              <li>
+                <Link to="/journal" className="nav-link-2" onClick={close}>JOURNAL</Link>
               </li>
               <li>
                 <Link to="/contact-us" className="nav-link-2" onClick={close}>CONTACT US</Link>
