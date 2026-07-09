@@ -1,6 +1,7 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect, useMemo, useRef } from 'react'
 import { Link, useParams, useNavigate } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { usePageDataSeed } from '@/lib/pageData'
 import { trackCollectionView } from '@/lib/analytics'
 import { COLLECTIONS } from '@/lib/collections'
 import type { Product } from '@/lib/types'
@@ -65,14 +66,16 @@ function getDressType(p: Product): string {
 export default function CollectionPage() {
   const { slug = 'all-collections' } = useParams<{ slug: string }>()
   const navigate = useNavigate()
+  const seed = usePageDataSeed<{ products: Product[] }>(`/category/${slug}`)
 
-  const [products,    setProducts]    = useState<Product[]>([])
-  const [loading,     setLoading]     = useState(true)
+  const [products,    setProducts]    = useState<Product[]>(() => seed?.products ?? [])
+  const [loading,     setLoading]     = useState(() => !seed)
   const [fetchError,  setFetchError]  = useState<string | null>(null)
   const [searchInput, setSearchInput] = useState('')
   const [activeSearch,setActiveSearch]= useState('')
   const [dressType,   setDressType]   = useState('ALL SHAPES')
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const seededSlug = useRef(seed ? slug : null)
 
   const meta = COLLECTION_META[slug] ?? {
     title:       'Collection | Miss Scarlett Bridal',
@@ -81,6 +84,11 @@ export default function CollectionPage() {
   }
 
   useEffect(() => {
+    if (seededSlug.current === slug) {
+      seededSlug.current = null // only skip the fetch once, right after the seeded mount
+      return
+    }
+
     setSearchInput('')
     setActiveSearch('')
     setDressType('ALL SHAPES')

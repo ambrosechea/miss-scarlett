@@ -4,6 +4,7 @@ node_modules/
 # Build output
 dist/
 dist-ssr/
+vite.config.ts.timestamp-*
 
 # Wrangler / Cloudflare local dev cache
 .wrangler/

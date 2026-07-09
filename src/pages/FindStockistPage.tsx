@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { usePageDataSeed } from '@/lib/pageData'
 import type { Stockist } from '@/lib/types'
 import SEO from '@/components/SEO'
 import { stockistPageSchema } from '@/lib/schema'
@@ -22,11 +23,14 @@ function location(s: Stockist): string {
 }
 
 export default function FindStockistPage() {
-  const [stockists, setStockists] = useState<Stockist[]>([])
-  const [loading, setLoading]     = useState(true)
+  const [stockists, setStockists] = useState<Stockist[]>(
+    () => usePageDataSeed<{ stockists: Stockist[] }>('/find-a-stockist')?.stockists ?? [],
+  )
+  const [loading, setLoading]     = useState(() => stockists.length === 0)
   const [fetchError, setFetchError] = useState<string | null>(null)
 
   useEffect(() => {
+    if (stockists.length > 0) return // already server-rendered
     apiGet<Stockist[]>('/api/stockists').then(({ data, error }) => {
       if (error) setFetchError(error)
       else setStockists(data ?? [])

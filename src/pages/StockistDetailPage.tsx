@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { usePageDataSeed } from '@/lib/pageData'
 import type { Stockist, Product } from '@/lib/types'
 import SEO from '@/components/SEO'
 import { buildStockistSchema } from '@/lib/schema'
@@ -17,12 +18,15 @@ function localIntro(s: Stockist): string {
 
 export default function StockistDetailPage() {
   const { slug = '' } = useParams<{ slug: string }>()
-  const [stockist, setStockist]     = useState<Stockist | null>(null)
-  const [loading, setLoading]       = useState(true)
+  const seed = usePageDataSeed<{ stockist: Stockist; dresses: Product[] }>(`/stockists/${slug}`)
+  const [stockist, setStockist]     = useState<Stockist | null>(() => seed?.stockist ?? null)
+  const [loading, setLoading]       = useState(() => !seed)
   const [fetchError, setFetchError] = useState<string | null>(null)
-  const [dresses, setDresses]       = useState<Product[]>([])
+  const [dresses, setDresses]       = useState<Product[]>(() => seed?.dresses ?? [])
 
   useEffect(() => {
+    if (stockist) return // already server-rendered
+
     setLoading(true)
     setFetchError(null)
     setStockist(null)
@@ -36,7 +40,7 @@ export default function StockistDetailPage() {
 
   // Showcase a handful of gowns brides can expect to find in-store
   useEffect(() => {
-    if (!stockist) return
+    if (!stockist || dresses.length > 0) return // already server-rendered
     apiGet<Product[]>('/api/products').then(({ data }) => {
       if (data) {
         const shuffled = [...data].sort(() => Math.random() - 0.5).slice(0, 8)

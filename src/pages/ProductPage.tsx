@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { usePageDataSeed } from '@/lib/pageData'
 import { trackProductView, trackEnquireClick, trackFindStockistClick } from '@/lib/analytics'
 import type { Product, ProductDetail } from '@/lib/types'
 import SEO from '@/components/SEO'
@@ -13,13 +14,20 @@ function categoryToSlug(cat: string): string {
 
 export default function ProductPage() {
   const { handle = '' } = useParams<{ handle: string }>()
-  const [product, setProduct]         = useState<ProductDetail | null>(null)
-  const [loading, setLoading]         = useState(true)
+  const seed = usePageDataSeed<{ product: ProductDetail; similarProducts: Product[] }>(`/product/${handle}`)
+  const [product, setProduct]         = useState<ProductDetail | null>(() => seed?.product ?? null)
+  const [loading, setLoading]         = useState(() => !seed)
   const [fetchError, setFetchError]   = useState<string | null>(null)
   const [activeImg, setActiveImg]     = useState(0)
-  const [similarProducts, setSimilarProducts] = useState<Product[]>([])
+  const [similarProducts, setSimilarProducts] = useState<Product[]>(() => seed?.similarProducts ?? [])
+  const seededHandle = useRef(seed ? handle : null)
 
   useEffect(() => {
+    if (seededHandle.current === handle) {
+      seededHandle.current = null // only skip the fetch once, right after the seeded mount
+      return
+    }
+
     setLoading(true)
     setFetchError(null)
     setProduct(null)
@@ -34,8 +42,7 @@ export default function ProductPage() {
 
   // Fetch similar dresses from the same collection whenever the product changes
   useEffect(() => {
-    if (!product) return
-    setSimilarProducts([])
+    if (!product || similarProducts.length > 0) return
     const primary = product.categories.find(c => c !== 'ALL COLLECTIONS') ?? ''
     if (!primary) return
     const slug = categoryToSlug(primary)

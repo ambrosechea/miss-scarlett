@@ -10,6 +10,8 @@ import { handleSitemap } from './routes/sitemap'
 import { handleMerchantFeed } from './routes/merchant-feed'
 import { handleMetaFeed } from './routes/meta-feed'
 import { getMetaForPath, injectPageMeta } from './seo'
+import { loadPageData } from './ssrData'
+import { render } from '../dist-ssr/entry-server.js'
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': '*',
@@ -90,6 +92,26 @@ export default {
       if (meta) {
         response = injectPageMeta(response, meta, `https://www.missscarlett.com.au${url.pathname}`)
       }
+
+      // Full React SSR: render real body markup into #root and seed the same
+      // data into window.__INITIAL_DATA__ so client hydration doesn't refetch.
+      const pageData = await loadPageData(url.pathname, env)
+      const payload = pageData ? { path: url.pathname, data: pageData } : null
+      const bodyHtml = render(url.pathname, payload)
+      const dataScript = `<script>window.__INITIAL_DATA__=${JSON.stringify(payload).replace(/</g, '\\u003c')}</script>`
+
+      response = new HTMLRewriter()
+        .on('#root', {
+          element(el) {
+            el.setInnerContent(bodyHtml, { html: true })
+          },
+        })
+        .on('script[type="module"]', {
+          element(el) {
+            el.before(dataScript, { html: true })
+          },
+        })
+        .transform(response)
     }
 
     return response

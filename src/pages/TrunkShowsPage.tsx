@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
+import { usePageDataSeed } from '@/lib/pageData'
 import type { TrunkShow } from '@/lib/types'
 import SEO from '@/components/SEO'
 import { trunkShowsSchema } from '@/lib/schema'
@@ -12,12 +13,15 @@ import group265_1080 from '@/assets/images/group_265-p-1080.webp'
 const COUNTRY_FILTERS = ['View All', 'AUSTRALIA', 'NZ', 'SINGAPORE', 'UK', 'USA', 'CANADA', 'MALAYSIA']
 
 export default function TrunkShowsPage() {
-  const [shows, setShows]         = useState<TrunkShow[]>([])
-  const [loading, setLoading]     = useState(true)
+  const [shows, setShows]         = useState<TrunkShow[]>(
+    () => usePageDataSeed<{ shows: TrunkShow[] }>('/trunk-shows')?.shows ?? [],
+  )
+  const [loading, setLoading]     = useState(() => shows.length === 0)
   const [fetchError, setFetchError] = useState<string | null>(null)
   const [activeFilter, setActiveFilter] = useState('View All')
 
   useEffect(() => {
+    if (shows.length > 0) return // already server-rendered
     apiGet<TrunkShow[]>('/api/trunk-shows').then(({ data, error }) => {
       if (error) setFetchError(error)
       else setShows(data ?? [])
