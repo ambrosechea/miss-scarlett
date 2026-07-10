@@ -11,6 +11,75 @@ const stockistLinks = [
   { label: 'Stockist login',   href: 'http://portal.missscarlett.com.au/orders', external: true },
 ]
 
+interface NavLinkItem {
+  label: string
+  to?: string
+  href?: string
+}
+
+function NavDropdown({
+  label,
+  items,
+  open,
+  onToggle,
+  onLinkClick,
+  toggleClassName,
+}: {
+  label: string
+  items: NavLinkItem[]
+  open: boolean
+  onToggle: () => void
+  onLinkClick: () => void
+  toggleClassName: string
+}) {
+  return (
+    <li>
+      <button
+        className={`nav-link-2 ${toggleClassName} w-dropdown-toggle`}
+        style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%' }}
+        onClick={onToggle}
+        aria-expanded={open}
+      >
+        {label}
+        <svg
+          className={`nav-chevron${open ? ' open' : ''}`}
+          width="11" height="7" viewBox="0 0 11 7"
+          fill="none" stroke="currentColor" strokeWidth="1.2"
+          strokeLinecap="round" strokeLinejoin="round"
+          aria-hidden="true"
+        >
+          <polyline points="1,1 5.5,6 10,1" />
+        </svg>
+      </button>
+      {open && (
+        <ul className="nav-overlay-sub dropdown-list-2 w--open">
+          {items.map((link) =>
+            link.to ? (
+              <li key={link.label}>
+                <Link to={link.to} className="dropdown-link-2 w-dropdown-link" onClick={onLinkClick}>
+                  {link.label}
+                </Link>
+              </li>
+            ) : (
+              <li key={link.label}>
+                <a
+                  href={link.href}
+                  className="dropdown-link-2 w-dropdown-link"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={onLinkClick}
+                >
+                  {link.label}
+                </a>
+              </li>
+            )
+          )}
+        </ul>
+      )}
+    </li>
+  )
+}
+
 export default function Navbar() {
   const [menuOpen,       setMenuOpen]       = useState(false)
   const [collectionOpen, setCollectionOpen] = useState(false)
@@ -112,91 +181,23 @@ export default function Navbar() {
                 <Link to="/about" className="nav-link-2" onClick={close}>ABOUT</Link>
               </li>
 
-              {/* Collection dropdown */}
-              <li>
-                <button
-                  className="nav-link-2 dropdown-toggle-copy w-dropdown-toggle"
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%' }}
-                  onClick={() => setCollectionOpen(!collectionOpen)}
-                  aria-expanded={collectionOpen}
-                >
-                  COLLECTION
-                  <svg
-                    className={`nav-chevron${collectionOpen ? ' open' : ''}`}
-                    width="11" height="7" viewBox="0 0 11 7"
-                    fill="none" stroke="currentColor" strokeWidth="1.2"
-                    strokeLinecap="round" strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <polyline points="1,1 5.5,6 10,1" />
-                  </svg>
-                </button>
-                {collectionOpen && (
-                  <ul className="nav-overlay-sub dropdown-list-2 w--open">
-                    {collectionLinks.map((link) => (
-                      <li key={link.label}>
-                        <Link
-                          to={link.to}
-                          className="dropdown-link-2 w-dropdown-link"
-                          onClick={close}
-                        >
-                          {link.label}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-              </li>
+              <NavDropdown
+                label="COLLECTION"
+                items={collectionLinks}
+                open={collectionOpen}
+                onToggle={() => setCollectionOpen(!collectionOpen)}
+                onLinkClick={close}
+                toggleClassName="dropdown-toggle-copy"
+              />
 
-              {/* Stockists dropdown */}
-              <li>
-                <button
-                  className="nav-link-2 dropdown-toggle w-dropdown-toggle"
-                  style={{ background: 'none', border: 'none', cursor: 'pointer', width: '100%' }}
-                  onClick={() => setStockistOpen(!stockistOpen)}
-                  aria-expanded={stockistOpen}
-                >
-                  STOCKISTS
-                  <svg
-                    className={`nav-chevron${stockistOpen ? ' open' : ''}`}
-                    width="11" height="7" viewBox="0 0 11 7"
-                    fill="none" stroke="currentColor" strokeWidth="1.2"
-                    strokeLinecap="round" strokeLinejoin="round"
-                    aria-hidden="true"
-                  >
-                    <polyline points="1,1 5.5,6 10,1" />
-                  </svg>
-                </button>
-                {stockistOpen && (
-                  <ul className="nav-overlay-sub dropdown-list-2 w--open">
-                    {stockistLinks.map((link) =>
-                      link.to ? (
-                        <li key={link.label}>
-                          <Link
-                            to={link.to}
-                            className="dropdown-link-2 w-dropdown-link"
-                            onClick={close}
-                          >
-                            {link.label}
-                          </Link>
-                        </li>
-                      ) : (
-                        <li key={link.label}>
-                          <a
-                            href={link.href}
-                            className="dropdown-link-2 w-dropdown-link"
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            onClick={close}
-                          >
-                            {link.label}
-                          </a>
-                        </li>
-                      )
-                    )}
-                  </ul>
-                )}
-              </li>
+              <NavDropdown
+                label="STOCKISTS"
+                items={stockistLinks}
+                open={stockistOpen}
+                onToggle={() => setStockistOpen(!stockistOpen)}
+                onLinkClick={close}
+                toggleClassName="dropdown-toggle"
+              />
 
               <li>
                 <Link to="/trunk-shows" className="nav-link-2" onClick={close}>TRUNK SHOWS</Link>

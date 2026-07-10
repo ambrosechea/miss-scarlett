@@ -1,9 +1,8 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { apiGet } from '@/lib/api'
-import { usePageDataSeed } from '@/lib/pageData'
+import { useSeededFetch } from '@/lib/pageData'
 import type { Stockist } from '@/lib/types'
 import SEO from '@/components/SEO'
+import PageHero from '@/components/PageHero'
 import { stockistPageSchema } from '@/lib/schema'
 import group257      from '@/assets/images/group_257.webp'
 import group257_500  from '@/assets/images/group_257-p-500.webp'
@@ -23,20 +22,8 @@ function location(s: Stockist): string {
 }
 
 export default function FindStockistPage() {
-  const [stockists, setStockists] = useState<Stockist[]>(
-    () => usePageDataSeed<{ stockists: Stockist[] }>('/find-a-stockist')?.stockists ?? [],
-  )
-  const [loading, setLoading]     = useState(() => stockists.length === 0)
-  const [fetchError, setFetchError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (stockists.length > 0) return // already server-rendered
-    apiGet<Stockist[]>('/api/stockists').then(({ data, error }) => {
-      if (error) setFetchError(error)
-      else setStockists(data ?? [])
-      setLoading(false)
-    })
-  }, [])
+  const { items: stockists, loading, error: fetchError } =
+    useSeededFetch<Stockist>('/find-a-stockist', '/api/stockists', 'stockists')
 
   return (
     <>
@@ -46,36 +33,22 @@ export default function FindStockistPage() {
         schema={stockistPageSchema}
       />
 
-      {/* Hero */}
-      <section className="section-2 discover-miss-scarlett">
-        <div className="w-layout-blockcontainer container-6 w-container">
-          <div className="w-layout-layout quick-stack-3 wf-layout-layout">
-            <div className="w-layout-cell cell-8">
-              <p className="heading latest-collections">Discover miss scarlett</p>
-              <h1 className="heading-5">Find a stockist</h1>
-              <p className="paragraph">
-                Miss Scarlett gowns are available through a curated network of bridal boutiques
-                worldwide. Each boutique offers a personalised experience where you can explore the
-                collection and discover the gown that feels beautifully yours.
-                <br /><br />
-                Discover a boutique near you and begin your bridal journey.
-              </p>
-            </div>
-            <div className="w-layout-cell cell-7">
-              <img
-                src={group257}
-                loading="lazy"
-                width={1138}
-                height={832}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                srcSet={`${group257_500} 500w, ${group257_800} 800w, ${group257_1080} 1080w, ${group257} 1138w`}
-                alt="Miss Scarlett bridal gown — find a stockist near you"
-                className="image-3"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Discover miss scarlett"
+        title="Find a stockist"
+        image={group257}
+        imageWidth={1138}
+        imageHeight={832}
+        imageSizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+        imageSrcSet={`${group257_500} 500w, ${group257_800} 800w, ${group257_1080} 1080w, ${group257} 1138w`}
+        imageAlt="Miss Scarlett bridal gown — find a stockist near you"
+      >
+        Miss Scarlett gowns are available through a curated network of bridal boutiques
+        worldwide. Each boutique offers a personalised experience where you can explore the
+        collection and discover the gown that feels beautifully yours.
+        <br /><br />
+        Discover a boutique near you and begin your bridal journey.
+      </PageHero>
 
       {/* Stockist lists */}
       <section className="section-18">

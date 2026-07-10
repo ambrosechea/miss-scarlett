@@ -1,7 +1,8 @@
 import { Link } from 'react-router-dom'
 import { useFormSubmit } from '@/lib/useFormSubmit'
 import SEO from '@/components/SEO'
-import Turnstile from '@/components/Turnstile'
+import PageHero from '@/components/PageHero'
+import FormShell from '@/components/FormShell'
 import { contactSchema } from '@/lib/schema'
 import group256 from '@/assets/images/group_256.webp'
 
@@ -20,86 +21,53 @@ export default function ContactPage() {
         schema={contactSchema}
       />
 
-      {/* Hero */}
-      <section className="section-2 discover-miss-scarlett">
-        <div className="w-layout-blockcontainer container-6 w-container">
-          <div className="w-layout-layout quick-stack-3 wf-layout-layout">
-            <div className="w-layout-cell cell-8">
-              <p className="heading latest-collections">Discover miss scarlett</p>
-              <h1 className="heading-5">GENERAL ENQUIRIES</h1>
-              <p className="paragraph">
-                Send us an enquiry below and our team will be in touch shortly.
-                <br /><br />
-                For brides looking to book an appointment, we can also connect you with the nearest
-                Miss Scarlett stockist.
-                <br /><br />
-                For wholesale enquiries, bridal boutiques are invited to apply{' '}
-                <Link to="/become-a-stockist">here</Link>.
-              </p>
-            </div>
-            <div className="w-layout-cell cell-7">
-              <img src={group256} loading="lazy" width={1315} height={1402} alt="Miss Scarlett bride — contact us for bridal enquiries" className="image-3" />
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="Discover miss scarlett"
+        title="GENERAL ENQUIRIES"
+        image={group256}
+        imageWidth={1315}
+        imageHeight={1402}
+        imageAlt="Miss Scarlett bride — contact us for bridal enquiries"
+      >
+        Send us an enquiry below and our team will be in touch shortly.
+        <br /><br />
+        For brides looking to book an appointment, we can also connect you with the nearest
+        Miss Scarlett stockist.
+        <br /><br />
+        For wholesale enquiries, bridal boutiques are invited to apply{' '}
+        <Link to="/become-a-stockist">here</Link>.
+      </PageHero>
 
-      {/* Form */}
-      <section className="section-6">
-        <div className="w-layout-blockcontainer container-6 w-container">
-          <div className="w-layout-layout quick-stack-11 wf-layout-layout">
-            <div className="w-layout-cell cell-23">
-              {submitted ? (
-                <div className="success-message w-form-done">
-                  <div>Thank you! Your submission has been received!</div>
-                </div>
-              ) : (
-                <div className="w-form">
-                  <form onSubmit={handleSubmit}>
-                    <div className="w-layout-layout quick-stack-12 wf-layout-layout">
-                      <div className="w-layout-cell cell-24">
-                        <label htmlFor="first-name" className="field-label-2">First Name*</label>
-                        <input className="text-field w-input" maxLength={256} name="firstName" type="text" id="first-name" required />
-                      </div>
-                      <div className="w-layout-cell cell-25">
-                        <label htmlFor="last-name" className="field-label-2">Last Name*</label>
-                        <input className="text-field w-input" maxLength={256} name="lastName" type="text" id="last-name" />
-                      </div>
-                    </div>
-                    <div className="w-layout-layout quick-stack-12 wf-layout-layout">
-                      <div className="w-layout-cell cell-24">
-                        <label htmlFor="email" className="field-label-2">Email*</label>
-                        <input className="text-field w-input" maxLength={256} name="email" type="email" id="email" required />
-                      </div>
-                    </div>
-                    <div className="w-layout-layout quick-stack-12 wf-layout-layout">
-                      <div className="w-layout-cell cell-24">
-                        <label htmlFor="phone" className="field-label-2">Phone Number*</label>
-                        <input className="text-field w-input" maxLength={256} name="phone" type="tel" id="phone" required />
-                      </div>
-                    </div>
-                    <div className="w-layout-layout quick-stack-12 wf-layout-layout">
-                      <div className="w-layout-cell cell-24">
-                        <label htmlFor="message" className="field-label-2">Message:</label>
-                        <textarea required maxLength={5000} id="message" name="message" className="textarea w-input" />
-                      </div>
-                    </div>
-                    <Turnstile />
-                    <div className="div-block-18">
-                      <input type="submit" className="submit-button w-button" value={submitting ? 'Sending…' : 'Submit'} disabled={submitting} />
-                    </div>
-                    {error && (
-                      <div className="error-message w-form-fail">
-                        <div>{error}</div>
-                      </div>
-                    )}
-                  </form>
-                </div>
-              )}
-            </div>
+      <FormShell submitted={submitted} submitting={submitting} error={error} onSubmit={handleSubmit}>
+        <div className="w-layout-layout quick-stack-12 wf-layout-layout">
+          <div className="w-layout-cell cell-24">
+            <label htmlFor="first-name" className="field-label-2">First Name*</label>
+            <input className="text-field w-input" maxLength={256} name="firstName" type="text" id="first-name" required />
+          </div>
+          <div className="w-layout-cell cell-25">
+            <label htmlFor="last-name" className="field-label-2">Last Name*</label>
+            <input className="text-field w-input" maxLength={256} name="lastName" type="text" id="last-name" />
           </div>
         </div>
-      </section>
+        <div className="w-layout-layout quick-stack-12 wf-layout-layout">
+          <div className="w-layout-cell cell-24">
+            <label htmlFor="email" className="field-label-2">Email*</label>
+            <input className="text-field w-input" maxLength={256} name="email" type="email" id="email" required />
+          </div>
+        </div>
+        <div className="w-layout-layout quick-stack-12 wf-layout-layout">
+          <div className="w-layout-cell cell-24">
+            <label htmlFor="phone" className="field-label-2">Phone Number*</label>
+            <input className="text-field w-input" maxLength={256} name="phone" type="tel" id="phone" required />
+          </div>
+        </div>
+        <div className="w-layout-layout quick-stack-12 wf-layout-layout">
+          <div className="w-layout-cell cell-24">
+            <label htmlFor="message" className="field-label-2">Message:</label>
+            <textarea required maxLength={5000} id="message" name="message" className="textarea w-input" />
+          </div>
+        </div>
+      </FormShell>
 
       {/* Contact Info */}
       <section className="section-24">

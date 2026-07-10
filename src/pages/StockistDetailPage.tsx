@@ -4,6 +4,7 @@ import { apiGet } from '@/lib/api'
 import { usePageDataSeed } from '@/lib/pageData'
 import type { Stockist, Product } from '@/lib/types'
 import SEO from '@/components/SEO'
+import DetailPageStatus from '@/components/DetailPageStatus'
 import { buildStockistSchema } from '@/lib/schema'
 
 function location(s: Stockist): string {
@@ -50,25 +51,18 @@ export default function StockistDetailPage() {
   }, [stockist])
 
   if (loading) {
-    return (
-      <section className="section-20">
-        <div className="product-wide-container">
-          <p className="paragraph">Loading…</p>
-        </div>
-      </section>
-    )
+    return <DetailPageStatus loading containerClassName="product-wide-container" />
   }
 
   if (fetchError || !stockist) {
     return (
-      <section className="section-20">
-        <div className="product-wide-container">
-          <p className="paragraph">{fetchError ?? 'Stockist not found.'}</p>
-          <Link to="/find-a-stockist" className="button-3 lovce-btn w-button" style={{ marginTop: '1rem', display: 'inline-block' }}>
-            View All Stockists
-          </Link>
-        </div>
-      </section>
+      <DetailPageStatus
+        containerClassName="product-wide-container"
+        error={fetchError}
+        notFoundMessage="Stockist not found."
+        backLinkTo="/find-a-stockist"
+        backLinkLabel="View All Stockists"
+      />
     )
   }
 

@@ -5,6 +5,7 @@ import { usePageDataSeed } from '@/lib/pageData'
 import { trackProductView, trackEnquireClick, trackFindStockistClick } from '@/lib/analytics'
 import type { Product, ProductDetail } from '@/lib/types'
 import SEO from '@/components/SEO'
+import DetailPageStatus from '@/components/DetailPageStatus'
 import { buildProductSchema } from '@/lib/schema'
 
 /** Maps DB category name → collection slug */
@@ -67,25 +68,18 @@ export default function ProductPage() {
   }, [product])
 
   if (loading) {
-    return (
-      <section className="section-20">
-        <div className="w-layout-blockcontainer container-13 w-container">
-          <p className="paragraph">Loading…</p>
-        </div>
-      </section>
-    )
+    return <DetailPageStatus loading containerClassName="w-layout-blockcontainer container-13 w-container" />
   }
 
   if (fetchError || !product) {
     return (
-      <section className="section-20">
-        <div className="w-layout-blockcontainer container-13 w-container">
-          <p className="paragraph">{fetchError ?? 'Gown not found.'}</p>
-          <Link to="/category/all-collections" className="button-3 lovce-btn w-button" style={{ marginTop: '1rem', display: 'inline-block' }}>
-            View All Gowns
-          </Link>
-        </div>
-      </section>
+      <DetailPageStatus
+        containerClassName="w-layout-blockcontainer container-13 w-container"
+        error={fetchError}
+        notFoundMessage="Gown not found."
+        backLinkTo="/category/all-collections"
+        backLinkLabel="View All Gowns"
+      />
     )
   }
 

@@ -3,6 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Autoplay } from 'swiper/modules'
 import 'swiper/css'
 import SEO from '@/components/SEO'
+import PageHero from '@/components/PageHero'
 import { aboutSchema } from '@/lib/schema'
 
 import group255      from '@/assets/images/group_255.webp'
@@ -100,35 +101,21 @@ export default function AboutPage() {
         schema={aboutSchema}
       />
 
-      {/* Hero */}
-      <section className="section-2 discover-miss-scarlett">
-        <div className="w-layout-blockcontainer container-6 w-container">
-          <div className="w-layout-layout quick-stack-3 wf-layout-layout">
-            <div className="w-layout-cell cell-8">
-              <p className="heading latest-collections">ABOUT US</p>
-              <h1 className="heading-5">THE WORLD OF MISS SCARLETT</h1>
-              <p className="paragraph">
-                Miss Scarlett celebrates a modern vision of bridal — where elegance, confidence, and
-                individuality come together.
-                <br />‍<br />
-                Created for the bride who values simplicity, grace, and individuality.
-              </p>
-            </div>
-            <div className="w-layout-cell cell-7">
-              <img
-                src={group255}
-                loading="lazy"
-                width={1315}
-                height={1402}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                srcSet={`${group255_500} 500w, ${group255_800} 800w, ${group255_1080} 1080w, ${group255} 1315w`}
-                alt="Miss Scarlett bride in a modern luxury bridal gown — understated elegance"
-                className="image-3"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="ABOUT US"
+        title="THE WORLD OF MISS SCARLETT"
+        image={group255}
+        imageWidth={1315}
+        imageHeight={1402}
+        imageSizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+        imageSrcSet={`${group255_500} 500w, ${group255_800} 800w, ${group255_1080} 1080w, ${group255} 1315w`}
+        imageAlt="Miss Scarlett bride in a modern luxury bridal gown — understated elegance"
+      >
+        Miss Scarlett celebrates a modern vision of bridal — where elegance, confidence, and
+        individuality come together.
+        <br />‍<br />
+        Created for the bride who values simplicity, grace, and individuality.
+      </PageHero>
 
       {/* Philosophy */}
       <section className="section-5 modern-minimalism-understated">

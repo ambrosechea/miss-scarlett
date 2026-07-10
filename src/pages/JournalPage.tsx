@@ -1,25 +1,11 @@
-import { useState, useEffect } from 'react'
-import { apiGet } from '@/lib/api'
-import { usePageDataSeed } from '@/lib/pageData'
+import { useSeededFetch } from '@/lib/pageData'
 import type { JournalPost } from '@/lib/types'
 import SEO from '@/components/SEO'
 import { journalSchema } from '@/lib/schema'
 
 export default function JournalPage() {
-  const [posts, setPosts] = useState<JournalPost[]>(
-    () => usePageDataSeed<{ posts: JournalPost[] }>('/journal')?.posts ?? [],
-  )
-  const [loading, setLoading] = useState(() => posts.length === 0)
-  const [fetchError, setFetchError] = useState<string | null>(null)
-
-  useEffect(() => {
-    if (posts.length > 0) return // already server-rendered
-    apiGet<JournalPost[]>('/api/journal').then(({ data, error }) => {
-      if (error) setFetchError(error)
-      else setPosts(data ?? [])
-      setLoading(false)
-    })
-  }, [])
+  const { items: posts, loading, error: fetchError } =
+    useSeededFetch<JournalPost>('/journal', '/api/journal', 'posts')
 
   return (
     <>

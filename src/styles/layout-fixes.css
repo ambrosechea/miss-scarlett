@@ -93,13 +93,6 @@
 }
 
 /* Logos slider */
-.team-member-image-two-2 {
-  display: block;
-  max-height: 80px;
-  width: auto;
-  margin: 0 auto;
-  object-fit: contain;
-}
 
 /* ── Testimonial card ────────────────────────────────────────── */
 .testimonial-card {
@@ -357,55 +350,15 @@
   }
 
   /* Hide desktop nav links on mobile */
-  .desktop-nav-links {
-    display: none !important;
-  }
 }
 
 /* ── Desktop inline nav links ─────────────────────────────────── */
-.desktop-nav-links {
-  display: none;
-}
 
 @media (min-width: 992px) {
-  .desktop-nav-links {
-    display: flex;
-    align-items: center;
-    gap: 28px;
-    margin-left: 32px;
-  }
 
-  .desktop-nav-link {
-    font-family: Lato, sans-serif;
-    font-size: 11px;
-    font-weight: 400;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--color-black-light, #1a1a1a);
-    text-decoration: none;
-    padding: 4px 0;
-    position: relative;
-    transition: opacity 0.2s ease;
-  }
 
-  .desktop-nav-link:hover {
-    opacity: 0.6;
-  }
 
-  .desktop-nav-link::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 0;
-    height: 1px;
-    background-color: var(--color-black-light, #1a1a1a);
-    transition: width 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
 
-  .desktop-nav-link:hover::after {
-    width: 100%;
-  }
 
   @media (prefers-reduced-motion: reduce) {
     .desktop-nav-link::after {
@@ -428,10 +381,6 @@
 
 /* ── Slider Arrows Override ──────────────────────────────────── */
 /* Hide the pseudo-element characters of the Webflow icons font to let our crisp SVGs show through */
-.w-icon-slider-left::before,
-.w-icon-slider-right::before {
-  content: none !important;
-}
 
 /* ── Nav dropdown chevron ────────────────────────────────────── */
 /* Sits inline after the label text, animates on open */

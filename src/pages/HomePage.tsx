@@ -1,7 +1,5 @@
-import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import { apiGet } from '@/lib/api'
-import { usePageDataSeed } from '@/lib/pageData'
+import { useSeededFetch } from '@/lib/pageData'
 import type { JournalPost } from '@/lib/types'
 import MarqueeText from '@/components/MarqueeText'
 import ImageSlider from '@/components/ImageSlider'
@@ -78,16 +76,7 @@ const collectionSlides = [
 ]
 
 export default function HomePage() {
-  const [latestPosts, setLatestPosts] = useState<JournalPost[]>(
-    () => usePageDataSeed<{ latestPosts: JournalPost[] }>('/')?.latestPosts ?? [],
-  )
-
-  useEffect(() => {
-    if (latestPosts.length > 0) return // already server-rendered
-    apiGet<JournalPost[]>('/api/journal?limit=3').then(({ data }) => {
-      if (data) setLatestPosts(data)
-    })
-  }, [])
+  const { items: latestPosts } = useSeededFetch<JournalPost>('/', '/api/journal?limit=3', 'latestPosts')
 
   return (
     <>

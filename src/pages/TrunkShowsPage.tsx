@@ -1,9 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { apiGet } from '@/lib/api'
-import { usePageDataSeed } from '@/lib/pageData'
+import { useSeededFetch } from '@/lib/pageData'
 import type { TrunkShow } from '@/lib/types'
 import SEO from '@/components/SEO'
+import PageHero from '@/components/PageHero'
 import { trunkShowsSchema } from '@/lib/schema'
 import group265      from '@/assets/images/group_265.webp'
 import group265_500  from '@/assets/images/group_265-p-500.webp'
@@ -13,21 +13,9 @@ import group265_1080 from '@/assets/images/group_265-p-1080.webp'
 const COUNTRY_FILTERS = ['View All', 'AUSTRALIA', 'NZ', 'SINGAPORE', 'UK', 'USA', 'CANADA', 'MALAYSIA']
 
 export default function TrunkShowsPage() {
-  const [shows, setShows]         = useState<TrunkShow[]>(
-    () => usePageDataSeed<{ shows: TrunkShow[] }>('/trunk-shows')?.shows ?? [],
-  )
-  const [loading, setLoading]     = useState(() => shows.length === 0)
-  const [fetchError, setFetchError] = useState<string | null>(null)
+  const { items: shows, loading, error: fetchError } =
+    useSeededFetch<TrunkShow>('/trunk-shows', '/api/trunk-shows', 'shows')
   const [activeFilter, setActiveFilter] = useState('View All')
-
-  useEffect(() => {
-    if (shows.length > 0) return // already server-rendered
-    apiGet<TrunkShow[]>('/api/trunk-shows').then(({ data, error }) => {
-      if (error) setFetchError(error)
-      else setShows(data ?? [])
-      setLoading(false)
-    })
-  }, [])
 
   const filtered = activeFilter === 'View All'
     ? shows
@@ -41,35 +29,21 @@ export default function TrunkShowsPage() {
         schema={trunkShowsSchema}
       />
 
-      {/* Hero */}
-      <section className="section-2 discover-miss-scarlett">
-        <div className="w-layout-blockcontainer container-6 w-container">
-          <div className="w-layout-layout quick-stack-3 wf-layout-layout">
-            <div className="w-layout-cell cell-8">
-              <p className="heading latest-collections">EXPERIENCE MISS SCARLETT</p>
-              <h1 className="heading-5">TRUNK SHOWS</h1>
-              <p className="paragraph">
-                Discover our latest designs at an exclusive Miss Scarlett trunk show — where brides
-                can experience the collection up close in an intimate boutique setting.
-                <br /><br />
-                Trunk shows run for a limited time at selected boutiques. Appointments are essential.
-              </p>
-            </div>
-            <div className="w-layout-cell cell-7">
-              <img
-                src={group265}
-                loading="lazy"
-                width={1315}
-                height={1402}
-                sizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
-                srcSet={`${group265_500} 500w, ${group265_800} 800w, ${group265_1080} 1080w, ${group265} 1315w`}
-                alt="Miss Scarlett trunk show — experience the bridal collection in person"
-                className="image-3"
-              />
-            </div>
-          </div>
-        </div>
-      </section>
+      <PageHero
+        eyebrow="EXPERIENCE MISS SCARLETT"
+        title="TRUNK SHOWS"
+        image={group265}
+        imageWidth={1315}
+        imageHeight={1402}
+        imageSizes="(max-width: 767px) 100vw, (max-width: 991px) 728px, 940px"
+        imageSrcSet={`${group265_500} 500w, ${group265_800} 800w, ${group265_1080} 1080w, ${group265} 1315w`}
+        imageAlt="Miss Scarlett trunk show — experience the bridal collection in person"
+      >
+        Discover our latest designs at an exclusive Miss Scarlett trunk show — where brides
+        can experience the collection up close in an intimate boutique setting.
+        <br /><br />
+        Trunk shows run for a limited time at selected boutiques. Appointments are essential.
+      </PageHero>
 
       {/* Events listing */}
       <section className="section-20">

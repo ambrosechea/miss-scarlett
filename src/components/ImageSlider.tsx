@@ -20,6 +20,38 @@ interface ImageSliderProps {
   className?: string
 }
 
+function SliderArrowButton({ direction }: { direction: 'left' | 'right' }) {
+  const points = direction === 'left' ? '15 18 9 12 15 6' : '9 18 15 12 9 6'
+  return (
+    <button
+      className={`slider-${direction}-arrow w-slider-arrow-${direction} btn-reset`}
+      aria-label={direction === 'left' ? 'Previous slide' : 'Next slide'}
+    >
+      <div className={`slider-icon w-icon-slider-${direction}`}>
+        <svg
+          width="18"
+          height="18"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            display: 'block'
+          }}
+        >
+          <polyline points={points} />
+        </svg>
+      </div>
+    </button>
+  )
+}
+
 export default function ImageSlider({
   slides,
   slidesPerView = 3,
@@ -62,61 +94,8 @@ export default function ImageSlider({
         ))}
       </Swiper>
 
-      {/* Custom Left Arrow Button */}
-      <button
-        className="slider-left-arrow w-slider-arrow-left btn-reset"
-        aria-label="Previous slide"
-      >
-        <div className="slider-icon w-icon-slider-left">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              display: 'block'
-            }}
-          >
-            <polyline points="15 18 9 12 15 6" />
-          </svg>
-        </div>
-      </button>
-
-      {/* Custom Right Arrow Button */}
-      <button
-        className="slider-right-arrow w-slider-arrow-right btn-reset"
-        aria-label="Next slide"
-      >
-        <div className="slider-icon w-icon-slider-right">
-          <svg
-            width="18"
-            height="18"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            style={{
-              position: 'absolute',
-              top: '50%',
-              left: '50%',
-              transform: 'translate(-50%, -50%)',
-              display: 'block'
-            }}
-          >
-            <polyline points="9 18 15 12 9 6" />
-          </svg>
-        </div>
-      </button>
+      <SliderArrowButton direction="left" />
+      <SliderArrowButton direction="right" />
     </div>
   )
 }

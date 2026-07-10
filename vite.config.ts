@@ -3,10 +3,8 @@ import react from '@vitejs/plugin-react'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig(({ isSsrBuild }) => ({
-  plugins: [
-    react(),
-    tailwindcss(),
-  ],
+  // entry-server.tsx never imports CSS, so skip the Tailwind plugin for the SSR build.
+  plugins: isSsrBuild ? [react()] : [react(), tailwindcss()],
   resolve: {
     alias: {
       '@': '/src',
