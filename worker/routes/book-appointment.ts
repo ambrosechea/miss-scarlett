@@ -1,7 +1,7 @@
 import type { Env } from '../types'
 import { json } from '../index'
 import { sendNotification } from '../lib/email'
-import { verifyTurnstile } from '../lib/turnstile'
+import { parseAndVerifyTurnstile } from '../lib/formRequest'
 
 interface BookAppointmentBody {
   firstName: string
@@ -17,21 +17,10 @@ interface BookAppointmentBody {
 }
 
 export async function handleBookAppointment(request: Request, env: Env): Promise<Response> {
-  let body: BookAppointmentBody
-  try {
-    body = await request.json<BookAppointmentBody>()
-  } catch {
-    return json({ error: 'Invalid JSON' }, 400)
-  }
+  const result = await parseAndVerifyTurnstile<BookAppointmentBody>(request, env)
+  if ('error' in result) return result.error
 
-  const ok = await verifyTurnstile(
-    body['cf-turnstile-response'],
-    env.TURNSTILE_SECRET_KEY,
-    request.headers.get('CF-Connecting-IP'),
-  )
-  if (!ok) return json({ error: 'Spam check failed — please try again' }, 400)
-
-  const { firstName, lastName, email, phone, city, state, country, weddingDate, message } = body
+  const { firstName, lastName, email, phone, city, state, country, weddingDate, message } = result.body
 
   if (!firstName || !email) {
     return json({ error: 'firstName and email are required' }, 400)

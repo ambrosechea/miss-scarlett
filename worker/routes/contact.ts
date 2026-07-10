@@ -1,7 +1,7 @@
 import type { Env } from '../types'
 import { json } from '../index'
 import { sendNotification } from '../lib/email'
-import { verifyTurnstile } from '../lib/turnstile'
+import { parseAndVerifyTurnstile } from '../lib/formRequest'
 
 interface ContactBody {
   firstName: string
@@ -13,21 +13,10 @@ interface ContactBody {
 }
 
 export async function handleContact(request: Request, env: Env): Promise<Response> {
-  let body: ContactBody
-  try {
-    body = await request.json<ContactBody>()
-  } catch {
-    return json({ error: 'Invalid JSON' }, 400)
-  }
+  const result = await parseAndVerifyTurnstile<ContactBody>(request, env)
+  if ('error' in result) return result.error
 
-  const ok = await verifyTurnstile(
-    body['cf-turnstile-response'],
-    env.TURNSTILE_SECRET_KEY,
-    request.headers.get('CF-Connecting-IP'),
-  )
-  if (!ok) return json({ error: 'Spam check failed — please try again' }, 400)
-
-  const { firstName, lastName, email, phone, message } = body
+  const { firstName, lastName, email, phone, message } = result.body
 
   if (!firstName || !email || !message) {
     return json({ error: 'firstName, email, and message are required' }, 400)

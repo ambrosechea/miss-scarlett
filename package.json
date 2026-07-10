@@ -12,8 +12,8 @@
     "worker:dev": "wrangler dev --config wrangler.toml",
     "worker:deploy": "npm run build && wrangler deploy",
     "db:create": "wrangler d1 create miss-scarlett",
-    "db:migrate:local": "wrangler d1 execute miss-scarlett --local --file=./migrations/0001_schema.sql",
-    "db:migrate:remote": "wrangler d1 execute miss-scarlett --file=./migrations/0001_schema.sql"
+    "db:migrate:local": "wrangler d1 migrations apply miss-scarlett --local",
+    "db:migrate:remote": "wrangler d1 migrations apply miss-scarlett --remote"
   },
   "dependencies": {
     "react": "^18.3.1",

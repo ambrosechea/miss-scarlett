@@ -88,20 +88,22 @@ export default {
 
     // Everything else → serve the Vite SPA with security headers
     const assetResponse = await env.ASSETS.fetch(request)
-    const knownRoute = isKnownRoute(url.pathname)
     let response = new Response(assetResponse.body, assetResponse)
-    if (!knownRoute) {
-      // Path doesn't match any route the app actually renders (typo, dead
-      // backlink, old Webflow URL) — don't serve the homepage as a 200.
-      response = new Response(response.body, { status: 404, headers: response.headers })
-    }
     for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
       response.headers.set(key, value)
     }
 
     // Server-render <title>/meta/OG/canonical/JSON-LD per route so crawlers that
     // don't execute JS (most AI bots) still see real content, not an empty shell.
+    // NB: only text/html responses reach here — real static assets (JS/CSS/fonts/
+    // images) keep whatever status env.ASSETS.fetch gave them, untouched below.
     if ((response.headers.get('content-type') ?? '').includes('text/html')) {
+      const knownRoute = isKnownRoute(url.pathname)
+      if (!knownRoute) {
+        // Path doesn't match any route the app actually renders (typo, dead
+        // backlink, old Webflow URL) — don't serve the homepage as a 200.
+        response = new Response(response.body, { status: 404, headers: response.headers })
+      }
       const meta = knownRoute ? await getMetaForPath(url.pathname, env) : NOT_FOUND_META
       if (meta) {
         response = injectPageMeta(response, meta, `https://www.missscarlett.com.au${url.pathname}`)

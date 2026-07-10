@@ -1,7 +1,7 @@
 import type { Env } from '../types'
 import { json } from '../index'
 import { sendNotification } from '../lib/email'
-import { verifyTurnstile } from '../lib/turnstile'
+import { parseAndVerifyTurnstile } from '../lib/formRequest'
 
 interface BecomeStockistBody {
   name: string
@@ -17,21 +17,10 @@ interface BecomeStockistBody {
 }
 
 export async function handleBecomeStockist(request: Request, env: Env): Promise<Response> {
-  let body: BecomeStockistBody
-  try {
-    body = await request.json<BecomeStockistBody>()
-  } catch {
-    return json({ error: 'Invalid JSON' }, 400)
-  }
+  const result = await parseAndVerifyTurnstile<BecomeStockistBody>(request, env)
+  if ('error' in result) return result.error
 
-  const ok = await verifyTurnstile(
-    body['cf-turnstile-response'],
-    env.TURNSTILE_SECRET_KEY,
-    request.headers.get('CF-Connecting-IP'),
-  )
-  if (!ok) return json({ error: 'Spam check failed — please try again' }, 400)
-
-  const { name, lastname, email, phone, storename, address, country, website, message } = body
+  const { name, lastname, email, phone, storename, address, country, website, message } = result.body
 
   if (!name || !email || !phone || !storename || !address || !country) {
     return json({ error: 'name, email, phone, storename, address, and country are required' }, 400)
