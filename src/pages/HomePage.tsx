@@ -1,11 +1,10 @@
-import { useState, useEffect, lazy, Suspense } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { apiGet } from '@/lib/api'
 import { usePageDataSeed } from '@/lib/pageData'
 import type { JournalPost } from '@/lib/types'
 import MarqueeText from '@/components/MarqueeText'
-
-const ImageSlider = lazy(() => import('@/components/ImageSlider'))
+import ImageSlider from '@/components/ImageSlider'
 import SEO from '@/components/SEO'
 import { homeSchema } from '@/lib/schema'
 
@@ -162,9 +161,7 @@ export default function HomePage() {
         <div className="w-layout-blockcontainer container-8 w-container">
           <div className="slider-container">
             <div className="slider-wrapper">
-              <Suspense fallback={null}>
-                <ImageSlider slides={collectionSlides} slidesPerView={3} spaceBetween={16} />
-              </Suspense>
+              <ImageSlider slides={collectionSlides} slidesPerView={3} spaceBetween={16} />
             </div>
           </div>
         </div>

@@ -16,6 +16,7 @@ const CollectionPage = lazy(() => import('@/pages/CollectionPage'))
 const ProductPage = lazy(() => import('@/pages/ProductPage'))
 const PrivacyPage = lazy(() => import('@/pages/PrivacyPage'))
 const TermsPage = lazy(() => import('@/pages/TermsPage'))
+const NotFoundPage = lazy(() => import('@/pages/NotFoundPage'))
 
 export default function App() {
   return (
@@ -39,7 +40,7 @@ export default function App() {
           <Route path="/privacy" element={<PrivacyPage />} />
           <Route path="/terms" element={<TermsPage />} />
           {/* Catch-all */}
-          <Route path="*" element={<HomePage />} />
+          <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </AppShell>
     </BrowserRouter>

@@ -16,6 +16,7 @@ export default function SearchPage() {
       <SEO
         title="Search the Miss Scarlett Luxury Bridal Gown Collection"
         description="Search the Miss Scarlett bridal collection — find your dream luxury wedding gown by name, style, silhouette, or collection in seconds, right from this page."
+        noindex
       />
 
       <section className="section-21">

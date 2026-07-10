@@ -25,12 +25,12 @@ const COLLECTION_SLUGS = [
 
 export async function handleSitemap(env: Env): Promise<Response> {
   const { results: products } = await env.DB.prepare(
-    `SELECT handle FROM products WHERE active = 1 ORDER BY rowid ASC`
-  ).all<{ handle: string }>()
+    `SELECT handle, created_at FROM products WHERE active = 1 ORDER BY rowid ASC`
+  ).all<{ handle: string; created_at: string }>()
 
   const { results: stockists } = await env.DB.prepare(
-    `SELECT slug FROM stockists WHERE active = 1 ORDER BY rowid ASC`
-  ).all<{ slug: string }>()
+    `SELECT slug, created_at FROM stockists WHERE active = 1 ORDER BY rowid ASC`
+  ).all<{ slug: string; created_at: string }>()
 
   const urls: string[] = []
 
@@ -42,12 +42,12 @@ export async function handleSitemap(env: Env): Promise<Response> {
     urls.push(entry(`${SITE_URL}/category/${slug}`, 'weekly', '0.8'))
   }
 
-  for (const { handle } of products) {
-    urls.push(entry(`${SITE_URL}/product/${handle}`, 'weekly', '0.6'))
+  for (const { handle, created_at } of products) {
+    urls.push(entry(`${SITE_URL}/product/${handle}`, 'weekly', '0.6', created_at))
   }
 
-  for (const { slug } of stockists) {
-    urls.push(entry(`${SITE_URL}/stockists/${slug}`, 'monthly', '0.6'))
+  for (const { slug, created_at } of stockists) {
+    urls.push(entry(`${SITE_URL}/stockists/${slug}`, 'monthly', '0.6', created_at))
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -63,9 +63,12 @@ ${urls.join('\n')}
   })
 }
 
-function entry(loc: string, changefreq: string, priority: string): string {
+function entry(loc: string, changefreq: string, priority: string, createdAt?: string): string {
+  // DB only tracks created_at (no updated_at); use it as a lastmod floor —
+  // an approximate freshness signal is better than none for crawlers.
+  const lastmod = createdAt ? `\n    <lastmod>${createdAt.replace(' ', 'T')}Z</lastmod>` : ''
   return `  <url>
-    <loc>${loc}</loc>
+    <loc>${loc}</loc>${lastmod}
     <changefreq>${changefreq}</changefreq>
     <priority>${priority}</priority>
   </url>`

@@ -9,7 +9,7 @@ import { handleProductsList, handleProductDetail } from './routes/products'
 import { handleSitemap } from './routes/sitemap'
 import { handleMerchantFeed } from './routes/merchant-feed'
 import { handleMetaFeed } from './routes/meta-feed'
-import { getMetaForPath, injectPageMeta } from './seo'
+import { getMetaForPath, injectPageMeta, isKnownRoute, NOT_FOUND_META } from './seo'
 import { loadPageData } from './ssrData'
 import { render } from '../dist-ssr/entry-server.js'
 
@@ -24,6 +24,7 @@ const SECURITY_HEADERS: Record<string, string> = {
   'X-Frame-Options': 'DENY',
   'Referrer-Policy': 'strict-origin-when-cross-origin',
   'Permissions-Policy': 'camera=(), microphone=(), geolocation=()',
+  'Strict-Transport-Security': 'max-age=31536000',
 }
 
 export default {
@@ -38,6 +39,13 @@ export default {
     // Redirect apex to www
     if (url.hostname === 'missscarlett.com.au') {
       url.hostname = 'www.missscarlett.com.au'
+      return Response.redirect(url.toString(), 301)
+    }
+
+    // Collapse trailing-slash duplicates (e.g. /about/ -> /about) so they don't
+    // exist as separate crawlable/indexable URLs alongside the canonical form.
+    if (url.pathname.length > 1 && url.pathname.endsWith('/')) {
+      url.pathname = url.pathname.replace(/\/+$/, '')
       return Response.redirect(url.toString(), 301)
     }
 
@@ -80,7 +88,13 @@ export default {
 
     // Everything else → serve the Vite SPA with security headers
     const assetResponse = await env.ASSETS.fetch(request)
+    const knownRoute = isKnownRoute(url.pathname)
     let response = new Response(assetResponse.body, assetResponse)
+    if (!knownRoute) {
+      // Path doesn't match any route the app actually renders (typo, dead
+      // backlink, old Webflow URL) — don't serve the homepage as a 200.
+      response = new Response(response.body, { status: 404, headers: response.headers })
+    }
     for (const [key, value] of Object.entries(SECURITY_HEADERS)) {
       response.headers.set(key, value)
     }
@@ -88,7 +102,7 @@ export default {
     // Server-render <title>/meta/OG/canonical/JSON-LD per route so crawlers that
     // don't execute JS (most AI bots) still see real content, not an empty shell.
     if ((response.headers.get('content-type') ?? '').includes('text/html')) {
-      const meta = await getMetaForPath(url.pathname, env)
+      const meta = knownRoute ? await getMetaForPath(url.pathname, env) : NOT_FOUND_META
       if (meta) {
         response = injectPageMeta(response, meta, `https://www.missscarlett.com.au${url.pathname}`)
       }

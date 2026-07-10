@@ -18,6 +18,7 @@ import CollectionPage from '@/pages/CollectionPage'
 import ProductPage from '@/pages/ProductPage'
 import PrivacyPage from '@/pages/PrivacyPage'
 import TermsPage from '@/pages/TermsPage'
+import NotFoundPage from '@/pages/NotFoundPage'
 
 export function render(url: string, initial: PageDataPayload | null): string {
   return renderToString(
@@ -42,7 +43,7 @@ export function render(url: string, initial: PageDataPayload | null): string {
             <Route path="/privacy" element={<PrivacyPage />} />
             <Route path="/terms" element={<TermsPage />} />
             {/* Catch-all */}
-            <Route path="*" element={<HomePage />} />
+            <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </AppShell>
       </PageDataProvider>

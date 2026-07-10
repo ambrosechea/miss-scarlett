@@ -1,7 +1,7 @@
 import type { Env } from '../types'
 import { json } from '../index'
 
-interface StockistRow {
+export interface StockistRow {
   id: number
   name: string
   slug: string
@@ -26,13 +26,16 @@ export async function handleStockists(_request: Request, env: Env): Promise<Resp
   return json(results)
 }
 
-export async function handleStockistDetail(slug: string, env: Env): Promise<Response> {
-  const stockist = await env.DB.prepare(
+export async function getStockistBySlug(slug: string, env: Env): Promise<StockistRow | null> {
+  return env.DB.prepare(
     `SELECT id, name, slug, address, city, state, country, region, phone, email, website
        FROM stockists
       WHERE slug = ? AND active = 1`
   ).bind(slug).first<StockistRow>()
+}
 
+export async function handleStockistDetail(slug: string, env: Env): Promise<Response> {
+  const stockist = await getStockistBySlug(slug, env)
   if (!stockist) return json({ error: 'Stockist not found' }, 404)
 
   return json(stockist)

@@ -7,6 +7,8 @@ interface SEOProps {
   image?: string
   /** JSON-LD structured data object (or @graph array wrapper). */
   schema?: object
+  /** Pages that shouldn't be indexed (404s, internal search results, etc). */
+  noindex?: boolean
 }
 
 const DEFAULT_IMAGE = 'https://www.missscarlett.com.au/og-image.jpg'
@@ -35,11 +37,12 @@ function injectSchema(schema: object) {
   el.textContent = JSON.stringify(schema)
 }
 
-export default function SEO({ title, description, image, schema }: SEOProps) {
+export default function SEO({ title, description, image, schema, noindex }: SEOProps) {
   useEffect(() => {
     // ── Basic ─────────────────────────────────────────────────────
     document.title = title
     setMeta('description', description)
+    setMeta('robots', noindex ? 'noindex,follow' : 'index,follow')
 
     // ── Open Graph ───────────────────────────────────────────────
     const ogImage = image ?? DEFAULT_IMAGE
@@ -66,7 +69,7 @@ export default function SEO({ title, description, image, schema }: SEOProps) {
 
     // ── JSON-LD ──────────────────────────────────────────────────
     if (schema) injectSchema(schema)
-  }, [title, description, image, schema])
+  }, [title, description, image, schema, noindex])
 
   return null
 }

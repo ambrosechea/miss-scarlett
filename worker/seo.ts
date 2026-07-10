@@ -1,9 +1,10 @@
 import type { Env } from './types'
 import { getProductHandles, getProductDetail } from './routes/products'
+import { getStockistBySlug } from './routes/stockists'
 import {
   homeSchema, aboutSchema, contactSchema, stockistPageSchema,
   bookAppointmentSchema, trunkShowsSchema, becomeStockistSchema, journalSchema,
-  buildProductSchema, buildCollectionSchema,
+  buildProductSchema, buildCollectionSchema, buildStockistSchema,
 } from '../src/lib/schema'
 
 export interface PageMeta {
@@ -11,6 +12,14 @@ export interface PageMeta {
   description: string
   image?: string
   schema?: object
+  /** Pages that shouldn't be indexed (404s, internal search results, etc). */
+  noindex?: boolean
+}
+
+export const NOT_FOUND_META: PageMeta = {
+  title: 'Page Not Found | Miss Scarlett',
+  description: "The page you're looking for doesn't exist. Explore Miss Scarlett's luxury bridal collections, find a stockist, or return to the homepage.",
+  noindex: true,
 }
 
 const STATIC_META: Record<string, PageMeta> = {
@@ -57,6 +66,7 @@ const STATIC_META: Record<string, PageMeta> = {
   '/search': {
     title: 'Search the Miss Scarlett Luxury Bridal Gown Collection',
     description: 'Search the Miss Scarlett bridal collection — find your dream luxury wedding gown by name, style, silhouette, or collection in seconds, right from this page.',
+    noindex: true,
   },
   '/privacy': {
     title: 'Privacy Statement | Miss Scarlett Bridal Label Website',
@@ -118,7 +128,7 @@ export function injectPageMeta(response: Response, meta: PageMeta, canonicalUrl:
   const image = meta.image ?? `${SITE}/og-image.jpg`
 
   const headExtra = `
-<meta name="description" content="${escapeAttr(meta.description)}">
+${meta.noindex ? '<meta name="robots" content="noindex,follow">\n' : ''}<meta name="description" content="${escapeAttr(meta.description)}">
 <meta property="og:type" content="website">
 <meta property="og:title" content="${escapeAttr(meta.title)}">
 <meta property="og:description" content="${escapeAttr(meta.description)}">
@@ -145,8 +155,33 @@ ${meta.schema ? `<script type="application/ld+json" id="ld-json-schema">${JSON.s
     .transform(response)
 }
 
+const DYNAMIC_ROUTE_PATTERNS = [
+  /^\/category\/[^/]+$/,
+  /^\/product\/[^/]+$/,
+  /^\/stockists\/[^/]+$/,
+]
+
+/** Whether pathname matches a route the React app actually renders (see src/App.tsx).
+ *  Used to tell "known route, entity just not found" apart from "no such route at all". */
+export function isKnownRoute(pathname: string): boolean {
+  if (STATIC_META[pathname]) return true
+  return DYNAMIC_ROUTE_PATTERNS.some(p => p.test(pathname))
+}
+
 export async function getMetaForPath(pathname: string, env: Env): Promise<PageMeta | null> {
   if (STATIC_META[pathname]) return STATIC_META[pathname]
+
+  const stockistMatch = pathname.match(/^\/stockists\/([^/]+)$/)
+  if (stockistMatch) {
+    const stockist = await getStockistBySlug(stockistMatch[1], env)
+    if (!stockist) return null
+    const locationLabel = [stockist.city, stockist.state, stockist.country].filter(Boolean).join(', ')
+    return {
+      title: `${stockist.name} — Miss Scarlett Stockist in ${stockist.city} | Miss Scarlett Bridal`,
+      description: `Visit ${stockist.name} in ${locationLabel} to try on the Miss Scarlett bridal collection in person. Address, contact details, and directions.`,
+      schema: buildStockistSchema(stockist),
+    }
+  }
 
   const catMatch = pathname.match(/^\/category\/([^/]+)$/)
   if (catMatch) {
