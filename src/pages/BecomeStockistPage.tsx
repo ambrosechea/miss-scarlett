@@ -56,9 +56,9 @@ export default function BecomeStockistPage() {
             {perks.map((perk, i) => (
               <div key={i} className={`w-layout-cell cell-${20 + i}`}>
                 <img src={perk.img} loading="lazy" alt={perk.label.replace('\n', ' ')} className="image-15" />
-                <h5 className="heading-19">
+                <h2 className="heading-19">
                   <sub style={{ whiteSpace: 'pre-line' }}>{perk.label}</sub>
-                </h5>
+                </h2>
               </div>
             ))}
           </div>

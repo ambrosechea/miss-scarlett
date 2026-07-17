@@ -1,6 +1,6 @@
 import type { Env } from './types'
 import { handleStockists, handleStockistDetail } from './routes/stockists'
-import { handleJournal } from './routes/journal'
+import { handleJournal, getJournalPostBySlug, getRelatedJournalPosts } from './routes/journal'
 import { handleTrunkShows } from './routes/trunk-shows'
 import { handleProductsList, handleProductDetail } from './routes/products'
 import { COLLECTIONS } from '../src/lib/collections'
@@ -40,6 +40,14 @@ export async function loadPageData(pathname: string, env: Env): Promise<unknown 
   if (pathname === '/trunk-shows') {
     const shows = await bodyOf(await handleTrunkShows(internalRequest('/api/trunk-shows'), env)) ?? []
     return { shows }
+  }
+
+  const journalMatch = pathname.match(/^\/journal\/([^/]+)$/)
+  if (journalMatch) {
+    const post = await getJournalPostBySlug(journalMatch[1], env)
+    if (!post) return null
+    const relatedPosts = await getRelatedJournalPosts(journalMatch[1], env)
+    return { post, relatedPosts }
   }
 
   const stockistMatch = pathname.match(/^\/stockists\/([^/]+)$/)

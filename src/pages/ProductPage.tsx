@@ -7,6 +7,7 @@ import type { Product, ProductDetail } from '@/lib/types'
 import SEO from '@/components/SEO'
 import DetailPageStatus from '@/components/DetailPageStatus'
 import { buildProductSchema } from '@/lib/schema'
+import { stripLigatures } from '@/lib/text'
 
 /** Maps DB category name → collection slug */
 function categoryToSlug(cat: string): string {
@@ -91,7 +92,7 @@ export default function ProductPage() {
     <>
       <SEO
         title={`${product.name} | Miss Scarlett Luxury Bridal Wedding Gown`}
-        description={product.description.slice(0, 155).replace(/\n/g, ' ')}
+        description={stripLigatures(product.description).slice(0, 155).replace(/\n/g, ' ')}
         image={product.main_image}
         schema={buildProductSchema({
           handle:      product.handle,
@@ -160,8 +161,7 @@ export default function ProductPage() {
               <h1 className="heading-5 product-name">{product.name}</h1>
 
               <div className="product-description">
-                {product.description
-                  .replace(/ﬁ/g, 'fi').replace(/ﬂ/g, 'fl').replace(/ﬀ/g, 'ff')
+                {stripLigatures(product.description)
                   .split('\n')
                   .map((para, i) =>
                     para.trim()

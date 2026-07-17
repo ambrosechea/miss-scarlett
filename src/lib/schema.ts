@@ -12,6 +12,8 @@
  *  - speakable on key descriptions
  */
 
+import { stripLigatures } from './text'
+
 const SITE = 'https://www.missscarlett.com.au'
 const ORG_ID = `${SITE}/#organization`
 const WEB_ID = `${SITE}/#website`
@@ -61,13 +63,9 @@ export const orgSchema = {
     areaServed: ['AU', 'NZ', 'US', 'CA', 'GB', 'SG', 'MY'],
     availableLanguage: 'English',
   },
-  aggregateRating: {
-    '@type': 'AggregateRating',
-    ratingValue: '5',
-    bestRating: '5',
-    ratingCount: '9',
-    reviewCount: '6',
-  },
+  // No aggregateRating/Review here: Google's review-snippet guidelines exclude
+  // self-serving reviews of your own business, so it would never be rich-result
+  // eligible — the genuine testimonials stay as visible page content on /about instead.
 }
 
 // ── Website ───────────────────────────────────────────────────────────────────
@@ -84,46 +82,6 @@ export const websiteSchema = {
     'query-input': 'required name=search_term_string',
   },
 }
-
-// ── Reviews (visible social proof for AEO) ───────────────────────────────────
-export const reviewsSchema = [
-  {
-    '@type': 'Review',
-    author: { '@type': 'Person', name: 'Katie H.' },
-    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-    reviewBody: 'I genuinely felt I had found the most stunning wedding dress.',
-  },
-  {
-    '@type': 'Review',
-    author: { '@type': 'Person', name: 'Bianca N.' },
-    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-    reviewBody: 'I knew it was perfect and fell in love instantly.',
-  },
-  {
-    '@type': 'Review',
-    author: { '@type': 'Person', name: 'Emily N.' },
-    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-    reviewBody: 'I felt comfortable and confident — exactly how every bride should feel.',
-  },
-  {
-    '@type': 'Review',
-    author: { '@type': 'Person', name: 'Olivia M.' },
-    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-    reviewBody: 'The craftsmanship is breathtaking. I felt so special on the day.',
-  },
-  {
-    '@type': 'Review',
-    author: { '@type': 'Person', name: 'Sophie L.' },
-    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-    reviewBody: 'A truly unforgettable experience — from the first fitting to walking down the aisle.',
-  },
-  {
-    '@type': 'Review',
-    author: { '@type': 'Person', name: 'Hannah R.' },
-    reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-    reviewBody: 'Miss Scarlett made my bridal dreams come true with a gown that was uniquely me.',
-  },
-]
 
 // ── Homepage graph ────────────────────────────────────────────────────────────
 export const homeSchema = {
@@ -145,8 +103,6 @@ export const homeSchema = {
         cssSelector: ['.heading-5', '.paragraph'],
       },
     },
-    // Reviews — surface social proof for AEO / rich results
-    ...reviewsSchema.map(r => ({ ...r, itemReviewed: { '@id': ORG_ID } })),
     // AEO — FAQ answers common "what is / where" search queries
     {
       '@type': 'FAQPage',
@@ -238,8 +194,7 @@ export function buildProductSchema(product: {
         '@type': 'Product',
         '@id': `${url}#product`,
         name: product.name,
-        description: product.description
-          .replace(/ﬁ/g, 'fi').replace(/ﬂ/g, 'fl').replace(/ﬀ/g, 'ff')
+        description: stripLigatures(product.description)
           .replace(/\n/g, ' ').trim(),
         image: product.main_image,
         url,
@@ -272,7 +227,7 @@ export function buildProductSchema(product: {
         '@type': 'WebPage',
         url,
         name: `${product.name} | Miss Scarlett Bridal`,
-        description: product.description.replace(/\n/g, ' ').slice(0, 155),
+        description: stripLigatures(product.description).replace(/\n/g, ' ').slice(0, 155),
         isPartOf: { '@id': WEB_ID },
         breadcrumb: `${url}#breadcrumb`,
       },
@@ -510,4 +465,42 @@ export const journalSchema = {
       about: { '@id': ORG_ID },
     },
   ],
+}
+
+// ── Individual journal post (called dynamically with post data) ───────────────
+export function buildJournalPostSchema(post: {
+  slug: string
+  title: string
+  excerpt: string | null
+  image_url: string | null
+  category: string | null
+  published_at: string | null
+}) {
+  const url = `${SITE}/journal/${post.slug}`
+  return {
+    '@context': 'https://schema.org',
+    '@graph': [
+      {
+        '@type': 'BlogPosting',
+        '@id': `${url}#article`,
+        headline: post.title,
+        description: post.excerpt ?? undefined,
+        image: post.image_url ?? undefined,
+        articleSection: post.category ?? undefined,
+        datePublished: post.published_at ?? undefined,
+        url,
+        author: { '@id': ORG_ID },
+        publisher: { '@id': ORG_ID },
+        mainEntityOfPage: url,
+      },
+      {
+        '@type': 'BreadcrumbList',
+        itemListElement: [
+          { '@type': 'ListItem', position: 1, name: 'Home', item: SITE },
+          { '@type': 'ListItem', position: 2, name: 'Journal', item: `${SITE}/journal` },
+          { '@type': 'ListItem', position: 3, name: post.title, item: url },
+        ],
+      },
+    ],
+  }
 }

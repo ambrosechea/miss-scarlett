@@ -8,6 +8,7 @@ import { COLLECTION_META } from '@/lib/collectionMeta'
 import type { Product } from '@/lib/types'
 import SEO from '@/components/SEO'
 import { buildCollectionSchema } from '@/lib/schema'
+import { stripLigatures } from '@/lib/text'
 
 const COLLECTION_NAV = COLLECTIONS.map(c => ({ slug: c.slug, label: c.label }))
 
@@ -15,9 +16,7 @@ const DRESS_TYPES = ['ALL SHAPES', 'MINI', 'A-LINE', 'BALLGOWN', 'FIT & FLARE', 
 
 /** Detect silhouette from product name + description text */
 function getDressType(p: Product): string {
-  const text = (p.name + ' ' + p.description)
-    .replace(/ﬁ/g, 'fi').replace(/ﬂ/g, 'fl').replace(/ﬀ/g, 'ff')
-    .toLowerCase()
+  const text = stripLigatures(p.name + ' ' + p.description).toLowerCase()
   if (text.includes('mini')) return 'MINI'
   if (text.includes('ballgown') || text.includes('ball gown')) return 'BALLGOWN'
   if (text.includes('a-line')) return 'A-LINE'
@@ -221,7 +220,7 @@ export default function CollectionPage() {
                               />
                             </div>
                             <div className="product-card-info">
-                              <h3 className="product-card-name">{product.name}</h3>
+                              <h2 className="product-card-name">{product.name}</h2>
                             </div>
                           </Link>
                         </div>

@@ -100,7 +100,8 @@ export default function HomePage() {
           fetchPriority="high"
         />
         <div className="w-layout-blockcontainer container-3 w-container">
-          <h1 className="heading-3">PALAIS</h1>
+          <p className="heading latest-collections">PALAIS COLLECTION</p>
+          <h1 className="heading-3">Miss Scarlett Luxury Bridal Gowns</h1>
           <p className="heading">A NEW CHAPTER OF MODERN BRIDAL ELEGANCE</p>
           <Link to="/category/palais" className="button-3 w-button">
             EXPLORE THE COLLECTION
@@ -198,7 +199,7 @@ export default function HomePage() {
         <div className="w-layout-blockcontainer container-6 w-container">
           <div className="w-layout-layout quick-stack-3 wf-layout-layout">
             <div className="w-layout-cell cell-11">
-              <h3 className="heading latest-collections" />
+              <p className="heading latest-collections">VISIT A BOUTIQUE</p>
               <h2 className="heading-5">
                 Try On <em>the One</em>
               </h2>
@@ -232,7 +233,7 @@ export default function HomePage() {
         <div className="w-layout-blockcontainer container-15 w-container">
           <div className="w-layout-layout quick-stack-5 wf-layout-layout">
             <div className="w-layout-cell">
-              <h3 className="heading latest-collections">Our Journal</h3>
+              <p className="heading latest-collections">Our Journal</p>
               <h2 className="heading-5">Latest news</h2>
               <Link to="/journal" className="button-3 lovce-btn w-button">
                 See All
@@ -245,10 +246,12 @@ export default function HomePage() {
                 <ul style={{ listStyle: 'none', padding: 0 }}>
                   {latestPosts.map((post) => (
                     <li key={post.id} style={{ marginBottom: '1.5rem' }}>
-                      {post.image_url && (
-                        <img src={post.image_url} alt={post.title} loading="lazy" style={{ width: '100%', marginBottom: '0.5rem' }} />
-                      )}
-                      <h4 className="heading-5">{post.title}</h4>
+                      <Link to={`/journal/${post.slug}`}>
+                        {post.image_url && (
+                          <img src={post.image_url} alt={post.title} loading="lazy" style={{ width: '100%', marginBottom: '0.5rem' }} />
+                        )}
+                        <h3 className="heading-5">{post.title}</h3>
+                      </Link>
                       {post.excerpt && <p className="paragraph">{post.excerpt}</p>}
                     </li>
                   ))}

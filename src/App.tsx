@@ -11,6 +11,7 @@ const BecomeStockistPage = lazy(() => import('@/pages/BecomeStockistPage'))
 const TrunkShowsPage = lazy(() => import('@/pages/TrunkShowsPage'))
 const BookAppointmentPage = lazy(() => import('@/pages/BookAppointmentPage'))
 const JournalPage = lazy(() => import('@/pages/JournalPage'))
+const JournalPostPage = lazy(() => import('@/pages/JournalPostPage'))
 const SearchPage = lazy(() => import('@/pages/SearchPage'))
 const CollectionPage = lazy(() => import('@/pages/CollectionPage'))
 const ProductPage = lazy(() => import('@/pages/ProductPage'))
@@ -33,6 +34,7 @@ export default function App() {
           <Route path="/trunk-shows" element={<TrunkShowsPage />} />
           <Route path="/book-appointment" element={<BookAppointmentPage />} />
           <Route path="/journal" element={<JournalPage />} />
+          <Route path="/journal/:slug" element={<JournalPostPage />} />
           <Route path="/search" element={<SearchPage />} />
           {/* Products */}
           <Route path="/category/:slug" element={<CollectionPage />} />

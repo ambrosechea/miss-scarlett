@@ -11,6 +11,8 @@ const STATIC_ROUTES = [
   '/trunk-shows',
   '/book-appointment',
   '/journal',
+  '/privacy',
+  '/terms',
 ]
 
 const COLLECTION_SLUGS = [
@@ -32,6 +34,10 @@ export async function handleSitemap(env: Env): Promise<Response> {
     `SELECT slug, created_at FROM stockists WHERE active = 1 ORDER BY rowid ASC`
   ).all<{ slug: string; created_at: string }>()
 
+  const { results: journalPosts } = await env.DB.prepare(
+    `SELECT slug, published_at FROM journal_posts WHERE published = 1 ORDER BY published_at DESC`
+  ).all<{ slug: string; published_at: string }>()
+
   const urls: string[] = []
 
   for (const path of STATIC_ROUTES) {
@@ -48,6 +54,10 @@ export async function handleSitemap(env: Env): Promise<Response> {
 
   for (const { slug, created_at } of stockists) {
     urls.push(entry(`${SITE_URL}/stockists/${slug}`, 'monthly', '0.6', created_at))
+  }
+
+  for (const { slug, published_at } of journalPosts) {
+    urls.push(entry(`${SITE_URL}/journal/${slug}`, 'monthly', '0.5', published_at))
   }
 
   const xml = `<?xml version="1.0" encoding="UTF-8"?>

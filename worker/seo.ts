@@ -1,12 +1,14 @@
 import type { Env } from './types'
 import { getProductHandles, getProductDetail } from './routes/products'
 import { getStockistBySlug } from './routes/stockists'
+import { getJournalPostBySlug } from './routes/journal'
 import {
   homeSchema, aboutSchema, contactSchema, stockistPageSchema,
   bookAppointmentSchema, trunkShowsSchema, becomeStockistSchema, journalSchema,
-  buildProductSchema, buildCollectionSchema, buildStockistSchema,
+  buildProductSchema, buildCollectionSchema, buildStockistSchema, buildJournalPostSchema,
 } from '../src/lib/schema'
 import { COLLECTION_META } from '../src/lib/collectionMeta'
+import { stripLigatures } from '../src/lib/text'
 
 export interface PageMeta {
   title: string
@@ -122,6 +124,7 @@ const DYNAMIC_ROUTE_PATTERNS = [
   /^\/category\/[^/]+$/,
   /^\/product\/[^/]+$/,
   /^\/stockists\/[^/]+$/,
+  /^\/journal\/[^/]+$/,
 ]
 
 /** Whether pathname matches a route the React app actually renders (see src/App.tsx).
@@ -159,6 +162,18 @@ export async function getMetaForPath(pathname: string, env: Env): Promise<PageMe
     }
   }
 
+  const journalMatch = pathname.match(/^\/journal\/([^/]+)$/)
+  if (journalMatch) {
+    const post = await getJournalPostBySlug(journalMatch[1], env)
+    if (!post) return null
+    return {
+      title: `${post.title} | Miss Scarlett Journal`,
+      description: (post.excerpt ?? stripLigatures(post.content ?? '').replace(/\n/g, ' ')).slice(0, 155),
+      image: post.image_url ?? undefined,
+      schema: buildJournalPostSchema(post),
+    }
+  }
+
   const prodMatch = pathname.match(/^\/product\/([^/]+)$/)
   if (prodMatch) {
     const handle = prodMatch[1]
@@ -166,7 +181,7 @@ export async function getMetaForPath(pathname: string, env: Env): Promise<PageMe
     if (!product) return null
     return {
       title: `${product.name} | Miss Scarlett Luxury Bridal Wedding Gown`,
-      description: product.description.slice(0, 155).replace(/\n/g, ' '),
+      description: stripLigatures(product.description).slice(0, 155).replace(/\n/g, ' '),
       image: product.main_image,
       schema: buildProductSchema(product),
     }

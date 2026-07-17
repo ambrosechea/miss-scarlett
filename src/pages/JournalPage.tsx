@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom'
 import { useSeededFetch } from '@/lib/pageData'
 import type { JournalPost } from '@/lib/types'
 import SEO from '@/components/SEO'
@@ -32,13 +33,15 @@ export default function JournalPage() {
             <div className="w-layout-layout quick-stack-14 wf-layout-layout">
               {posts.map((post) => (
                 <article key={post.id} className="w-layout-cell cell-30" style={{ marginBottom: '2rem' }}>
-                  {post.image_url && (
-                    <img src={post.image_url} alt={post.title} loading="lazy" style={{ width: '100%', marginBottom: '1rem' }} />
-                  )}
-                  {post.category && (
-                    <p className="heading latest-collections" style={{ marginBottom: '0.25rem' }}>{post.category}</p>
-                  )}
-                  <h2 className="heading-5">{post.title}</h2>
+                  <Link to={`/journal/${post.slug}`}>
+                    {post.image_url && (
+                      <img src={post.image_url} alt={post.title} loading="lazy" style={{ width: '100%', marginBottom: '1rem' }} />
+                    )}
+                    {post.category && (
+                      <p className="heading latest-collections" style={{ marginBottom: '0.25rem' }}>{post.category}</p>
+                    )}
+                    <h2 className="heading-5">{post.title}</h2>
+                  </Link>
                   {post.excerpt && <p className="paragraph">{post.excerpt}</p>}
                   {post.published_at && (
                     <p style={{ fontSize: '0.85em', opacity: 0.6 }}>

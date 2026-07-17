@@ -3,7 +3,7 @@ import { handleContact } from './routes/contact'
 import { handleBecomeStockist } from './routes/become-stockist'
 import { handleBookAppointment } from './routes/book-appointment'
 import { handleStockists, handleStockistDetail } from './routes/stockists'
-import { handleJournal } from './routes/journal'
+import { handleJournal, handleJournalPost } from './routes/journal'
 import { handleTrunkShows } from './routes/trunk-shows'
 import { handleProductsList, handleProductDetail } from './routes/products'
 import { handleSitemap } from './routes/sitemap'
@@ -46,6 +46,22 @@ export default {
     // exist as separate crawlable/indexable URLs alongside the canonical form.
     if (url.pathname.length > 1 && url.pathname.endsWith('/')) {
       url.pathname = url.pathname.replace(/\/+$/, '')
+      return Response.redirect(url.toString(), 301)
+    }
+
+    // Legacy Webflow-era URLs Google still has indexed/discovered from before the
+    // React migration — 301 them to today's equivalent instead of 404ing, so the
+    // existing backlink/index equity carries over rather than being dropped.
+    // (Search Console flagged these as "Duplicate, Google chose different canonical
+    // than user" and growing — Google is already trying to fold them into the new
+    // URLs; this makes that explicit instead of leaving it to guesswork.)
+    const legacyStockistMatch = url.pathname.match(/^\/stockist\/([^/]+)$/)
+    if (legacyStockistMatch) {
+      url.pathname = `/stockists/${legacyStockistMatch[1]}`
+      return Response.redirect(url.toString(), 301)
+    }
+    if (url.pathname.startsWith('/tag/')) {
+      url.pathname = '/journal'
       return Response.redirect(url.toString(), 301)
     }
 
@@ -157,6 +173,11 @@ async function routeApi(request: Request, url: URL, env: Env): Promise<Response>
   }
   if (pathname === '/api/journal' && method === 'GET') {
     return handleJournal(request, env)
+  }
+  // /api/journal/:slug
+  const journalMatch = pathname.match(/^\/api\/journal\/([^/]+)$/)
+  if (journalMatch && method === 'GET') {
+    return handleJournalPost(journalMatch[1], env)
   }
   if (pathname === '/api/trunk-shows' && method === 'GET') {
     return handleTrunkShows(request, env)

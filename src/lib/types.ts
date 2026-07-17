@@ -22,6 +22,10 @@ export interface JournalPost {
   published_at: string | null
 }
 
+export interface JournalPostDetail extends JournalPost {
+  content: string | null
+}
+
 export interface TrunkShow {
   id: number
   name: string

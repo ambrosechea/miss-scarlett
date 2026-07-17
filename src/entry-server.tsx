@@ -13,6 +13,7 @@ import BecomeStockistPage from '@/pages/BecomeStockistPage'
 import TrunkShowsPage from '@/pages/TrunkShowsPage'
 import BookAppointmentPage from '@/pages/BookAppointmentPage'
 import JournalPage from '@/pages/JournalPage'
+import JournalPostPage from '@/pages/JournalPostPage'
 import SearchPage from '@/pages/SearchPage'
 import CollectionPage from '@/pages/CollectionPage'
 import ProductPage from '@/pages/ProductPage'
@@ -36,6 +37,7 @@ export function render(url: string, initial: PageDataPayload | null): string {
             <Route path="/trunk-shows" element={<TrunkShowsPage />} />
             <Route path="/book-appointment" element={<BookAppointmentPage />} />
             <Route path="/journal" element={<JournalPage />} />
+            <Route path="/journal/:slug" element={<JournalPostPage />} />
             <Route path="/search" element={<SearchPage />} />
             {/* Products */}
             <Route path="/category/:slug" element={<CollectionPage />} />

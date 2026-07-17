@@ -48,11 +48,16 @@ export function useSeededFetch<T>(
   const [items, setItems] = useState<T[]>(
     () => usePageDataSeed<Record<string, T[]>>(pathname)?.[seedKey] ?? [],
   )
-  const [loading, setLoading] = useState(() => items.length === 0)
+  // Track whether SSR actually provided a seed, separately from whether that
+  // seed was an empty array — a legitimately empty result set (e.g. zero
+  // published posts) must still count as "already server-rendered", or the
+  // SSR output gets stuck showing the loading state forever.
+  const [hasSeed] = useState(() => usePageDataSeed<Record<string, T[]>>(pathname) !== undefined)
+  const [loading, setLoading] = useState(() => !hasSeed)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    if (items.length > 0) return // already server-rendered
+    if (hasSeed) return // already server-rendered
     apiGet<T[]>(apiPath).then(({ data, error }) => {
       if (error) setError(error)
       else setItems(data ?? [])

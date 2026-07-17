@@ -93,7 +93,7 @@ export default function TrunkShowsPage() {
                         <div className="w-layout-layout quick-stack-13 wf-layout-layout">
                           {/* Name + subtitle */}
                           <div className="w-layout-cell cell-41">
-                            <h5 className="heading-20">{show.name}</h5>
+                            <h3 className="heading-20">{show.name}</h3>
                             {show.subtitle && (
                               <p className="paragraph-11">{show.subtitle}</p>
                             )}
