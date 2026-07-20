@@ -12,7 +12,15 @@ import { stripLigatures } from '@/lib/text'
 
 const COLLECTION_NAV = COLLECTIONS.map(c => ({ slug: c.slug, label: c.label }))
 
-const DRESS_TYPES = ['ALL SHAPES', 'MINI', 'A-LINE', 'BALLGOWN', 'FIT & FLARE', 'SHEATH']
+const DRESS_TYPES = ['ALL SHAPES', 'MINI', 'A-LINE', 'BALLGOWN', 'FIT & FLARE', 'SHEATH', 'LACE']
+
+/** Curated handles for the LACE filter — not text-detected, since "lace" appears
+ *  loosely in many descriptions that aren't primarily lace gowns. */
+const LACE_HANDLES = new Set([
+  'sorelle', 'sorelle-mini', 'seraphine', 'saskia', 'sage', 'sabine',
+  'tatum', 'anna', 'amelie2', 'tory', 'saffron', 'tilly', 'tiana',
+  'tessa', 'tegan', 'tallulah',
+])
 
 /** Detect silhouette from product name + description text */
 function getDressType(p: Product): string {
@@ -74,7 +82,8 @@ export default function CollectionPage() {
   const displayed = useMemo(() => {
     let list = [...products]
     if (activeSearch) list = list.filter(p => p.name.toLowerCase().includes(activeSearch.toLowerCase()))
-    if (dressType !== 'ALL SHAPES') list = list.filter(p => getDressType(p) === dressType)
+    if (dressType === 'LACE') list = list.filter(p => LACE_HANDLES.has(p.handle))
+    else if (dressType !== 'ALL SHAPES') list = list.filter(p => getDressType(p) === dressType)
     return list
   }, [products, activeSearch, dressType])
 
