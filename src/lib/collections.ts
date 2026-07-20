@@ -1,9 +1,9 @@
 export const COLLECTIONS = [
   { slug: 'palais',          label: 'PALAIS',              category: 'PALAIS' },
-  { slug: 'lumiere',         label: 'LUMIÈRE',             category: 'LUMIÈRE' },
   { slug: 'modern-muse',     label: 'MODERN MUSE',         category: 'MODERN MUSE' },
   { slug: 'iconic',          label: 'ICONIC',              category: 'ICONIC' },
   { slug: 'anniversary',     label: 'ANNIVERSARY',          category: 'ANNIVERSARY' },
+  { slug: 'lumiere',         label: 'LUMIÈRE',             category: 'LUMIÈRE' },
   { slug: 'siren',           label: 'SIREN',               category: 'SIREN' },
   { slug: 'all-collections', label: 'ALL WEDDING DRESSES', category: 'ALL COLLECTIONS' },
 ] as const

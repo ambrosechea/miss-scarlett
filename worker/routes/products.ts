@@ -1,5 +1,6 @@
 import type { Env } from '../types'
 import { json } from '../index'
+import { COLLECTIONS } from '../../src/lib/collections'
 
 interface ProductRow {
   id: number
@@ -77,10 +78,20 @@ export async function handleProductsList(request: Request, env: Env): Promise<Re
     ).bind(category).all<ProductRow>()
     results = res.results
   } else {
+    const categoryOrder = COLLECTIONS
+      .map(c => c.category)
+      .filter(category => category !== 'ALL COLLECTIONS')
+
+    const caseWhens = categoryOrder.map((_, i) => `WHEN ? THEN ${i}`).join(' ')
     const res = await env.DB.prepare(
-      `SELECT id, handle, name, description, price, main_image
-         FROM products WHERE active = 1 ORDER BY rowid ASC`
-    ).all<ProductRow>()
+      `SELECT p.id, p.handle, p.name, p.description, p.price, p.main_image
+         FROM products p
+         LEFT JOIN product_categories pc
+           ON pc.product_id = p.id AND pc.category != 'ALL COLLECTIONS'
+        WHERE p.active = 1
+        GROUP BY p.id
+        ORDER BY MIN(CASE pc.category ${caseWhens} ELSE ${categoryOrder.length} END) ASC, p.rowid ASC`
+    ).bind(...categoryOrder).all<ProductRow>()
     results = res.results
   }
 
